@@ -51,28 +51,28 @@ class tx_postfix_TestTask_AdditionalFieldProvider implements tx_scheduler_Additi
     public function getAdditionalFields(array &$taskInfo, $task, tx_scheduler_Module $parentObject) {
 
             // Initialize extra field value
-        if (empty($taskInfo['postfix_email'])) {
+        if (empty($taskInfo['postfix_postfixAdminEmail'])) {
             if ($parentObject->CMD == 'add') {
                     // In case of new task and if field is empty, set default email address
-                $taskInfo['postfix_email'] = $GLOBALS['BE_USER']->user['email'];
+                $taskInfo['postfix_postfixAdminEmail'] = $GLOBALS['BE_USER']->user['email'];
 
             } elseif ($parentObject->CMD == 'edit') {
                     // In case of edit, and editing a test task, set to internal value if not data was submitted already
-                $taskInfo['postfix_email'] = $task->postfix_email;
+                $taskInfo['postfix_postfixAdminEmail'] = $task->postfix_postfixAdminEmail;
             } else {
                     // Otherwise set an empty value, as it will not be used anyway
-                $taskInfo['postfix_email'] = '';
+                $taskInfo['postfix_postfixAdminEmail'] = '';
             }
         }
 
             // Write the code for the field
-        $fieldID    = 'task_email';
-        $fieldValue = htmlspecialchars( $taskInfo['postfix_email'] );
-        $fieldCode = '<input type="text" name="tx_scheduler[postfix_email]" id="' . $fieldID . '" value="' . $fieldValue . '" size="30" />';
+        $fieldID    = 'postfix_postfixAdminEmail';
+        $fieldValue = htmlspecialchars( $taskInfo['postfix_postfixAdminEmail'] );
+        $fieldCode  = '<input type="text" name="tx_scheduler[postfix_postfixAdminEmail]" id="' . $fieldID . '" value="' . $fieldValue . '" size="30" />';
         $additionalFields = array();
         $additionalFields[$fieldID] = array(
             'code'     => $fieldCode,
-            'label'    => 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.email',
+            'label'    => 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.postfixAdminEmail',
             'cshKey'   => '_MOD_tools_txschedulerM1',
             'cshLabel' => $fieldID
         );
@@ -89,9 +89,9 @@ class tx_postfix_TestTask_AdditionalFieldProvider implements tx_scheduler_Additi
      * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
      */
     public function validateAdditionalFields(array &$submittedData, tx_scheduler_Module $parentObject) {
-        $submittedData['postfix_email'] = trim($submittedData['postfix_email']);
+        $submittedData['postfix_postfixAdminEmail'] = trim($submittedData['postfix_postfixAdminEmail']);
 
-        if (empty($submittedData['postfix_email'])) {
+        if (empty($submittedData['postfix_postfixAdminEmail'])) {
             $prompt = $this->extLabel . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterEmail' );
             $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
             $result = FALSE;
@@ -111,7 +111,7 @@ class tx_postfix_TestTask_AdditionalFieldProvider implements tx_scheduler_Additi
      * @return void
      */
     public function saveAdditionalFields(array $submittedData, tx_scheduler_Task $task) {
-        $task->postfix_email = $submittedData['postfix_email'];
+        $task->postfix_postfixAdminEmail = $submittedData['postfix_postfixAdminEmail'];
     }
 }
 

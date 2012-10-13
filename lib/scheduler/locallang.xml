@@ -6,11 +6,11 @@
   </meta>
   <data type="array">
     <languageKey index="default" type="array">
-      <label index="label.email">Email</label>
+      <label index="label.postfixAdminEmail">Email of the postfix admin</label>
       <label index="msg.enterEmail">Please enter an email adress.</label>
     </languageKey>
     <languageKey index="de" type="array">
-      <label index="label.email">E-Mail</label>
+      <label index="label.postfixAdminEmail">E-Mail des Postfix-Adninistrators</label>
       <label index="msg.enterEmail">Bitte gebe eine Mail-Adresse an.</label>
     </languageKey>
   </data>

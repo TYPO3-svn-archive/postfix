@@ -36,7 +36,7 @@ class tx_postfix_TestTask extends tx_scheduler_Task {
      *
      * @var string $email
      */
-     var $postfix_email;
+     var $postfix_postfixAdminEmail;
 
     /**
      * Function executed from the Scheduler.
@@ -47,12 +47,12 @@ class tx_postfix_TestTask extends tx_scheduler_Task {
     public function execute() {
         $success = FALSE;
 
-        if (!empty($this->postfix_email)) {
+        if (!empty($this->postfix_postfixAdminEmail)) {
                 // If an email address is defined, send a message to it
 
                 // NOTE: the TYPO3_DLOG constant is not used in this case, as this is a test task
                 // and debugging is its main purpose anyway
-            t3lib_div::devLog('[tx_postfix_TestTask]: Test email sent to "' . $this->postfix_email . '"', 'postfix', 0);
+            t3lib_div::devLog('[tx_postfix_TestTask]: Test email sent to "' . $this->postfix_postfixAdminEmail . '"', 'postfix', 0);
 
                 // Get execution information
             $exec = $this->getExecution();
@@ -66,11 +66,11 @@ class tx_postfix_TestTask extends tx_scheduler_Task {
                 $site = t3lib_div::getIndpEnv('TYPO3_SITE_URL');
             }
 
-            $start = $exec->getStart();
-            $end = $exec->getEnd();
+            $start    = $exec->getStart();
+            $end      = $exec->getEnd();
             $interval = $exec->getInterval();
             $multiple = $exec->getMultiple();
-            $cronCmd = $exec->getCronCmd();
+            $cronCmd  = $exec->getCronCmd();
             $mailBody =
                 'POSTFIX TEST-TASK' . LF
                 . '- - - - - - - - - - - - - - - -' . LF
@@ -90,11 +90,11 @@ class tx_postfix_TestTask extends tx_scheduler_Task {
             try {
                 /** @var $mailer t3lib_mail_message */
                 $mailer = t3lib_div::makeInstance('t3lib_mail_message');
-                $mailer->setFrom(array($this->postfix_email => 'POSTFIX TEST-TASK'));
-                $mailer->setReplyTo(array($this->postfix_email => 'POSTFIX TEST-TASK'));
+                $mailer->setFrom(array($this->postfix_postfixAdminEmail => 'POSTFIX TEST-TASK'));
+                $mailer->setReplyTo(array($this->postfix_postfixAdminEmail => 'POSTFIX TEST-TASK'));
                 $mailer->setSubject('POSTFIX TEST-TASK');
                 $mailer->setBody($mailBody);
-                $mailer->setTo($this->postfix_email);
+                $mailer->setTo($this->postfix_postfixAdminEmail);
                 $mailsSend = $mailer->send();
                 $success = ($mailsSend>0);
             } catch (Exception $e) {
@@ -114,7 +114,7 @@ class tx_postfix_TestTask extends tx_scheduler_Task {
      * @return string Information to display
      */
     public function getAdditionalInformation() {
-        return $GLOBALS['LANG']->sL('LLL:EXT:postfix/lib/scheduler/locallang.xml:label.email') . ': ' . $this->postfix_email;
+        return $GLOBALS['LANG']->sL('LLL:EXT:postfix/lib/scheduler/locallang.xml:label.postfixAdminEmail') . ': ' . $this->postfix_postfixAdminEmail;
     }
 }
 
