@@ -169,7 +169,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
   private function sql( )
   {
       // Query
-    $select_fields  = 'uid, username, tx_postfix_maildir tinytext NOT NULL, tx_postfix_homedir, tx_postfix_quota, tx_postfix_webmail';
+    $select_fields  = 'uid, username, tx_postfix_maildir, tx_postfix_homedir, tx_postfix_quota, tx_postfix_webmail';
     $from_table     = 'fe_users';
     //$where_clause   = "FIND_IN_SET( pid, '" . $pidList . "') " . $this->pageSetSqlAndWhere( );
     $where_clause   = null;
