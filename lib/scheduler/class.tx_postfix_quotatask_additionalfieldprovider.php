@@ -234,7 +234,6 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     $prompt = $this->extLabel . ': &Auml;&auml;h?';
     $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
     $parentObject->addMessage( $prompt, t3lib_FlashMessage::WARN );
-    $parentObject->addMessage( $prompt, t3lib_FlashMessage::WARNING );
     $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
     $parentObject->addMessage( $prompt, t3lib_FlashMessage::OK );
 
