@@ -152,16 +152,18 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     */
   private function validateFieldPostfixAdminMail( array &$submittedData, tx_scheduler_Module $parentObject ) 
   {
+    $bool_isValidatingSuccessful = true;
+
     $submittedData['postfix_postfixAdminEmail'] = trim( $submittedData['postfix_postfixAdminEmail'] );
 
     if( empty( $submittedData['postfix_postfixAdminEmail'] ) ) 
     {
       $prompt = $this->extLabel . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterEmail' );
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
-      return false;
+      $bool_isValidatingSuccessful = false;
     } 
 
-    return false;
+    return $bool_isValidatingSuccessful;
   }
 
   /**
