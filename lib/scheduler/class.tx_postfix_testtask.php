@@ -72,7 +72,7 @@ class tx_postfix_TestTask extends tx_scheduler_Task {
             $multiple = $exec->getMultiple();
             $cronCmd = $exec->getCronCmd();
             $mailBody =
-                'SCHEDULER TEST-TASK' . LF
+                'POSTFIX TEST-TASK' . LF
                 . '- - - - - - - - - - - - - - - -' . LF
                 . 'UID: ' . $this->taskUid . LF
                 . 'Sitename: ' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] . LF
@@ -90,9 +90,9 @@ class tx_postfix_TestTask extends tx_scheduler_Task {
             try {
                 /** @var $mailer t3lib_mail_message */
                 $mailer = t3lib_div::makeInstance('t3lib_mail_message');
-                $mailer->setFrom(array($this->postfix_email => 'SCHEDULER TEST-TASK'));
-                $mailer->setReplyTo(array($this->postfix_email => 'SCHEDULER TEST-TASK'));
-                $mailer->setSubject('SCHEDULER TEST-TASK');
+                $mailer->setFrom(array($this->postfix_email => 'POSTFIX TEST-TASK'));
+                $mailer->setReplyTo(array($this->postfix_email => 'POSTFIX TEST-TASK'));
+                $mailer->setSubject('POSTFIX TEST-TASK');
                 $mailer->setBody($mailBody);
                 $mailer->setTo($this->postfix_email);
                 $mailsSend = $mailer->send();
