@@ -119,7 +119,9 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       'multiple: ' . ($multiple ? 'yes' : 'no') . PHP_EOL .
       'cronCmd: ' . ($cronCmd ? $cronCmd : 'not used') . PHP_EOL .
       PHP_EOL .
-      $this->sql( );
+      $this->sql( ) . PHP_EOL .
+      PHP_EOL .
+      'XXX'
       ;
 
       // Prepare mailer and send the mail
@@ -177,8 +179,8 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       // Query
 
       // DRS prompt
-    if ( $this->b_drs_sql )
-    {
+//    if ( $this->b_drs_sql )
+//    {
       $query  = $GLOBALS['TYPO3_DB']->SELECTquery
                 (
                   $select_fields,
@@ -190,7 +192,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
                 );
       $prompt = $query;
       t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->extKey, 0 );
-    }
+//    }
       // DRS prompt
 
       // SELECT
@@ -215,6 +217,8 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     
     $str_records = implode( PHP_EOL, ( array ) $arr_records );
 
+    $prompt = $str_records;
+    t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->extKey, 0 );
     return $str_records;
   }
 
