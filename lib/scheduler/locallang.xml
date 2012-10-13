@@ -19,6 +19,7 @@
       <label index="label.testTask.name">Postfix Test</label>
       <label index="label.testTask.description">Postfix tests the sending of an email to the postfix admin. It is a service for development only.</label>
       <label index="msg.enterEmail">Please enter an email adress.</label>
+      <label index="msg.enterPathToFolderWiDrafts">Please enter the path to the folder with the email drafts (with an ending slash). Default: typo3conf/ext/postfix/lib/scheduler/marldrafts/</label>
     </languageKey>
     <languageKey index="de" type="array">
       <label index="label.quotaTask.name">Postfix Quota</label>

@@ -109,7 +109,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
       // Write the code for the field
     $fieldID    = 'postfix_pathToFolderWiDrafts';
     $fieldValue = htmlspecialchars( $taskInfo['postfix_pathToFolderWiDrafts'] );
-    $fieldCode  = '<input type="text" name="tx_scheduler[postfix_pathToFolderWiDrafts]" id="' . $fieldID . '" value="' . $fieldValue . '" size="30" />';
+    $fieldCode  = '<input type="text" name="tx_scheduler[postfix_pathToFolderWiDrafts]" id="' . $fieldID . '" value="' . $fieldValue . '" size="50" />';
     $additionalFields = array( );
     $additionalFields[$fieldID] = array
     (
@@ -197,6 +197,37 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     
     if( ! $this->validateFieldPostfixAdminMail( $submittedData, $parentObject ) ) 
     {
+      $bool_isValidatingSuccessful = false;
+    } 
+
+    if( ! $this->validateFieldPathToFolderWiDrafts( $submittedData, $parentObject ) ) 
+    {
+      $bool_isValidatingSuccessful = false;
+    } 
+
+    return $bool_isValidatingSuccessful;
+  }
+
+  /**
+    * validateFieldPathToFolderWiDrafts( )  : This method checks any additional data that is relevant to the specific task
+    *                                     If the task class is not relevant, the method is expected to return TRUE
+    *
+    * @param array     $submittedData Reference to the array containing the data submitted by the user
+    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
+    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function validateFieldPathToFolderWiDrafts( array &$submittedData, tx_scheduler_Module $parentObject ) 
+  {
+    $bool_isValidatingSuccessful = true;
+
+    $submittedData['postfix_pathToFolderWithDrafts'] = trim( $submittedData['postfix_pathToFolderWithDrafts'] );
+
+    if( empty( $submittedData['postfix_pathToFolderWithDrafts'] ) ) 
+    {
+      $prompt = $this->extLabel . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterPathToFolderWiDrafts' );
+      $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
       $bool_isValidatingSuccessful = false;
     } 
 
