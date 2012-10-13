@@ -30,6 +30,8 @@
  * @subpackage    tx_postfix
  */
 class tx_postfix_TestTask_AdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider {
+  
+    var $extLabel = 'Postfix';
 
     /**
      * This method is used to define new fields for adding or editing a task
@@ -64,12 +66,13 @@ class tx_postfix_TestTask_AdditionalFieldProvider implements tx_scheduler_Additi
         }
 
             // Write the code for the field
-        $fieldID = 'task_email';
-        $fieldCode = '<input type="text" name="tx_scheduler[postfix_email]" id="' . $fieldID . '" value="' . $taskInfo['postfix_email'] . '" size="30" />';
+        $fieldID    = 'task_email';
+        $fieldValue = htmlspecialchars( $taskInfo['postfix_email'] );
+        $fieldCode = '<input type="text" name="tx_scheduler[postfix_email]" id="' . $fieldID . '" value="' . $fieldValue . '" size="30" />';
         $additionalFields = array();
         $additionalFields[$fieldID] = array(
             'code'     => $fieldCode,
-            'label'    => 'LLL:EXT:scheduler/mod1/locallang.xml:label.email',
+            'label'    => 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.email',
             'cshKey'   => '_MOD_tools_txschedulerM1',
             'cshLabel' => $fieldID
         );
@@ -89,7 +92,8 @@ class tx_postfix_TestTask_AdditionalFieldProvider implements tx_scheduler_Additi
         $submittedData['postfix_email'] = trim($submittedData['postfix_email']);
 
         if (empty($submittedData['postfix_email'])) {
-            $parentObject->addMessage($GLOBALS['LANG']->sL('LLL:EXT:scheduler/mod1/locallang.xml:msg.noEmail'), t3lib_FlashMessage::ERROR);
+            $prompt = $this->extLabel . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterEmail' );
+            $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
             $result = FALSE;
         } else {
             $result = TRUE;

@@ -114,7 +114,7 @@ class tx_postfix_TestTask extends tx_scheduler_Task {
      * @return string Information to display
      */
     public function getAdditionalInformation() {
-        return $GLOBALS['LANG']->sL('LLL:EXT:scheduler/mod1/locallang.xml:label.email') . ': ' . $this->postfix_email;
+        return $GLOBALS['LANG']->sL('LLL:EXT:postfix/lib/scheduler/locallang.xml:label.email') . ': ' . $this->postfix_email;
     }
 }
 
