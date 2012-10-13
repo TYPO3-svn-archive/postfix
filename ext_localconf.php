@@ -9,8 +9,8 @@ if (!defined ('TYPO3_MODE')) {
 if (!empty($extConf['showSampleTasks'])) {
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['tx_scheduler_TestTask'] = array(
         'extension'        => $_EXTKEY,
-        'title'            => 'LLL:EXT:' . $_EXTKEY . '/locallang.xml:testTask.name',
-        'description'      => 'LLL:EXT:' . $_EXTKEY . '/locallang.xml:testTask.description',
+        'title'            => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:testTask.name',
+        'description'      => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:testTask.description',
         'additionalFields' => 'tx_scheduler_TestTask_AdditionalFieldProvider'
     );
 }
