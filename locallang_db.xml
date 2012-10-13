@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+  <meta type="array">
+    <type>database</type>
+    <description>Language labels for database tables/fields belonging to extension 'postfix'</description>
+  </meta>
+  <data type="array">
+    <languageKey index="default" type="array">
+      <label index="fe_users.tx_postfix_id">Mailsystem Uid</label>
+      <label index="fe_users.tx_postfix_gid">Mailsystem Gid</label>
+      <label index="fe_users.tx_postfix_password">Password for Mail</label>
+      <label index="fe_users.tx_postfix_maildir">Mail Directory</label>
+      <label index="fe_users.tx_postfix_homedir">Mailsystem Homedir</label>
+      <label index="fe_users.tx_postfix_quota">Quota</label>
+      <label index="fe_users.tx_postfix_webmail">Allow Webmail</label>
+      <label index="testTask.name">Postfix test task</label>
+      <label index="testTask.description">The Postfix test task just sends a mail to a given email address. It is designed to be used for testing purposes.</label>
+      <label index="tx_postfix_forwards">Forwards</label>
+      <label index="tx_postfix_forwards.forward_from">Forward from address</label>
+      <label index="tx_postfix_forwards.forward_to">Forward to address</label>
+      <label index="tx_postfix_forwards.memo_txt">Memo Text</label>
+      <label index="tx_postfix_domains">Domains</label>
+      <label index="tx_postfix_domains.domain">Domain</label>
+      <label index="tx_postfix_canonical">Canonical</label>
+      <label index="tx_postfix_canonical.mail_srce">Mail Original</label>
+      <label index="tx_postfix_canonical.mail_dest">Mail Transformed</label>
+      <label index="tx_postfix_canonical_sender">Canonical Sender</label>
+      <label index="tx_postfix_canonical_sender.mail_srce">Mail Original</label>
+      <label index="tx_postfix_canonical_sender.mail_dest">Mails Transformed</label>
+      <label index="tx_postfix_canonical_recipient">Canonical Recipient</label>
+      <label index="tx_postfix_canonical_recipient.mail_srce">Mail Original</label>
+      <label index="tx_postfix_canonical_recipient.mail_dest">Mail Transformed</label>
+      <label index="tx_postfix_autoresponder">Autoresponder</label>
+      <label index="tx_postfix_autoresponder.email">email</label>
+      <label index="tx_postfix_autoresponder.descname">title</label>
+      <label index="tx_postfix_autoresponder.from_date">from (YYYY-MM-DD)</label>
+      <label index="tx_postfix_autoresponder.to_date">to (YYYY-MM-DD)</label>
+      <label index="tx_postfix_autoresponder.message">message</label>
+      <label index="tx_postfix_autoresponder.enabled">latest (ignore it!)</label>
+      <label index="tx_postfix_autoresponder.force_enabled">enabled</label>
+      <label index="tx_postfix_autoresponder.subject">subject</label>
+    </languageKey>
+    <languageKey index="de" type="array">
+      <label index="fe_users.tx_postfix_id">Mailsystem Uid</label>
+      <label index="fe_users.tx_postfix_gid">Mailsystem Gid</label>
+      <label index="fe_users.tx_postfix_password">Passwort für Mail</label>
+      <label index="fe_users.tx_postfix_maildir">Mail-Verzeichnis</label>
+      <label index="fe_users.tx_postfix_homedir">Mailsystem Homedir</label>
+      <label index="fe_users.tx_postfix_quota">Quota</label>
+      <label index="fe_users.tx_postfix_webmail">Erlaube Webmail</label>
+      <label index="testTask.name">Postfix Test-Job</label>
+      <label index="testTask.description">Der Postfix Test-Job sendet lediglich eine Mail zu der angegebenen E-Mail-Adresse. Der Job dient nur Test-Zwecken.</label>
+      <label index="tx_postfix_forwards">Weiterleitungen</label>
+      <label index="tx_postfix_forwards.forward_from">Weiterleitung von</label>
+      <label index="tx_postfix_forwards.forward_to">Weiterleitung an</label>
+      <label index="tx_postfix_forwards.memo_txt">Bemerkung</label>
+      <label index="tx_postfix_domains">Domains</label>
+      <label index="tx_postfix_domains.domain">Domain</label>
+      <label index="tx_postfix_canonical">Canonical</label>
+      <label index="tx_postfix_canonical.mail_srce">Mail Original</label>
+      <label index="tx_postfix_canonical.mail_dest">Mail Gewandelt</label>
+      <label index="tx_postfix_canonical_sender">Canonical Sender</label>
+      <label index="tx_postfix_canonical_sender.mail_srce">Mail Original</label>
+      <label index="tx_postfix_canonical_sender.mail_dest">Mail Gewandelt</label>
+      <label index="tx_postfix_canonical_recipient">Canonical Empfänger</label>
+      <label index="tx_postfix_canonical_recipient.mail_srce">Mail Original</label>
+      <label index="tx_postfix_canonical_recipient.mail_dest">Mail Gewandelt</label>
+      <label index="tx_postfix_autoresponder">Auto-Antwort</label>
+      <label index="tx_postfix_autoresponder.email">Mail-Adresse</label>
+      <label index="tx_postfix_autoresponder.descname">Titel</label>
+      <label index="tx_postfix_autoresponder.from_date">Von (JJJJ-MM-TT)</label>
+      <label index="tx_postfix_autoresponder.to_date">Bis (JJJJ-MM-TT)</label>
+      <label index="tx_postfix_autoresponder.message">Nachricht</label>
+      <label index="tx_postfix_autoresponder.enabled">Aktuell (ignorieren!)</label>
+      <label index="tx_postfix_autoresponder.force_enabled">Aktiviert</label>
+      <label index="tx_postfix_autoresponder.subject">Betreff</label>
+    </languageKey>
+  </data>
+</T3locallang>

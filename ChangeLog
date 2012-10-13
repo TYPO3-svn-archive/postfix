@@ -1,0 +1,38 @@
+1.1.0
+  12-10-13
+  New Feature
+  * #41953: Quota
+            Effected files:
+            * ext_autoload.php (new)
+            * ext_conf_template.php (new)
+            * ext_localconf.php (new)
+            * locallang_db.xml
+            * lib/scheduler
+              * class.tx_scheduler_testtask.php (new)
+              * class.tx_scheduler_testtask_additionalfieldprovider.php (new)
+  Development
+  * #00000: Publishing code in the SVN repository
+  
+1.0.2
+  10-08-23
+  Bugfix
+  * #9417: Wrong result with from_date and to_date
+  * #0000: from_date and to_date are missed in the TYPO3 backend form
+  
+1.0.1
+  10-08-19
+  Improvement
+  * Move table fields from from_mail to from_date and to_mail to to_date
+  * autoresponder.php is extended with a prevention for autoreply loops
+  
+1.0.0
+  10-08-18
+  New feature
+  * Autoresponder
+  State
+  * Move state from alpha to beta
+  
+0.0.1 (tv_postfix)
+  07-10-08
+  Initial release
+  Dirk Wildt  http://wildt.at.die-netzmacher.de

@@ -1,0 +1,39 @@
+INSTALLATION
+------------
+
+- Please take a look in the manual. Below is a quick description only.
+
+- TYPO3
+  - Install this TYPO3 extension with the extension manager
+
+- Autoresponder
+  1. Copy the script autoresponder to a common directory like 'opt' or 'share'
+  2. Configure the database connection in the copied autoresponder script to your needs
+  3. Add a statement to your cronjob
+  - Example
+    1. # cp -a autoresponder.php /usr/share/autoresponder.php 
+    2. # nano /usr/share/autoresponder.php
+       See the section /* Database information */
+    3. See the example in res/cron.txt
+
+- Roundcube
+  - The lines below are optional. They are of interest only, if your are using the web-mailer roundcube.
+  1. Copy the folder res/eugenesklyar.com/autoreply into the plugin folder of roundcube.
+  2. Copy the file res/config.inc.php into the copied autoreply folder.
+  3. Copy the file res/de_DE.inc into the localization folder of the copied autoreply folder.
+  4. Configure the database connection and the pid of your fe_user folder in the copied config.inc.php
+     in the autoreply folder in roundcube.
+  - Example
+    1. # cp -aR res/eugenesklyar.com/autoreply /usr/share/roundcubemail-0.4/plugins/
+    2. # cp -a res/config.inc.php /usr/share/roundcubemail-0.4/plugins/autoreply/config.inc.php
+    3. # cp -a res/de_DE.inc /usr/share/roundcubemail-0.4/plugins/autoreply/localization/de_DE.inc
+    4. # nano /usr/share/roundcubemail-0.4/plugins/autoreply/config.inc.php
+       @ $rcmail_config['autoreply_db_dsn']
+       @ $pid
+
+QUESTIONS
+---------
+
+- Feel free to contact me and send an email.
+  @ http://wildt.at.die-netzmacher.de
+
