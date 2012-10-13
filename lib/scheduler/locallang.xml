@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+  <meta type="array">
+    <type>database</type>
+    <description>Language labels for database tables/fields belonging to extension 'postfix'</description>
+  </meta>
+  <data type="array">
+    <languageKey index="default" type="array">
+      <label index="label.email">Email</label>
+      <label index="msg.enterEmail">Please enter an email adress.</label>
+    </languageKey>
+    <languageKey index="de" type="array">
+      <label index="label.email">E-Mail</label>
+      <label index="msg.enterEmail">Bitte gebe eine Mail-Adresse an.</label>
+    </languageKey>
+  </data>
+</T3locallang>
