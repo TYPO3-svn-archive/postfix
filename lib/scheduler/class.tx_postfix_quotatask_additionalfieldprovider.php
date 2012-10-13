@@ -91,7 +91,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
       if( $parentObject->CMD == 'add' ) 
       {
           // In case of new task and if field is empty, set default email address
-        $taskInfo['postfix_pathToFolderWiDrafts'] = 'typo3conf/ext/postfix/lib/scheduler/marldrafts/';
+        $taskInfo['postfix_pathToFolderWiDrafts'] = 'typo3conf/ext/postfix/lib/scheduler/maildrafts/';
       } 
       elseif( $parentObject->CMD == 'edit' ) 
       {
@@ -272,10 +272,42 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     */
   public function saveAdditionalFields( array $submittedData, tx_scheduler_Task $task )
   {
-    $task->postfix_postfixAdminEmail    = $submittedData['postfix_postfixAdminEmail'];
+    $this->saveFieldPathToFolderWiDrafts( $submittedData, $task );
+    $this->saveFieldPostfixAdminEmail( $submittedData, $task );
+  }
+
+  /**
+    * saveAdditionalFields( ) : This method is used to save any additional input into the current task object
+    *                           if the task class matches
+    *
+    * @param array $submittedData Array containing the data submitted by the user
+    * @param tx_scheduler_Task $task Reference to the current task object
+    * @return void
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  public function saveFieldPathToFolderWiDrafts( array $submittedData, tx_scheduler_Task $task )
+  {
     $postfix_pathToFolderWiDrafts       = rtrim( $submittedData['postfix_pathToFolderWiDrafts'], '/' ) . '/';
     $task->postfix_pathToFolderWiDrafts = $postfix_pathToFolderWiDrafts;
   }
+  
+  /**
+    * saveAdditionalFields( ) : This method is used to save any additional input into the current task object
+    *                           if the task class matches
+    *
+    * @param array $submittedData Array containing the data submitted by the user
+    * @param tx_scheduler_Task $task Reference to the current task object
+    * @return void
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  public function saveFieldPostfixAdminEmail( array $submittedData, tx_scheduler_Task $task )
+  {
+    $task->postfix_postfixAdminEmail = $submittedData['postfix_postfixAdminEmail'];
+  }
+
+  
 }
 
 if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/postfix/lib/scheduler/class.tx_postfix_quotatask_additionalfieldprovider.php'])) {
