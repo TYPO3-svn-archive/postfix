@@ -6,7 +6,7 @@
   </meta>
   <data type="array">
     <languageKey index="default" type="array">
-      <label index="label.pathToFolderWiMails">Path to the folder with the e-mail drafts</label>
+      <label index="label.pathToFolderWiDrafts">Path to the folder with the e-mail drafts</label>
       <label index="label.postfixAdminEmail">Email of the postfix admin</label>
       <label index="label.quotaDefaultLimit">Default quota limit (in megabyte)</label>
       <label index="label.quotaWarnIfLimitOver">Send the warning message, if quota is over</label>

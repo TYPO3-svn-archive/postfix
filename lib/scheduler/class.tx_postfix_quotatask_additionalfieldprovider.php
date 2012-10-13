@@ -57,9 +57,72 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   {
     $additionalFields = array( );
     $additionalFields = $additionalFields + $this->getFieldPostfixAdminMail( $taskInfo, $task, $parentObject );
+    $additionalFields = $additionalFields + $this->getFieldPathToFolderWiDrafts( $taskInfo, $task, $parentObject );
+//    quotaDefaultLimit
+//    quotaWarnIfLimitOver
+//    quotaDeleteIfLimitOver
+//    testMode
     
     return $additionalFields;
   }
+
+  /**
+    * getFieldPathToFolder( )  : This method is used to define new fields for adding or editing a task
+    *                                           In this case, it adds an email field
+    *
+    * @param array $taskInfo Reference to the array containing the info used in the add/edit form
+    * @param object $task When editing, reference to the current task object. Null when adding.
+    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
+    * @return array    Array containing all the information pertaining to the additional fields
+    *                    The array is multidimensional, keyed to the task class name and each field's id
+    *                    For each field it provides an associative sub-array with the following:
+    *                        ['code']        => The HTML code for the field
+    *                        ['label']        => The label of the field (possibly localized)
+    *                        ['cshKey']        => The CSH key for the field
+    *                        ['cshLabel']    => The code of the CSH label
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function getFieldPathToFolderWiDrafts( array &$taskInfo, $task, $parentObject ) 
+  {
+      // IF : field is empty, initialize extra field value
+    if( empty( $taskInfo['postfix_pathToFolderWiDrafts'] ) ) 
+    {
+      if( $parentObject->CMD == 'add' ) 
+      {
+          // In case of new task and if field is empty, set default email address
+        $taskInfo['postfix_pathToFolderWiDrafts'] = 'typo3conf/ext/postfix/lib/scheduler/marldrafts/';
+      } 
+      elseif( $parentObject->CMD == 'edit' ) 
+      {
+          // In case of edit, and editing a test task, set to internal value if not data was submitted already
+        $taskInfo['postfix_pathToFolderWiDrafts'] = $task->postfix_pathToFolderWiDrafts;
+      }
+      else
+      {
+          // Otherwise set an empty value, as it will not be used anyway
+        $taskInfo['postfix_pathToFolderWiDrafts'] = '';
+      }
+    }
+      // IF : field is empty, initialize extra field value
+
+      // Write the code for the field
+    $fieldID    = 'postfix_pathToFolderWiDrafts';
+    $fieldValue = htmlspecialchars( $taskInfo['postfix_pathToFolderWiDrafts'] );
+    $fieldCode  = '<input type="text" name="tx_scheduler[postfix_pathToFolderWiDrafts]" id="' . $fieldID . '" value="' . $fieldValue . '" size="30" />';
+    $additionalFields = array( );
+    $additionalFields[$fieldID] = array
+    (
+      'code'     => $fieldCode,
+      'label'    => 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.pathToFolderWiDrafts',
+      'cshKey'   => '_MOD_tools_txschedulerM1',
+      'cshLabel' => $fieldID
+    );
+      // Write the code for the field
+
+    return $additionalFields;
+  }
+
 
   /**
     * getFieldPostfixAdminMail( )  : This method is used to define new fields for adding or editing a task
