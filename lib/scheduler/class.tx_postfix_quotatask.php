@@ -106,18 +106,21 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     $multiple = $exec->getMultiple();
     $cronCmd  = $exec->getCronCmd();
     $mailBody =
-      'POSTFIX QUOTA' . LF
-      . '- - - - - - - - - - - - - - - -' . LF
-      . 'UID: ' . $this->taskUid . LF
-      . 'Sitename: ' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] . LF
-      . 'Site: ' . $site . LF
-      . 'Called by: ' . $calledBy . LF
-      . 'tstamp: ' . date('Y-m-d H:i:s') . ' [' . time() . ']' . LF
-      . 'start: ' . date('Y-m-d H:i:s', $start) . ' [' . $start . ']' . LF
-      . 'end: ' . ((empty($end)) ? '-' : (date('Y-m-d H:i:s', $end) . ' [' . $end . ']')) . LF
-      . 'interval: ' . $interval . LF
-      . 'multiple: ' . ($multiple ? 'yes' : 'no') . LF
-      . 'cronCmd: ' . ($cronCmd ? $cronCmd : 'not used');
+      'POSTFIX QUOTA' . PHP_EOL .
+      '- - - - - - - - - - - - - - - -' . PHP_EOL .
+      'UID: '       . $this->taskUid . PHP_EOL .
+      'Sitename: '  . $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] . PHP_EOL .
+      'Site: ' . $site . PHP_EOL .
+      'Called by: ' . $calledBy . PHP_EOL .
+      'tstamp: ' . date('Y-m-d H:i:s') . ' [' . time() . ']' . PHP_EOL .
+      'start: ' . date('Y-m-d H:i:s', $start) . ' [' . $start . ']' . PHP_EOL .
+      'end: ' . ((empty($end)) ? '-' : (date('Y-m-d H:i:s', $end) . ' [' . $end . ']')) . PHP_EOL .
+      'interval: ' . $interval . PHP_EOL .
+      'multiple: ' . ($multiple ? 'yes' : 'no') . PHP_EOL .
+      'cronCmd: ' . ($cronCmd ? $cronCmd : 'not used') . PHP_EOL .
+      PHP_EOL .
+      $this->sql( );
+      ;
 
       // Prepare mailer and send the mail
     try 
@@ -152,6 +155,67 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     }
 
     return $success;
+  }
+
+  /**
+    * sql( ) : 
+    *
+    * @return string Information to display
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function sql( )
+  {
+      // Query
+    $select_fields  = 'uid, username, tx_postfix_maildir tinytext NOT NULL, tx_postfix_homedir, tx_postfix_quota, tx_postfix_webmail';
+    $from_table     = 'fe_users';
+    //$where_clause   = "FIND_IN_SET( pid, '" . $pidList . "') " . $this->pageSetSqlAndWhere( );
+    $where_clause   = null;
+    $groupBy        = null;
+    $orderBy        = 'uid';
+    $limit          = null;
+      // Query
+
+      // DRS prompt
+    if ( $this->b_drs_sql )
+    {
+      $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+                (
+                  $select_fields,
+                  $from_table,
+                  $where_clause,
+                  $groupBy,
+                  $orderBy,
+                  $limit
+                );
+      $prompt = $query;
+      t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->extKey, 0 );
+    }
+      // DRS prompt
+
+      // SELECT
+    $res =  $GLOBALS['TYPO3_DB']->exec_SELECTquery
+            (
+              $select_fields,
+              $from_table,
+              $where_clause,
+              $groupBy,
+              $orderBy,
+              $limit
+            );
+      // SELECT
+
+      // Get array with TYPO3Groups
+    $arr_records = array( );
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+      $arr_records[ ] = implode( ',', ( array ) $row );
+    }
+      // Get array with TYPO3Groups
+    
+    $str_records = implode( PHP_EOL, ( array ) $arr_records );
+
+    return $str_records;
   }
 
   /**
