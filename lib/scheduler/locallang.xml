@@ -12,20 +12,20 @@
       <label index="label.quotaWarnIfLimitOver">Send the warning message, if quota is over</label>
       <label index="label.quotaDeleteIfLimitOver">Delete mails and send a message, if quota is over</label>
       <label index="label.quotaTask.name">Postfix Quota</label>
-      <label index="label.quotaTask.description">Postfix Quota checks postfix maildirs. It will send warning emails to the owner of the current account, if the size of the account is over the warning limit. It will delete some mails, if the size of the folder is over the quota limit.</label>
+      <label index="label.quotaTask.description">Postfix Quota checks postfix maildirs. It will send warning emails to the owner of the current account, if the size of the account is over the warning limit. It will delete some mails, if the size of the folder is over the quota limit. The owner of the current account will informed by email.</label>
       <label index="label.testMode">Test mode</label>
       <label index="label.testMode.disabled">Disabled (Warning message will sent, e-mails over quota will deleted)</label>
       <label index="label.testMode.enabled">Enabled (postfix admin will get the report "Which will happen")</label>
-      <label index="label.testTask.name">Postfix Test Mail</label>
-      <label index="label.testTask.description">Postfix is testing the sending of a mail to the postfix admin. It is a service for development only.</label>
+      <label index="label.testTask.name">Postfix Test</label>
+      <label index="label.testTask.description">Postfix tests the sending of an email to the postfix admin. It is a service for development only.</label>
       <label index="msg.enterEmail">Please enter an email adress.</label>
     </languageKey>
     <languageKey index="de" type="array">
       <label index="label.quotaTask.name">Postfix Quota</label>
-      <label index="label.quotaTask.description">Postfix Quota <![CDATA[&uuml;]]>berwacht Postfix-Mail-Ordner. <![CDATA[&Uuml;]]>berschreitet die Gr<![CDATA[&ouml;]]><![CDATA[&szlig;]]>e des jeweiligen Ordners die Warn-Grenze, wird eine Warnung an den Konto-Inhaber versendet. Wird das Quota_Limit <![CDATA[&uuml;]]>berschritten, wird ein Teil der Mails gel<![CDATA[&ouml;]]>scht.</label>
+      <label index="label.quotaTask.description">Postfix Quota <![CDATA[&uuml;]]>berwacht Postfix-Mail-Ordner. <![CDATA[&Uuml;]]>berschreitet die Gr<![CDATA[&ouml;]]><![CDATA[&szlig;]]>e des jeweiligen Ordners die Warn-Grenze, wird eine Warnung an den Konto-Inhaber versendet. Wird das Quota-Limit <![CDATA[&uuml;]]>berschritten, wird ein Teil der Mails gel<![CDATA[&ouml;]]>scht. Der Konto-Inhaber wird per Mail <![CDATA[&uuml;]]>ber das L<![CDATA[&ouml;]]>schen informiert.</label>
       <label index="label.postfixAdminEmail">E-Mail des Postfix-Adninistrators</label>
-      <label index="label.testTask.name">Postfix Test Mail-Versand</label>
-      <label index="label.testTask.description">Postfix testet lediglich denMail-Versand an den Postfix Administrator. Dient der Entwicklung von TYPO3-Postfix.</label>
+      <label index="label.testTask.name">Postfix Test</label>
+      <label index="label.testTask.description">Postfix testet den Mail-Versand an den Postfix Administrator. Der Test dient allein der Entwicklung von TYPO3-Postfix.</label>
       <label index="msg.enterEmail">Bitte gebe eine Mail-Adresse an.</label>
     </languageKey>
   </data>
