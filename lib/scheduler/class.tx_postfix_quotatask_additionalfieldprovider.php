@@ -272,7 +272,9 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     */
   public function saveAdditionalFields( array $submittedData, tx_scheduler_Task $task )
   {
-    $task->postfix_postfixAdminEmail = $submittedData['postfix_postfixAdminEmail'];
+    $task->postfix_postfixAdminEmail    = $submittedData['postfix_postfixAdminEmail'];
+    $postfix_pathToFolderWiDrafts       = rtrim( $submittedData['postfix_pathToFolderWiDrafts'], '/' ) . '/';
+    $task->postfix_pathToFolderWiDrafts = $postfix_pathToFolderWiDrafts;
   }
 }
 
