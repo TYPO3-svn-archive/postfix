@@ -79,7 +79,6 @@ class tx_postfix_TestTask extends tx_scheduler_Task {
                 . 'Site: ' . $site . LF
                 . 'Called by: ' . $calledBy . LF
                 . 'tstamp: ' . date('Y-m-d H:i:s') . ' [' . time() . ']' . LF
-                . 'maxLifetime: ' . $this->postfix->extConf['maxLifetime'] . LF
                 . 'start: ' . date('Y-m-d H:i:s', $start) . ' [' . $start . ']' . LF
                 . 'end: ' . ((empty($end)) ? '-' : (date('Y-m-d H:i:s', $end) . ' [' . $end . ']')) . LF
                 . 'interval: ' . $interval . LF
