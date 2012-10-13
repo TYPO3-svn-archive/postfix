@@ -34,7 +34,7 @@
 class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider
 {
   
-  var $extLabel = 'Postfix';
+  var $msgPrefix = 'Postfix Quota';
 
   /**
     * getAdditionalFields( )  : This method is used to define new fields for adding or editing a task
@@ -226,12 +226,12 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
 
     if( empty( $submittedData['postfix_pathToFolderWiDrafts'] ) ) 
     {
-      $prompt = $this->extLabel . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterPathToFolderWiDrafts' );
+      $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterPathToFolderWiDrafts' );
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
       $bool_isValidatingSuccessful = false;
     } 
 
-    $prompt = $this->extLabel . ': &Auml;&auml;h?';
+    $prompt = $this->msgPrefix . ': &Auml;&auml;h?';
     $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
     $parentObject->addMessage( $prompt, t3lib_FlashMessage::WARNING );
     $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
@@ -258,7 +258,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
 
     if( empty( $submittedData['postfix_postfixAdminEmail'] ) ) 
     {
-      $prompt = $this->extLabel . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterEmail' );
+      $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterEmail' );
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
       $bool_isValidatingSuccessful = false;
     } 
@@ -292,7 +292,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     * @version       1.1.0
     * @since         1.1.0
     */
-  public function saveFieldPathToFolderWiDrafts( array $submittedData, tx_scheduler_Task $task )
+  private function saveFieldPathToFolderWiDrafts( array $submittedData, tx_scheduler_Task $task )
   {
     $postfix_pathToFolderWiDrafts       = rtrim( $submittedData['postfix_pathToFolderWiDrafts'], '/' ) . '/';
     $task->postfix_pathToFolderWiDrafts = $postfix_pathToFolderWiDrafts;
@@ -308,7 +308,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     * @version       1.1.0
     * @since         1.1.0
     */
-  public function saveFieldPostfixAdminEmail( array $submittedData, tx_scheduler_Task $task )
+  private function saveFieldPostfixAdminEmail( array $submittedData, tx_scheduler_Task $task )
   {
     $task->postfix_postfixAdminEmail = $submittedData['postfix_postfixAdminEmail'];
   }
