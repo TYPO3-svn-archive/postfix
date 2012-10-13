@@ -13,8 +13,6 @@
       <label index="fe_users.tx_postfix_homedir">Mailsystem Homedir</label>
       <label index="fe_users.tx_postfix_quota">Quota</label>
       <label index="fe_users.tx_postfix_webmail">Allow Webmail</label>
-      <label index="testTask.name">Postfix test task</label>
-      <label index="testTask.description">The Postfix test task just sends a mail to a given email address. It is designed to be used for testing purposes.</label>
       <label index="tx_postfix_forwards">Forwards</label>
       <label index="tx_postfix_forwards.forward_from">Forward from address</label>
       <label index="tx_postfix_forwards.forward_to">Forward to address</label>
@@ -48,8 +46,6 @@
       <label index="fe_users.tx_postfix_homedir">Mailsystem Homedir</label>
       <label index="fe_users.tx_postfix_quota">Quota</label>
       <label index="fe_users.tx_postfix_webmail">Erlaube Webmail</label>
-      <label index="testTask.name">Postfix Test-Job</label>
-      <label index="testTask.description">Der Postfix Test-Job sendet lediglich eine Mail zu der angegebenen E-Mail-Adresse. Der Job dient nur Test-Zwecken.</label>
       <label index="tx_postfix_forwards">Weiterleitungen</label>
       <label index="tx_postfix_forwards.forward_from">Weiterleitung von</label>
       <label index="tx_postfix_forwards.forward_to">Weiterleitung an</label>

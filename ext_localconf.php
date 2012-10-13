@@ -12,9 +12,17 @@ $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['postfix'])
 if (!empty($extConf['showSampleTasks'])) {
   $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['tx_postfix_TestTask'] = array(
     'extension'        => $_EXTKEY,
-    'title'            => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:testTask.name',
-    'description'      => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:testTask.description',
+    'title'            => 'LLL:EXT:' . $_EXTKEY . '/lib/scheduler/locallang.xml:label.testTask.name',
+    'description'      => 'LLL:EXT:' . $_EXTKEY . '/lib/scheduler/locallang.xml:label.testTask.description',
     'additionalFields' => 'tx_postfix_TestTask_AdditionalFieldProvider'
   );
 }
+
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['tx_postfix_QuotaTask'] = array(
+  'extension'        => $_EXTKEY,
+  'title'            => 'LLL:EXT:' . $_EXTKEY . '/lib/scheduler/locallang.xml:label.quotaTask.name',
+  'description'      => 'LLL:EXT:' . $_EXTKEY . '/lib/scheduler/locallang.xml:label.quotaTask.description',
+  'additionalFields' => 'tx_postfix_QuotaTask_AdditionalFieldProvider'
+);
+
 ?>

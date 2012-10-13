@@ -6,11 +6,26 @@
   </meta>
   <data type="array">
     <languageKey index="default" type="array">
+      <label index="label.pathToFolderWiMails">Path to the folder with the e-mail drafts</label>
       <label index="label.postfixAdminEmail">Email of the postfix admin</label>
+      <label index="label.quotaDefaultLimit">Default quota limit (in megabyte)</label>
+      <label index="label.quotaWarnIfLimitOver">Send the warning message, if quota is over</label>
+      <label index="label.quotaDeleteIfLimitOver">Delete mails and send a message, if quota is over</label>
+      <label index="label.quotaTask.name">Postfix quota task</label>
+      <label index="label.quotaTask.description">The Postfix quota task checks each Postfix account for quota limits. It send s warn mails and delete mails over limit.</label>
+      <label index="label.testMode">Test mode</label>
+      <label index="label.testMode.disabled">Disabled (Warning message will sent, e-mails over quota will deleted)</label>
+      <label index="label.testMode.enabled">Enabled (postfix admin will get the report "Which will happen")</label>
+      <label index="label.testTask.name">Postfix test task</label>
+      <label index="label.testTask.description">The Postfix test task just sends a mail to a given email address. It is designed to be used for testing purposes.</label>
       <label index="msg.enterEmail">Please enter an email adress.</label>
     </languageKey>
     <languageKey index="de" type="array">
+      <label index="label.quotaTask.name">Postfix Quota</label>
+      <label index="label.quotaTask.description">Postfix Quota <![CDATA[&uuml;]]>berwacht Mail-Konten. Postfix Quota versendet Warn-Mails und l<![CDATA[&ouml;]]>scht Mails, wenn das Quota Limit <![CDATA[&uuml;]]>berschritten ist.</label>
       <label index="label.postfixAdminEmail">E-Mail des Postfix-Adninistrators</label>
+      <label index="label.testTask.name">Postfix Test-Job</label>
+      <label index="label.testTask.description">Der Postfix Test-Job sendet lediglich eine Mail zu der angegebenen E-Mail-Adresse. Der Job dient nur Test-Zwecken.</label>
       <label index="msg.enterEmail">Bitte gebe eine Mail-Adresse an.</label>
     </languageKey>
   </data>
