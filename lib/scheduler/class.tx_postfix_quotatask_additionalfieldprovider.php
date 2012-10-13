@@ -132,7 +132,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   {
     $bool_isValidatingSuccessful = true;
     
-    if( ! $this->validateFieldPostfixAdminMail ) 
+    if( ! $this->validateFieldPostfixAdminMail( $submittedData, $parentObject ) ) 
     {
       $bool_isValidatingSuccessful = false;
     } 
