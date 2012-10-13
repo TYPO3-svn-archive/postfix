@@ -49,17 +49,17 @@ class tx_postfix_TestTask_AdditionalFieldProvider implements tx_scheduler_Additi
     public function getAdditionalFields(array &$taskInfo, $task, tx_scheduler_Module $parentObject) {
 
             // Initialize extra field value
-        if (empty($taskInfo['email'])) {
+        if (empty($taskInfo['postfix_email'])) {
             if ($parentObject->CMD == 'add') {
                     // In case of new task and if field is empty, set default email address
-                $taskInfo['email'] = $GLOBALS['BE_USER']->user['email'];
+                $taskInfo['postfix_email'] = $GLOBALS['BE_USER']->user['email'];
 
             } elseif ($parentObject->CMD == 'edit') {
                     // In case of edit, and editing a test task, set to internal value if not data was submitted already
-                $taskInfo['email'] = $task->email;
+                $taskInfo['postfix_email'] = $task->postfix_email;
             } else {
                     // Otherwise set an empty value, as it will not be used anyway
-                $taskInfo['email'] = '';
+                $taskInfo['postfix_email'] = '';
             }
         }
 
@@ -107,7 +107,7 @@ class tx_postfix_TestTask_AdditionalFieldProvider implements tx_scheduler_Additi
      * @return void
      */
     public function saveAdditionalFields(array $submittedData, tx_scheduler_Task $task) {
-        $task->email = $submittedData['postfix_email'];
+        $task->postfix_email = $submittedData['postfix_email'];
     }
 }
 
