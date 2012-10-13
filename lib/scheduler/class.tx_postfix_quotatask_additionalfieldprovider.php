@@ -119,8 +119,8 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   }
 
   /**
-    * This method checks any additional data that is relevant to the specific task
-    * If the task class is not relevant, the method is expected to return TRUE
+    * validateAdditionalFields( ) : This method checks any additional data that is relevant to the specific task
+    *                               If the task class is not relevant, the method is expected to return TRUE
     *
     * @param array     $submittedData Reference to the array containing the data submitted by the user
     * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
@@ -130,25 +130,43 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     */
   public function validateAdditionalFields( array &$submittedData, tx_scheduler_Module $parentObject ) 
   {
-    $submittedData['postfix_postfixAdminEmail'] = trim( $submittedData['postfix_postfixAdminEmail'] );
-
-    if( empty($submittedData['postfix_postfixAdminEmail'] ) ) 
+    $bool_isValidatingSuccessful = true;
+    
+    if( ! $this->validateFieldPostfixAdminMail ) 
     {
-      $prompt = $this->extLabel . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterEmail' );
-      $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
-      $result = FALSE;
+      $bool_isValidatingSuccessful = false;
     } 
-    else
-    {
-      $result = TRUE;
-    }
 
-    return $result;
+    return $bool_isValidatingSuccessful;
   }
 
   /**
-    * This method is used to save any additional input into the current task object
-    * if the task class matches
+    * validateFieldPostfixAdminMail( )  : This method checks any additional data that is relevant to the specific task
+    *                                     If the task class is not relevant, the method is expected to return TRUE
+    *
+    * @param array     $submittedData Reference to the array containing the data submitted by the user
+    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
+    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function validateFieldPostfixAdminMail( array &$submittedData, tx_scheduler_Module $parentObject ) 
+  {
+    $submittedData['postfix_postfixAdminEmail'] = trim( $submittedData['postfix_postfixAdminEmail'] );
+
+    if( empty( $submittedData['postfix_postfixAdminEmail'] ) ) 
+    {
+      $prompt = $this->extLabel . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterEmail' );
+      $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
+      return false;
+    } 
+
+    return false;
+  }
+
+  /**
+    * saveAdditionalFields( ) : This method is used to save any additional input into the current task object
+    *                           if the task class matches
     *
     * @param array $submittedData Array containing the data submitted by the user
     * @param tx_scheduler_Task $task Reference to the current task object
