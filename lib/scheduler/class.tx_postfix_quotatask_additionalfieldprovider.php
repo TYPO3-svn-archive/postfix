@@ -222,9 +222,9 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   {
     $bool_isValidatingSuccessful = true;
 
-    $submittedData['postfix_pathToFolderWithDrafts'] = trim( $submittedData['postfix_pathToFolderWithDrafts'] );
+    $submittedData['postfix_pathToFolderWiDrafts'] = trim( $submittedData['postfix_pathToFolderWiDrafts'] );
 
-    if( empty( $submittedData['postfix_pathToFolderWithDrafts'] ) ) 
+    if( empty( $submittedData['postfix_pathToFolderWiDrafts'] ) ) 
     {
       $prompt = $this->extLabel . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterPathToFolderWiDrafts' );
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
