@@ -27,9 +27,9 @@
  *
  * @author        François Suter <francois@typo3.org>
  * @package        TYPO3
- * @subpackage    tx_scheduler
+ * @subpackage    tx_postfix
  */
-class tx_scheduler_TestTask_AdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider {
+class tx_postfix_TestTask_AdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider {
 
     /**
      * This method is used to define new fields for adding or editing a task
@@ -65,7 +65,7 @@ class tx_scheduler_TestTask_AdditionalFieldProvider implements tx_scheduler_Addi
 
             // Write the code for the field
         $fieldID = 'task_email';
-        $fieldCode = '<input type="text" name="tx_scheduler[email]" id="' . $fieldID . '" value="' . $taskInfo['email'] . '" size="30" />';
+        $fieldCode = '<input type="text" name="tx_scheduler[postfix_email]" id="' . $fieldID . '" value="' . $taskInfo['postfix_email'] . '" size="30" />';
         $additionalFields = array();
         $additionalFields[$fieldID] = array(
             'code'     => $fieldCode,
@@ -86,9 +86,9 @@ class tx_scheduler_TestTask_AdditionalFieldProvider implements tx_scheduler_Addi
      * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
      */
     public function validateAdditionalFields(array &$submittedData, tx_scheduler_Module $parentObject) {
-        $submittedData['email'] = trim($submittedData['email']);
+        $submittedData['postfix_email'] = trim($submittedData['postfix_email']);
 
-        if (empty($submittedData['email'])) {
+        if (empty($submittedData['postfix_email'])) {
             $parentObject->addMessage($GLOBALS['LANG']->sL('LLL:EXT:scheduler/mod1/locallang.xml:msg.noEmail'), t3lib_FlashMessage::ERROR);
             $result = FALSE;
         } else {
@@ -107,12 +107,12 @@ class tx_scheduler_TestTask_AdditionalFieldProvider implements tx_scheduler_Addi
      * @return void
      */
     public function saveAdditionalFields(array $submittedData, tx_scheduler_Task $task) {
-        $task->email = $submittedData['email'];
+        $task->email = $submittedData['postfix_email'];
     }
 }
 
-if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/scheduler/examples/class.tx_scheduler_testtask_additionalfieldprovider.php'])) {
-    include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/scheduler/examples/class.tx_scheduler_testtask_additionalfieldprovider.php']);
+if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/postfix/lib/scheduler/class.tx_postfix_testtask_additionalfieldprovider.php'])) {
+    include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/postfix/lib/scheduler/class.tx_postfix_testtask_additionalfieldprovider.php']);
 }
 
 ?>

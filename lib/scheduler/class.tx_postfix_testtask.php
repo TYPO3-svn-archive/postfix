@@ -23,20 +23,20 @@
 ***************************************************************/
 
 /**
- * Class "tx_scheduler_TestTask" provides testing procedures
+ * Class "tx_postfix_TestTask" provides testing procedures
  *
  * @author        Markus Friedrich <markus.friedrich@dkd.de>
  * @package        TYPO3
- * @subpackage    tx_scheduler
+ * @subpackage    tx_postfix
  */
-class tx_scheduler_TestTask extends tx_scheduler_Task {
+class tx_postfix_TestTask extends tx_scheduler_Task {
 
     /**
      * An email address to be used during the process
      *
      * @var string $email
      */
-     var $email;
+     var $postfix_email;
 
     /**
      * Function executed from the Scheduler.
@@ -47,12 +47,12 @@ class tx_scheduler_TestTask extends tx_scheduler_Task {
     public function execute() {
         $success = FALSE;
 
-        if (!empty($this->email)) {
+        if (!empty($this->postfix_email)) {
                 // If an email address is defined, send a message to it
 
                 // NOTE: the TYPO3_DLOG constant is not used in this case, as this is a test task
                 // and debugging is its main purpose anyway
-            t3lib_div::devLog('[tx_scheduler_TestTask]: Test email sent to "' . $this->email . '"', 'scheduler', 0);
+            t3lib_div::devLog('[tx_postfix_TestTask]: Test email sent to "' . $this->postfix_email . '"', 'postfix', 0);
 
                 // Get execution information
             $exec = $this->getExecution();
@@ -79,7 +79,7 @@ class tx_scheduler_TestTask extends tx_scheduler_Task {
                 . 'Site: ' . $site . LF
                 . 'Called by: ' . $calledBy . LF
                 . 'tstamp: ' . date('Y-m-d H:i:s') . ' [' . time() . ']' . LF
-                . 'maxLifetime: ' . $this->scheduler->extConf['maxLifetime'] . LF
+                . 'maxLifetime: ' . $this->postfix->extConf['maxLifetime'] . LF
                 . 'start: ' . date('Y-m-d H:i:s', $start) . ' [' . $start . ']' . LF
                 . 'end: ' . ((empty($end)) ? '-' : (date('Y-m-d H:i:s', $end) . ' [' . $end . ']')) . LF
                 . 'interval: ' . $interval . LF
@@ -90,11 +90,11 @@ class tx_scheduler_TestTask extends tx_scheduler_Task {
             try {
                 /** @var $mailer t3lib_mail_message */
                 $mailer = t3lib_div::makeInstance('t3lib_mail_message');
-                $mailer->setFrom(array($this->email => 'SCHEDULER TEST-TASK'));
-                $mailer->setReplyTo(array($this->email => 'SCHEDULER TEST-TASK'));
+                $mailer->setFrom(array($this->postfix_email => 'SCHEDULER TEST-TASK'));
+                $mailer->setReplyTo(array($this->postfix_email => 'SCHEDULER TEST-TASK'));
                 $mailer->setSubject('SCHEDULER TEST-TASK');
                 $mailer->setBody($mailBody);
-                $mailer->setTo($this->email);
+                $mailer->setTo($this->postfix_email);
                 $mailsSend = $mailer->send();
                 $success = ($mailsSend>0);
             } catch (Exception $e) {
@@ -102,7 +102,7 @@ class tx_scheduler_TestTask extends tx_scheduler_Task {
             }
         } else {
                 // No email defined, just log the task
-            t3lib_div::devLog('[tx_scheduler_TestTask]: No email address given', 'scheduler', 2);
+            t3lib_div::devLog('[tx_postfix_TestTask]: No email address given', 'postfix', 2);
         }
 
         return $success;
@@ -114,12 +114,12 @@ class tx_scheduler_TestTask extends tx_scheduler_Task {
      * @return string Information to display
      */
     public function getAdditionalInformation() {
-        return $GLOBALS['LANG']->sL('LLL:EXT:scheduler/mod1/locallang.xml:label.email') . ': ' . $this->email;
+        return $GLOBALS['LANG']->sL('LLL:EXT:scheduler/mod1/locallang.xml:label.email') . ': ' . $this->postfix_email;
     }
 }
 
-if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/scheduler/examples/class.tx_scheduler_testtask.php'])) {
-    include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/scheduler/examples/class.tx_scheduler_testtask.php']);
+if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/postfix/lib/scheduler/class.tx_postfix_testtask.php'])) {
+    include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/postfix/lib/scheduler/class.tx_postfix_testtask.php']);
 }
 
 ?>

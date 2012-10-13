@@ -14,7 +14,7 @@ if (!empty($extConf['showSampleTasks'])) {
     'extension'        => $_EXTKEY,
     'title'            => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:testTask.name',
     'description'      => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:testTask.description',
-    'additionalFields' => 'tx_scheduler_TestTask_AdditionalFieldProvider'
+    'additionalFields' => 'tx_postfix_TestTask_AdditionalFieldProvider'
   );
 }
 ?>
