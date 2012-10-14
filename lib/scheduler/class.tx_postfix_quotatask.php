@@ -625,7 +625,13 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     */
   public function getAdditionalInformation( )
   {    
-    return $GLOBALS['LANG']->sL('LLL:EXT:postfix/lib/scheduler/locallang.xml:label.postfixAdminEmail') . ': ' . $this->postfix_postfixAdminEmail;
+    $postfixAdminEmail  = $GLOBALS['LANG']->sL('LLL:EXT:postfix/lib/scheduler/locallang.xml:label.postfixAdminEmail') .
+                          ': ' . 
+                          $this->postfix_postfixAdminEmail;
+    $quotaMode          =  $GLOBALS['LANG']->sL('LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode') .
+                          ': ' . 
+                          $this->postfix_quotaMode;
+    return $postfixAdminEmail . '<br />' . $quotaMode;
   }
 }
 
