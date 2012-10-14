@@ -8,6 +8,10 @@
     <languageKey index="default" type="array">
       <label index="label.pathToFolderWiDrafts">Path to the folder with the e-mail drafts</label>
       <label index="label.postfixAdminEmail">Email of the postfix admin</label>
+      <label index="label.quotaMode">Quota Mode</label>
+      <label index="label.quotaMode.remove">Warnings and remove emails, if quota limit is overrun.</label>
+      <label index="label.quotaMode.warn">Warnings</label>
+      <label index="label.quotaMode.test">What-will-happen-report (test mode)</label>
       <label index="label.quotaDefaultLimit">Default quota limit (in megabyte)</label>
       <label index="label.quotaWarnIfLimitOver">Send the warning message, if quota is over</label>
       <label index="label.quotaDeleteIfLimitOver">Delete mails and send a message, if quota is over</label>

@@ -375,9 +375,9 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
   {
     $success = true;
     
-    foreach( $this->mailboxesData as $mailboxData )
+    foreach( $this->mailboxesData as $this->mailboxData )
     {
-      $this->quotaLoopMailbox( $mailboxData );
+      $this->quotaLoopMailbox( );
     }
 
     return $success;
@@ -386,23 +386,31 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
   /**
     * quotaLoopMailbox( )  : 
     *
-    * @param  array   $mailboxData  : row of one mailbox
     * @return boolean
     * @version       1.1.0
     * @since         1.1.0
     */
-  private function quotaLoopMailbox( $mailboxData )
+  private function quotaLoopMailbox( )
   {
     $success = false;
     
       // DRS
     if( $this->drsModeQuotaTask )
     {
-      $prompt = $mailboxData['pathToMailbox'];
+      $prompt = $this->mailboxData['pathToMailbox'];
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
     }
       // DRS
-
+    
+//      // RETURN : Path to Mailbox isn't proper
+//    if( ! $this->quotaMailboxPathIsProper( ) )
+//    {
+//      return;
+//    }
+//      // RETURN : Path to Mailbox isn't proper
+//
+//    $mailboxSizeMByte = $this->quotaMailboxSizeMByte( );
+    
     return $success;
 
     foreach( $mailboxData as $data )
