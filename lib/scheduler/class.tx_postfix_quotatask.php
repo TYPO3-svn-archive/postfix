@@ -177,7 +177,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
                         tx_postfix_quota
                       ";
     $from_table     = "fe_users";
-    $where_clause   = "(tx_postfix_homedir IS NOT NULL OR tx_postfix_maildir IS NOT NULL)";
+    $where_clause   = "(tx_postfix_homedir != '' OR tx_postfix_maildir != '')";
     $groupBy        = null;
     $orderBy        = "pathToFolder";
     $limit          = null;
