@@ -401,7 +401,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     */
   private function saveFieldPostfixQuotaMode( array $submittedData, tx_scheduler_Task $task )
   {
-    $task->postfix_postfixQuotaMode = $submittedData['postfix_postfixQuotaMode'];
+    $task->postfix_quotaMode = $submittedData['postfix_quotaMode'];
   }
 
   
