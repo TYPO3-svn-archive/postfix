@@ -128,6 +128,13 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
 
       // Init the DRS - Development Reporting System
     $this->initDRS( );
+
+      // 
+    if( ! $this->initRequirements( ) )
+    {
+      $success = false;
+      return $success;
+    }
     
       // Init timetracking, set the starttime
     $this->timeTracking_init( );
@@ -138,7 +145,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     $this->accountsData = $this->initAccountsData( );
     
       // Loop all accounts;
-    if( ! $this->executeLoopAllAccounts( ) )
+    if( ! $this->quotaLoopAccounts( ) )
     {
       $success = false;
     }
@@ -173,13 +180,13 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
                         first_name, 
                         last_name, 
                         email,
-                        CONCAT( tx_postfix_homedir, '/', tx_postfix_maildir ) AS 'pathToFolder', 
+                        CONCAT( tx_postfix_homedir, '/', tx_postfix_maildir ) AS 'pathToMailbox', 
                         tx_postfix_quota
                       ";
     $from_table     = "fe_users";
     $where_clause   = "(tx_postfix_homedir != '' OR tx_postfix_maildir != '')";
     $groupBy        = null;
-    $orderBy        = "pathToFolder";
+    $orderBy        = "pathToMailbox";
     $limit          = null;
       // Query
 
@@ -269,44 +276,140 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
         break;
     }
   }
+  
+  /**
+    * initRequirements( ) : 
+    *
+    * @return   boolean   
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function initRequirements( )
+  {
+      // RETURN : email address is given
+    if ( ! empty( $this->postfix_postfixAdminEmail ) ) 
+    {
+      return true;
+    }
+      // RETURN : email address is given
+
+      // DRS
+    if( $this->drsModeError )
+    {
+      $prompt = 'email address is missing for the Postfix admin.';
+      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+    }
+      // DRS
+
+    return false;
+  }
+
+  /***********************************************
+   *
+   * DRS - Development Reporting System
+   *
+   **********************************************/
+
+
+
+/**
+ * drs_debugTrail( ): Returns class, method and line of the call of this method.
+ *                    The calling method is a debug method - if it is called by another
+ *                    method, please set the level in the calling method to 2.
+ *
+ * $param   integer   $level      : integer
+ *
+ * @param    [type]        $$level: ...
+ * @return    array        $arr_return : with elements class, method, line and prompt
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function drs_debugTrail( $level = 1 )
+  {
+    $arr_return = null; 
+    
+      // Get the debug trail
+    $debugTrail_str = t3lib_utility_Debug::debugTrail( );
+
+      // Get debug trail elements
+    $debugTrail_arr = explode( '//', $debugTrail_str );
+
+      // Get class, method
+    $classMethodLine = $debugTrail_arr[ count( $debugTrail_arr) - ( $level + 2 )];
+    list( $classMethod ) = explode ( '#', $classMethodLine );
+    list($class, $method ) = explode( '->', $classMethod );
+      // Get class, method
+
+      // Get line
+    $classMethodLine = $debugTrail_arr[ count( $debugTrail_arr) - ( $level + 1 )];
+    list( $dummy, $line ) = explode ( '#', $classMethodLine );
+    unset( $dummy );
+      // Get line
+
+      // RETURN content
+    $arr_return['class']  = trim( $class );
+    $arr_return['method'] = trim( $method );
+    $arr_return['line']   = trim( $line );
+    $arr_return['prompt'] = $arr_return['class'] . '::' . $arr_return['method'] . ' (' . $arr_return['line'] . ')';
+
+    return $arr_return;
+      // RETURN content
+  }
+
+
+
+  /***********************************************
+   *
+   * Quota
+   *
+   **********************************************/
 
   /**
-    * executeLoopAllAccounts( )  : Function executed from the Scheduler.
-    *               * Sends an email
+    * quotaLoopAccounts( )  : 
     *
     * @return boolean
     * @version       1.1.0
     * @since         1.1.0
     */
-  private function executeLoopAllAccounts( )
+  private function quotaLoopAccounts( )
   {
-    $success = false;
+    $success = true;
     
     foreach( $this->accountsData as $accountData )
     {
-        // DRS
-      if( $this->drsModeQuotaTask )
-      {
-        $prompt = $accountData['email'];
-        t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
-      }
-        // DRS
+      $this->quotaLoopAccount( $accountData );
+    }
+
+    return $success;
+  }
+
+  /**
+    * quotaLoopAccount( )  : 
+    *
+    * @param  array   $accountData  : row of one account
+    * @return boolean
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function quotaLoopAccount( $accountData )
+  {
+    $success = false;
+    
+      // DRS
+    if( $this->drsModeQuotaTask )
+    {
+      $prompt = $accountData['pathToMailbox'];
+      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
+    }
+      // DRS
+
+    return $success;
+
+    foreach( $accountData as $data )
+    {
     }
     
-      // RETURN : no email address is given
-    if ( empty( $this->postfix_postfixAdminEmail ) ) 
-    {
-        // DRS
-      if( $this->drsModeQuotaTask )
-      {
-        $prompt = 'email address is missing for the Postfix admin.';
-        t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 2 );
-      }
-        // DRS
-      return $success;
-    }
-      // RETURN : no email address is given
-      
+    
       // Get call method
     if( basename( PATH_thisScript ) == 'cli_dispatch.phpsh')
     {
@@ -386,62 +489,9 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
 
     return $success;
   }
-    /***********************************************
-   *
-   * DRS - Development Reporting System
-   *
-   **********************************************/
 
 
 
-/**
- * drs_debugTrail( ): Returns class, method and line of the call of this method.
- *                    The calling method is a debug method - if it is called by another
- *                    method, please set the level in the calling method to 2.
- *
- * $param   integer   $level      : integer
- *
- * @param    [type]        $$level: ...
- * @return    array        $arr_return : with elements class, method, line and prompt
- * @version 3.9.9
- * @since   3.9.9
- */
-  public function drs_debugTrail( $level = 1 )
-  {
-    $arr_return = null; 
-    
-      // Get the debug trail
-    $debugTrail_str = t3lib_utility_Debug::debugTrail( );
-
-      // Get debug trail elements
-    $debugTrail_arr = explode( '//', $debugTrail_str );
-
-      // Get class, method
-    $classMethodLine = $debugTrail_arr[ count( $debugTrail_arr) - ( $level + 2 )];
-    list( $classMethod ) = explode ( '#', $classMethodLine );
-    list($class, $method ) = explode( '->', $classMethod );
-      // Get class, method
-
-      // Get line
-    $classMethodLine = $debugTrail_arr[ count( $debugTrail_arr) - ( $level + 1 )];
-    list( $dummy, $line ) = explode ( '#', $classMethodLine );
-    unset( $dummy );
-      // Get line
-
-      // RETURN content
-    $arr_return['class']  = trim( $class );
-    $arr_return['method'] = trim( $method );
-    $arr_return['line']   = trim( $line );
-    $arr_return['prompt'] = $arr_return['class'] . '::' . $arr_return['method'] . ' (' . $arr_return['line'] . ')';
-
-    return $arr_return;
-      // RETURN content
-  }
-
-
-
-  
-  
   /***********************************************
    *
    * Time tracking
