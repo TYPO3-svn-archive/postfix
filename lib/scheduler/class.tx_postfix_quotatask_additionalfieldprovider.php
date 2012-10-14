@@ -145,7 +145,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   private function getFieldPostfixAdminMail( array &$taskInfo, $task, $parentObject ) 
   {
       // IF : field is empty, initialize extra field value
-    if( empty( $taskInfo['postfix_PostfixAdminMail'] ) ) 
+    if( empty( $taskInfo['postfix_postfixAdminMail'] ) ) 
     {
       if( $parentObject->CMD == 'add' ) 
       {
@@ -236,7 +236,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     $selected[$fieldValue]  = ' selected="selected"';
     
     $fieldCode    = '
-                      <select name="tx_scheduler[postfix_quotaMode]" id="' . $fieldID . '" size="1">
+                      <select name="tx_scheduler[postfix_quotaMode]" id="' . $fieldID . '" size="1" style="width:300px;">
                         <option value="remove"' . $selected['remove'] . '>' . $labelRemove . '</option>
                         <option value="warn"' . $selected['warn'] . '>' . $labelWarn . '</option>
                         <option value="test"' . $selected['test'] . '>' . $labelTest . '</option>
