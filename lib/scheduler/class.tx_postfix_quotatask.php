@@ -224,7 +224,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     $this->drsModeInfo  = true;
 
     $prompt = 'DRS - Development Reporting System: ' . $this->extConf['drs_mode'];
-    t3lib_div::devlog( '[tx_postfix_QuotaTask] ', $this->extKey, 0 );
+    t3lib_div::devlog( '[tx_postfix_QuotaTask] ' . $prompt, $this->extKey, 0 );
 
     switch( $this->extConf['drs_mode'] )
     {
@@ -237,7 +237,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
         $this->drsModeQuotaTask = true;
         $this->drsModeSql       = true;
         $prompt = 'DRS mode isn\'t defined.';
-        t3lib_div::devlog( '[tx_postfix_QuotaTask] ', $this->extKey, 3 );
+        t3lib_div::devlog( '[tx_postfix_QuotaTask] ' . $prompt, $this->extKey, 3 );
         break;
     }
   }
