@@ -23,7 +23,7 @@
 ***************************************************************/
 
 /**
- * Class "tx_postfix_QuotaTask" provides procedures for check quota and control postfix accounts
+ * Class "tx_postfix_QuotaTask" provides procedures for check quota and control postfix mailboxes
  *
  * @author        Dirk Wildt (http://wildt.at.die-netzmacher.de/)
  * @package        TYPO3
@@ -104,11 +104,11 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     var $postfix_postfixAdminEmail;
     
   /**
-    * All Postfix accounts returned from database
+    * All Postfix mailboxes returned from database
     *
-    * @var array $accountsData
+    * @var array $mailboxesData
     */
-    var $accountsData;
+    var $mailboxesData;
     
 
   /**
@@ -141,15 +141,15 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     $debugTrailLevel = 1;
     $this->timeTracking_log( $debugTrailLevel, 'START' );
 
-      // Get the data of each postfix account from the database
-    $this->accountsData = $this->initAccountsData( );
+      // Get the data of each postfix mailbox from the database
+    $this->mailboxesData = $this->initMailboxesData( );
     
-      // Loop all accounts;
-    if( ! $this->quotaLoopAccounts( ) )
+      // Loop all mailboxes;
+    if( ! $this->quotaLoopMailboxes( ) )
     {
       $success = false;
     }
-      // Loop all accounts;
+      // Loop all mailboxes;
     
       // RETURN : the success
     $this->timeTracking_log( $debugTrailLevel, 'END' );
@@ -165,13 +165,13 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
    **********************************************/
   
   /**
-    * initAccountsData( ) : Get the data of each postfix account from the database.
+    * initMailboxesData( ) : Get the data of each postfix mailbox from the database.
     *
     * @return   array   $rows
     * @version       1.1.0
     * @since         1.1.0
     */
-  private function initAccountsData( )
+  private function initMailboxesData( )
   {
       // Query
     $select_fields  = "
@@ -230,7 +230,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       // DRS
     if( $this->drsModeSql )
     {
-      $prompt = '#' . count( $rows ) . ' accounts found.';
+      $prompt = '#' . count( $rows ) . ' mailboxes found.';
       t3lib_div::devlog( '[tx_postfix_QuotaTask] ' . $prompt, $this->extKey, 0 );
     }
     return $rows;
@@ -365,47 +365,47 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
    **********************************************/
 
   /**
-    * quotaLoopAccounts( )  : 
+    * quotaLoopMailboxes( )  : 
     *
     * @return boolean
     * @version       1.1.0
     * @since         1.1.0
     */
-  private function quotaLoopAccounts( )
+  private function quotaLoopMailboxes( )
   {
     $success = true;
     
-    foreach( $this->accountsData as $accountData )
+    foreach( $this->mailboxesData as $mailboxData )
     {
-      $this->quotaLoopAccount( $accountData );
+      $this->quotaLoopMailbox( $mailboxData );
     }
 
     return $success;
   }
 
   /**
-    * quotaLoopAccount( )  : 
+    * quotaLoopMailbox( )  : 
     *
-    * @param  array   $accountData  : row of one account
+    * @param  array   $mailboxData  : row of one mailbox
     * @return boolean
     * @version       1.1.0
     * @since         1.1.0
     */
-  private function quotaLoopAccount( $accountData )
+  private function quotaLoopMailbox( $mailboxData )
   {
     $success = false;
     
       // DRS
     if( $this->drsModeQuotaTask )
     {
-      $prompt = $accountData['pathToMailbox'];
+      $prompt = $mailboxData['pathToMailbox'];
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
     }
       // DRS
 
     return $success;
 
-    foreach( $accountData as $data )
+    foreach( $mailboxData as $data )
     {
     }
     
@@ -426,7 +426,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       // Get execution information
     $exec = $this->getExecution();
 
-    $strAccountData = var_export( $this->accountsData, true );
+    $strMailboxData = var_export( $this->mailboxesData, true );
 
     $start    = $exec->getStart();
     $end      = $exec->getEnd();
@@ -447,7 +447,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       'multiple: ' . ($multiple ? 'yes' : 'no') . PHP_EOL .
       'cronCmd: ' . ($cronCmd ? $cronCmd : 'not used') . PHP_EOL .
       PHP_EOL .
-      $strAccountData . PHP_EOL .
+      $strMailboxData . PHP_EOL .
       'XXX'
       ;
 
