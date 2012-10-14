@@ -117,7 +117,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     $success = true;
     
       // Get the extensions's configuration
-    $this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['postfix']);
+    $this->extConf = unserialize( $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['postfix'] );
 
       // Init the DRS - Development Repöorting System
     $this->initDRS( );
@@ -213,7 +213,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
   private function initDRS( )
   {
 
-    if( $this->extConf['drs_mode'] == 'Disabled' )
+    if( $this->extConf['drsMode'] == 'Disabled' )
     {
       return;
     }

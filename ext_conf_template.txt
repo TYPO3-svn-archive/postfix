@@ -1,4 +1,7 @@
-  # cat=debugging/dev/100;  type=options[Disabled,Enabled (for debugging only!)]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
-drs_mode        = Disabled
-  # cat=debugging/dev/101;  type=boolean; label=Enable sample tasks: When turned on, you can use the sample, test tasks provided by the postfix. Before turning this off, make sure you don't have any of those sample tasks currently scheduled. You will also need to clear the configuration cache.
+  # cat=quota/quota/100;  type=options[Disabled,Enabled (for debugging only!)]; label= Quota: Without any effect
+quota        = Disabled
+
+  # cat=debugging/dev/900;  type=options[Disabled,Enabled (for debugging only!)]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
+drsMode        = Disabled
+  # cat=debugging/dev/901;  type=boolean; label=Enable sample tasks: When turned on, you can use the sample, test tasks provided by the postfix. Before turning this off, make sure you don't have any of those sample tasks currently scheduled. You will also need to clear the configuration cache.
 showSampleTasks = 0
