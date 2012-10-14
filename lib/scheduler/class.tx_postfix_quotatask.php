@@ -452,7 +452,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       // Init the timetracking object
 
       // Set the global $startTime.
-    $this->tt_startTime = $this->TT->mtime();
+    $this->tt_startTime = $this->TT->getDifferenceToStarttime();
   }
 
   /**
@@ -475,7 +475,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       // RETURN: DRS shouldn't report performance prompts
 
       // Get the current time
-    $endTime = $this->TT->mtime( );
+    $endTime = $this->TT->getDifferenceToStarttime( );
 
     $debugTrail = $this->drs_debugTrail( $debugTrailLevel );
 
