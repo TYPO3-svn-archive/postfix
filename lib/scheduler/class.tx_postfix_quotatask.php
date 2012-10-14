@@ -172,11 +172,12 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
                         username, 
                         first_name, 
                         last_name, 
+                        email,
                         CONCAT( tx_postfix_homedir, '/', tx_postfix_maildir ) AS 'pathToFolder', 
                         tx_postfix_quota
                       ";
     $from_table     = "fe_users";
-    $where_clause   = "(tx_postfix_homedir IS NOT NULL OR tx_postfix_maildir IS NOT NULL";
+    $where_clause   = "(tx_postfix_homedir IS NOT NULL OR tx_postfix_maildir IS NOT NULL)";
     $groupBy        = null;
     $orderBy        = "pathToFolder";
     $limit          = null;
@@ -280,6 +281,17 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
   private function executeLoopAllAccounts( )
   {
     $success = false;
+    
+    foreach( $this->accountsData as $accountData )
+    {
+        // DRS
+      if( $this->drsModeQuotaTask )
+      {
+        $prompt = $accountData['email'];
+        t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
+      }
+        // DRS
+    }
     
       // RETURN : no email address is given
     if ( empty( $this->postfix_postfixAdminEmail ) ) 
