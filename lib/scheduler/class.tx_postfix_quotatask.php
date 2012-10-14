@@ -248,10 +248,10 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     $this->drsModeWarn  = true;
     $this->drsModeInfo  = true;
 
-    $prompt = 'DRS - Development Reporting System: ' . $this->extConf['drs_mode'];
+    $prompt = 'DRS - Development Reporting System: ' . $this->extConf['drsMode'];
     t3lib_div::devlog( '[tx_postfix_QuotaTask] ' . $prompt, $this->extKey, 0 );
 
-    switch( $this->extConf['drs_mode'] )
+    switch( $this->extConf['drsMode'] )
     {
       case( 'Enabled (for debugging only!)' ):
         $this->drsModePerformance = true;
