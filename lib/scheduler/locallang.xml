@@ -8,10 +8,10 @@
     <languageKey index="default" type="array">
       <label index="label.pathToFolderWiDrafts">Path to the folder with the e-mail drafts</label>
       <label index="label.postfixAdminEmail">Email of the postfix admin</label>
-      <label index="label.quotaMode">Quota Mode</label>
-      <label index="label.quotaMode.remove">Warnings and remove emails, if quota limit is overrun.</label>
+      <label index="label.quotaMode">Quota mode</label>
+      <label index="label.quotaMode.remove">Warnings and removing emails</label>
       <label index="label.quotaMode.warn">Warnings</label>
-      <label index="label.quotaMode.test">What-will-happen-report (test mode)</label>
+      <label index="label.quotaMode.test">Report (test mode)</label>
       <label index="label.quotaDefaultLimit">Default quota limit (in megabyte)</label>
       <label index="label.quotaWarnIfLimitOver">Send the warning message, if quota is over</label>
       <label index="label.quotaDeleteIfLimitOver">Delete mails and send a message, if quota is over</label>
@@ -26,9 +26,13 @@
       <label index="msg.enterPathToFolderWiDrafts">Please enter the path to the folder with the email drafts (with an ending slash). Default: typo3conf/ext/postfix/lib/scheduler/maildrafts/</label>
     </languageKey>
     <languageKey index="de" type="array">
+      <label index="label.postfixAdminEmail">E-Mail des Postfix-Administrators</label>
+      <label index="label.quotaMode">Quota Modus</label>
+      <label index="label.quotaMode.remove">Warnungen und L<![CDATA[&ouml;]]>schen von Mails</label>
+      <label index="label.quotaMode.warn">Warnungen</label>
+      <label index="label.quotaMode.test">Bericht (Test-Modus)</label>
       <label index="label.quotaTask.name">Postfix Quota</label>
       <label index="label.quotaTask.description">Postfix Quota <![CDATA[&uuml;]]>berwacht Postfix-Mail-Ordner. <![CDATA[&Uuml;]]>berschreitet die Gr<![CDATA[&ouml;]]><![CDATA[&szlig;]]>e des jeweiligen Ordners die Warn-Grenze, wird eine Warnung an den Konto-Inhaber versendet. Wird das Quota-Limit <![CDATA[&uuml;]]>berschritten, wird ein Teil der Mails gel<![CDATA[&ouml;]]>scht. Der Konto-Inhaber wird per Mail <![CDATA[&uuml;]]>ber das L<![CDATA[&ouml;]]>schen informiert.</label>
-      <label index="label.postfixAdminEmail">E-Mail des Postfix-Administrators</label>
       <label index="label.testTask.name">Postfix Test</label>
       <label index="label.testTask.description">Postfix testet den Mail-Versand an den Postfix Administrator. Der Test dient allein der Entwicklung von TYPO3-Postfix.</label>
       <label index="msg.enterEmail">Bitte gebe eine Mail-Adresse an.</label>
