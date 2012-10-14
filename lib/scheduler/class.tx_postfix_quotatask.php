@@ -129,6 +129,8 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       // Init the DRS - Development Reporting System
     $this->initDRS( );
     
+      // Init timetracking, set the starttime
+    $this->timeTracking_init( );
     $debugTrailLevel = 1;
     $this->timeTracking_log( $debugTrailLevel, 'START' );
 
