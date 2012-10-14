@@ -126,7 +126,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
 
 
   /**
-    * getFieldPathToFolder( )  : This method is used to define new fields for adding or editing a task
+    * getFieldPostfixAdminMail( )  : This method is used to define new fields for adding or editing a task
     *                                           In this case, it adds an email field
     *
     * @param array $taskInfo Reference to the array containing the info used in the add/edit form
@@ -142,38 +142,38 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     * @version       1.1.0
     * @since         1.1.0
     */
-  private function getFieldPathToFolderWiDrafts( array &$taskInfo, $task, $parentObject ) 
+  private function getFieldPostfixAdminMail( array &$taskInfo, $task, $parentObject ) 
   {
       // IF : field is empty, initialize extra field value
-    if( empty( $taskInfo['postfix_pathToFolderWiDrafts'] ) ) 
+    if( empty( $taskInfo['postfix_PostfixAdminMail'] ) ) 
     {
       if( $parentObject->CMD == 'add' ) 
       {
           // In case of new task and if field is empty, set default email address
-        $taskInfo['postfix_pathToFolderWiDrafts'] = 'typo3conf/ext/postfix/lib/scheduler/maildrafts/';
+        $taskInfo['postfix_postfixAdminMail'] = $GLOBALS['BE_USER']->user['email'];
       } 
       elseif( $parentObject->CMD == 'edit' ) 
       {
           // In case of edit, and editing a test task, set to internal value if not data was submitted already
-        $taskInfo['postfix_pathToFolderWiDrafts'] = $task->postfix_pathToFolderWiDrafts;
+        $taskInfo['postfix_postfixAdminMail'] = $task->postfix_postfixAdminMail;
       }
       else
       {
           // Otherwise set an empty value, as it will not be used anyway
-        $taskInfo['postfix_pathToFolderWiDrafts'] = '';
+        $taskInfo['postfix_postfixAdminMail'] = '';
       }
     }
       // IF : field is empty, initialize extra field value
 
       // Write the code for the field
-    $fieldID    = 'postfix_pathToFolderWiDrafts';
-    $fieldValue = htmlspecialchars( $taskInfo['postfix_pathToFolderWiDrafts'] );
-    $fieldCode  = '<input type="text" name="tx_scheduler[postfix_pathToFolderWiDrafts]" id="' . $fieldID . '" value="' . $fieldValue . '" size="50" />';
+    $fieldID    = 'postfix_postfixAdminMail';
+    $fieldValue = htmlspecialchars( $taskInfo['postfix_postfixAdminMail'] );
+    $fieldCode  = '<input type="text" name="tx_scheduler[postfix_postfixAdminMail]" id="' . $fieldID . '" value="' . $fieldValue . '" size="50" />';
     $additionalFields = array( );
     $additionalFields[$fieldID] = array
     (
       'code'     => $fieldCode,
-      'label'    => 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.pathToFolderWiDrafts',
+      'label'    => 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.postfixAdminMail',
       'cshKey'   => '_MOD_tools_txschedulerM1',
       'cshLabel' => $fieldID
     );
