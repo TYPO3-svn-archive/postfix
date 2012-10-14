@@ -57,7 +57,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   {
     $additionalFields = array( );
     $additionalFields = $additionalFields + $this->getFieldQuotaMode( $taskInfo, $task, $parentObject );
-    $additionalFields = $additionalFields + $this->getFieldPostfixAdminMail( $taskInfo, $task, $parentObject );
+    $additionalFields = $additionalFields + $this->getFieldPostfixAdminEmail( $taskInfo, $task, $parentObject );
     $additionalFields = $additionalFields + $this->getFieldPathToFolderWiDrafts( $taskInfo, $task, $parentObject );
 //    quotaDefaultLimit
 //    quotaWarnIfLimitOver
@@ -126,7 +126,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
 
 
   /**
-    * getFieldPostfixAdminMail( )  : This method is used to define new fields for adding or editing a task
+    * getFieldPostfixAdminEmail( )  : This method is used to define new fields for adding or editing a task
     *                                           In this case, it adds an email field
     *
     * @param array $taskInfo Reference to the array containing the info used in the add/edit form
@@ -142,38 +142,38 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     * @version       1.1.0
     * @since         1.1.0
     */
-  private function getFieldPostfixAdminMail( array &$taskInfo, $task, $parentObject ) 
+  private function getFieldPostfixAdminEmail( array &$taskInfo, $task, $parentObject ) 
   {
       // IF : field is empty, initialize extra field value
-    if( empty( $taskInfo['postfix_postfixAdminMail'] ) ) 
+    if( empty( $taskInfo['postfix_postfixAdminEmail'] ) ) 
     {
       if( $parentObject->CMD == 'add' ) 
       {
           // In case of new task and if field is empty, set default email address
-        $taskInfo['postfix_postfixAdminMail'] = $GLOBALS['BE_USER']->user['email'];
+        $taskInfo['postfix_postfixAdminEmail'] = $GLOBALS['BE_USER']->user['email'];
       } 
       elseif( $parentObject->CMD == 'edit' ) 
       {
           // In case of edit, and editing a test task, set to internal value if not data was submitted already
-        $taskInfo['postfix_postfixAdminMail'] = $task->postfix_postfixAdminMail;
+        $taskInfo['postfix_postfixAdminEmail'] = $task->postfix_postfixAdminEmail;
       }
       else
       {
           // Otherwise set an empty value, as it will not be used anyway
-        $taskInfo['postfix_postfixAdminMail'] = '';
+        $taskInfo['postfix_postfixAdminEmail'] = '';
       }
     }
       // IF : field is empty, initialize extra field value
 
       // Write the code for the field
-    $fieldID    = 'postfix_postfixAdminMail';
-    $fieldValue = htmlspecialchars( $taskInfo['postfix_postfixAdminMail'] );
-    $fieldCode  = '<input type="text" name="tx_scheduler[postfix_postfixAdminMail]" id="' . $fieldID . '" value="' . $fieldValue . '" size="50" />';
+    $fieldID    = 'postfix_postfixAdminEmail';
+    $fieldValue = htmlspecialchars( $taskInfo['postfix_postfixAdminEmail'] );
+    $fieldCode  = '<input type="text" name="tx_scheduler[postfix_postfixAdminEmail]" id="' . $fieldID . '" value="' . $fieldValue . '" size="50" />';
     $additionalFields = array( );
     $additionalFields[$fieldID] = array
     (
       'code'     => $fieldCode,
-      'label'    => 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.postfixAdminMail',
+      'label'    => 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.postfixAdminEmail',
       'cshKey'   => '_MOD_tools_txschedulerM1',
       'cshLabel' => $fieldID
     );
@@ -270,7 +270,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   {
     $bool_isValidatingSuccessful = true;
     
-    if( ! $this->validateFieldPostfixAdminMail( $submittedData, $parentObject ) ) 
+    if( ! $this->validateFieldPostfixAdminEmail( $submittedData, $parentObject ) ) 
     {
       $bool_isValidatingSuccessful = false;
     } 
@@ -316,7 +316,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   }
 
   /**
-    * validateFieldPostfixAdminMail( )  : This method checks any additional data that is relevant to the specific task
+    * validateFieldPostfixAdminEmail( )  : This method checks any additional data that is relevant to the specific task
     *                                     If the task class is not relevant, the method is expected to return TRUE
     *
     * @param array     $submittedData Reference to the array containing the data submitted by the user
@@ -325,7 +325,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     * @version       1.1.0
     * @since         1.1.0
     */
-  private function validateFieldPostfixAdminMail( array &$submittedData, tx_scheduler_Module $parentObject ) 
+  private function validateFieldPostfixAdminEmail( array &$submittedData, tx_scheduler_Module $parentObject ) 
   {
     $bool_isValidatingSuccessful = true;
 
