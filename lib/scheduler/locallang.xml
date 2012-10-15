@@ -25,21 +25,21 @@
       <label index="msg.enterEmail">Please enter an email adress.</label>
       <label index="msg.enterPathToFolderWiDrafts">Please enter the path to the folder with the email drafts (with an ending slash). Default: typo3conf/ext/postfix/lib/scheduler/maildrafts/</label>
       <label index="msg.quotaMode.remove"><![CDATA[
-        <h1>
+        <h1 style="text-align: left; color: red;">
           CAUTION: Postfix Quota will remove emails!"
         </h1>
-        <h2>
+        <h2 style="font-size:1.2em;">
           Postfix Quota mode is "Warnings and removing emails"
         </h2>
         <p>
           Postfix Quota will
         </p>
         <ul>
-          <li>
+          <li style="margin:0;">
             send a warning email to the owner of a mailbox and a copy to the Postfix administrator, 
             if warning limit is overrun and
           </li>
-          <li>
+          <li style="margin:0;">
             will remove e-mails in the mailbox, if the quota limit is overrun. 
             Owner and administrator will informed of course.
           </li>
@@ -48,38 +48,38 @@
           To let remove emails automatically is a very high-risk! 
           If you have an unproper configuration like a quota of 0 megabyte, 
           all emails of all mailboxes will removed!
-          You won\'t have any chance to cancel it.
+          You won't have any chance to cancel it.
         </p>
         <p>
           If you aren't strong-willed to use Postfix Quota in this mode:
         </p>
         <ul>
-          <li>
+          <li style="margin:0;">
             Please remove this task directly!
           </li>
-          <li>
+          <li style="margin:0;">
             Check your configuration in mode "Report (test mode)".
           </li>
-          <li>
+          <li style="margin:0;">
             Use Postfix Quota in mode "Warnings" for a time.
           </li>
         </ul>
-        <p>
+        <p style="color:red;font-weight:bold;">
           You are using TYPO3 and TYPO3 Postfix without any warranty!
         </p>
       ]]></label>
       <label index="msg.quotaMode.warn"><![CDATA[
-        <h1>
+        <h1 style="text-align: left;">
           Postfix Quota will warn mailbox owner"
         </h1>
-        <h2>
+        <h2 style="font-size:1.2em;">
           Warn mails, if a mailbox overrun the warning limit.
         </h2>
         <p>
           Postfix Quota will
         </p>
         <ul>
-          <li>
+          <li style="margin:0;">
             send a warning email to the owner of a mailbox and a copy to the Postfix administrator, 
             if warning limit is overrun.
           </li>
@@ -89,17 +89,17 @@
         </p>
       ]]></label>
       <label index="msg.quotaMode.test"><![CDATA[
-        <h1>
+        <h1 style="text-align: left;">
           Postfix Quota sends a report only
         </h1>
         <p>
           The Postfix administrator will get a report by email about what will happen in
         </p>
         <ul>
-          <li>
+          <li style="margin:0;">
             Postfix Quota mode "Warnings"
           </li>
-          <li>
+          <li style="margin:0;">
             Postfix Quota mode "Warnings and removing emails"
           </li>
         </ul>
