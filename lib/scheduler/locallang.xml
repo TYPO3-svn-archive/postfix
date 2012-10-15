@@ -26,7 +26,7 @@
       <label index="msg.enterPathToFolderWiDrafts">Please enter the path to the folder with the e-mail drafts (with an ending slash). Default: typo3conf/ext/postfix/lib/scheduler/maildrafts/</label>
       <label index="msg.quotaMode.remove"><![CDATA[
         <h1 style="text-align: left; color: red;">
-          CAUTION: Postfix Quota will remove e-mails!"
+          CAUTION: Postfix Quota will remove e-mails as of now!"
         </h1>
         <h2 style="font-size:1.2em;">
           Postfix Quota mode is "Warnings and removing e-mails"
