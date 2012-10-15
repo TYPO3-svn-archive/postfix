@@ -270,12 +270,17 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   {
     $bool_isValidatingSuccessful = true;
     
+    if( ! $this->validateFieldPathToFolderWiDrafts( $submittedData, $parentObject ) ) 
+    {
+      $bool_isValidatingSuccessful = false;
+    } 
+
     if( ! $this->validateFieldPostfixAdminEmail( $submittedData, $parentObject ) ) 
     {
       $bool_isValidatingSuccessful = false;
     } 
 
-    if( ! $this->validateFieldPathToFolderWiDrafts( $submittedData, $parentObject ) ) 
+    if( ! $this->validateFieldQuotaMode( $submittedData, $parentObject ) ) 
     {
       $bool_isValidatingSuccessful = false;
     } 
@@ -306,12 +311,6 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
       $bool_isValidatingSuccessful = false;
     } 
 
-    $prompt = $this->msgPrefix . ': &Auml;&auml;h?';
-    $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
-    $parentObject->addMessage( $prompt, t3lib_FlashMessage::WARNING );
-    $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
-    $parentObject->addMessage( $prompt, t3lib_FlashMessage::OK );
-
     return $bool_isValidatingSuccessful;
   }
 
@@ -337,6 +336,46 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
       $bool_isValidatingSuccessful = false;
     } 
+
+    return $bool_isValidatingSuccessful;
+  }
+
+  /**
+    * validateFieldQuotaMode( )  : This method checks any additional data that is relevant to the specific task
+    *                                     If the task class is not relevant, the method is expected to return TRUE
+    *
+    * @param array     $submittedData Reference to the array containing the data submitted by the user
+    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
+    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function validateFieldQuotaMode( array &$submittedData, tx_scheduler_Module $parentObject ) 
+  {
+    $bool_isValidatingSuccessful = true;
+
+      // Messages depending on mode
+    switch( $submittedData['postfix_quotaMode'] )
+    {
+      case( 'remove' ):
+        $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.quotaMode.remove' );;
+        $parentObject->addMessage( $prompt, t3lib_FlashMessage::WARNING );
+        break;
+      case( 'warn' ):
+        $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.quotaMode.warn' );;
+        $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
+        break;
+      case( 'test' ):
+        $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.quotaMode.test' );;
+        $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
+        break;
+      default:
+        $bool_isValidatingSuccessful = false;
+        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.quotaMode.undefined' );;
+        $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
+        break;
+    }
+      // Messages depending on mode
 
     return $bool_isValidatingSuccessful;
   }
