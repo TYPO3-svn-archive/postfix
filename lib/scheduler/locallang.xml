@@ -24,7 +24,10 @@
       <label index="label.testTask.description">Postfix tests the sending of an e-mail to the postfix admin. It is a service for development only.</label>
       <label index="msg.enterEmail">Please enter an e-mail adress.</label>
       <label index="msg.enterPathToFolderWiDrafts">Please enter the path to the folder with the e-mail drafts (with an ending slash). Default: typo3conf/ext/postfix/lib/scheduler/maildrafts/</label>
-      <label index="msg.osIsNotSupported">Sorry, but the operating system ###PHP_OS### of the server isn\'t supported by TYPO3 Postfix.</label>
+      <label index="msg.osIsNotSupported"><![CDATA[
+        Sorry, but the operating system ###PHP_OS### of the server isn\'t supported by TYPO3 Postfix.<br />
+        If you need support, please contact <a href="http://wildt.at.die-netzmacher.de/">http://wildt.at.die-netzmacher.de/</a>
+      ]]></label>
       <label index="msg.quotaMode.remove"><![CDATA[
         <h1 style="text-align: left; color: red;">
           CAUTION: Postfix Quota will remove e-mails as of now!"
