@@ -269,7 +269,12 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   public function validateAdditionalFields( array &$submittedData, tx_scheduler_Module $parentObject ) 
   {
     $bool_isValidatingSuccessful = true;
-    
+     
+    if( ! $this->validateOS( $parentObject ) ) 
+    {
+      $bool_isValidatingSuccessful = false;
+    } 
+
     if( ! $this->validateFieldPathToFolderWiDrafts( $submittedData, $parentObject ) ) 
     {
       $bool_isValidatingSuccessful = false;
