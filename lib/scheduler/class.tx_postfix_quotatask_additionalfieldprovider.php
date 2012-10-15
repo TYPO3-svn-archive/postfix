@@ -272,7 +272,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
      
     if( ! $this->validateOS( $parentObject ) ) 
     {
-      $bool_isValidatingSuccessful = false;
+      return false;
     } 
 
     if( ! $this->validateFieldPathToFolderWiDrafts( $submittedData, $parentObject ) ) 
@@ -407,8 +407,8 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
         break;
       default:
         $bool_isValidatingSuccessful = false;
-//        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.quotaMode.undefined' );;
-        $prompt = 'Sorry, but the operating system ' . PHP_OS . ' of the server isn\'t supported by TYPO3 Postfix.';
+        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.osIsNotSupported' );
+        $prompt = str_replace( '###PHP_OS###', PHP_OS, $prompt );
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
           // DRS
         if( $this->drsModeError )
