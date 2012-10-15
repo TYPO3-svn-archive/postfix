@@ -92,9 +92,9 @@
         <h1>
           Postfix Quota sends a report only
         </h1>
-        <h2>
+        <p>
           The Postfix administrator will get a report by email about what will happen in
-        </h2>
+        </p>
         <ul>
           <li>
             Postfix Quota mode "Warnings"
