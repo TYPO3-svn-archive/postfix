@@ -379,6 +379,42 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
 
     return $bool_isValidatingSuccessful;
   }
+  
+  /**
+    * validateOS( ) : This method checks any additional data that is relevant to the specific task
+    *                               If the task class is not relevant, the method is expected to return TRUE
+    *
+    * @param array     $submittedData Reference to the array containing the data submitted by the user
+    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
+    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  public function validateOS( tx_scheduler_Module $parentObject ) 
+  {
+    $bool_isValidatingSuccessful = true;
+    
+      // SWITCH : OS of the server
+    switch( strtolower( PHP_OS ) )
+    {
+      case( 'linux2' ):
+          // Linux is proper: Follow the workflow
+        break;
+      default:
+        $bool_isValidatingSuccessful = false;
+//        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.quotaMode.undefined' );;
+        $prompt = 'Sorry, but the operating system ' . PHP_OS . ' of the server isn\'t supported by TYPO3 Postfix.';
+        $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
+          // DRS
+        if( $this->drsModeError )
+        {
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+        }
+    }
+      // SWITCH : OS of the server
+      
+    return $bool_isValidatingSuccessful;
+  }
 
   /**
     * saveAdditionalFields( ) : This method is used to save any additional input into the current task object

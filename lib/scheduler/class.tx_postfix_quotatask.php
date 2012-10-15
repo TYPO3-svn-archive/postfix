@@ -286,6 +286,24 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     */
   private function initRequirements( )
   {
+      // SWITCH : OS of the server
+    switch( strtolower( PHP_OS ) )
+    {
+      case( 'linux' ):
+          // Linux is proper: Follow the workflow
+        break;
+      default:
+          // DRS
+        if( $this->drsModeError )
+        {
+          $prompt = 'Sorry, but the operating system ' . PHP_OS . ' of the server isn\'t supported by TYPO3 Postfix.';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+        }
+          // DRS
+      return false;
+    }
+      // SWITCH : OS of the server
+      
       // RETURN : email address is given
     if ( ! empty( $this->postfix_postfixAdminEmail ) ) 
     {
@@ -300,6 +318,8 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
     }
       // DRS
+    
+    
 
     return false;
   }
@@ -626,12 +646,17 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
   public function getAdditionalInformation( )
   {    
     $postfixAdminEmail  = $this->postfix_postfixAdminEmail;
+// Kein Effekt
 //    $quotaMode          = htmlspecialchars_decode( $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode' ) ) .
 //                          ': ' . 
 //                          htmlspecialchars_decode( $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode.' . $this->postfix_quotaMode ) );
-    $quotaMode          = html_entity_decode( $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode' ) ) .
+// &ouml; wird Ä   
+//    $quotaMode          = html_entity_decode( $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode' ) ) .
+//                          ': ' . 
+//                          html_entity_decode( $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode.' . $this->postfix_quotaMode ) );
+    $quotaMode          = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode' ) .
                           ': ' . 
-                          html_entity_decode( $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode.' . $this->postfix_quotaMode ) );
+                          $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode.' . $this->postfix_quotaMode );
     return $quotaMode . ' (admin e-mail: ' . $postfixAdminEmail . ')'; //x
   }
 }
