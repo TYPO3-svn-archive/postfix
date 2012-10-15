@@ -632,7 +632,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     $quotaMode          = html_entity_decode( $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode' ) ) .
                           ': ' . 
                           html_entity_decode( $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode.' . $this->postfix_quotaMode ) );
-    return $quotaMode . ' (admin e-mail: ' . $postfixAdminEmail . ')';
+    return $quotaMode . ' (admin e-mail: ' . $postfixAdminEmail . ')'; //x
   }
 }
 
