@@ -45,10 +45,16 @@
           </li>
         </ul>
         <p>
-          To let remove e-mails automatically is a very high-risk! 
+          <br />
+        </p>
+        <p>
+          To let remove e-mails automatically is a <span style="color:red;font-weight:bold;">very high-risk!</span> 
           If you have an unproper configuration like a quota of 0 megabyte, 
           all e-mails of all mailboxes will removed!
           You won't have any chance to cancel it.
+        </p>
+        <p>
+          <br />
         </p>
         <p>
           If you aren't strong-willed to use Postfix Quota in this mode:
@@ -64,6 +70,9 @@
             Use Postfix Quota in mode "Warnings" for a time.
           </li>
         </ul>
+        <p>
+          <br />
+        </p>
         <p style="color:red;font-weight:bold;">
           You are using TYPO3 and TYPO3 Postfix without any warranty!
         </p>
@@ -84,6 +93,9 @@
             if warning limit is overrun.
           </li>
         </ul>
+        <p>
+          <br />
+        </p>
         <p>
           Nothing more won't happen.
         </p>
