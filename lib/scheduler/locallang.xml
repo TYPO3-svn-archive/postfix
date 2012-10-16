@@ -26,7 +26,7 @@
       <label index="msg.enterPathToFolderWiDrafts">Please enter the path to the folder with the e-mail drafts (with an ending slash). Default: typo3conf/ext/postfix/lib/scheduler/maildrafts/</label>
       <label index="msg.osIsNotSupported"><![CDATA[
         Sorry, but the operating system "###PHP_OS###" isn't supported by TYPO3 Postfix.<br />
-        If you need support, please contact <a href="http://wildt.at.die-netzmacher.de/">http://wildt.at.die-netzmacher.de/</a>
+        If you need support, please contact <a href="http://wildt.at.die-netzmacher.de/" target="_blank">http://wildt.at.die-netzmacher.de/</a>
       ]]></label>
       <label index="msg.quotaMode.remove"><![CDATA[
         <h1 style="text-align: left; color: red;">

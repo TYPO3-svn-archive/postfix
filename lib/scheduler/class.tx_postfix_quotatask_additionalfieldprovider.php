@@ -402,7 +402,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
       // SWITCH : OS of the server
     switch( strtolower( PHP_OS ) )
     {
-      case( 'linux2' ):
+      case( 'linux' ):
           // Linux is proper: Follow the workflow
         break;
       default:
@@ -410,11 +410,6 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
         $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.osIsNotSupported' );
         $prompt = str_replace( '###PHP_OS###', PHP_OS, $prompt );
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
-          // DRS
-        if( $this->drsModeError )
-        {
-          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
-        }
     }
       // SWITCH : OS of the server
       

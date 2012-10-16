@@ -286,23 +286,25 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     */
   private function initRequirements( )
   {
-      // SWITCH : OS of the server
+      // SWITCH : server OS
     switch( strtolower( PHP_OS ) )
     {
       case( 'linux' ):
           // Linux is proper: Follow the workflow
         break;
       default:
+          // RETURN : OS isn't supported
           // DRS
         if( $this->drsModeError )
         {
-          $prompt = 'Sorry, but the operating system ' . PHP_OS . ' of the server isn\'t supported by TYPO3 Postfix.';
+          $prompt = 'Sorry, but the operating system "' . PHP_OS . '" isn\'t supported by TYPO3 Postfix.';
           t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
         }
           // DRS
-      return false;
+        return false;
+          // RETURN : OS isn't supported
     }
-      // SWITCH : OS of the server
+      // SWITCH : server OS
       
       // RETURN : email address is given
     if ( ! empty( $this->postfix_postfixAdminEmail ) ) 
@@ -417,7 +419,10 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       // DRS
     if( $this->drsModeQuotaTask )
     {
-      $prompt = $this->mailboxData['pathToMailbox'];
+      $mailbox    = $this->mailboxData['pathToMailbox'];
+      $command    = 'du -h --max-depth=0 ' . $mailbox;
+      $outputOfDu = shell_exec( $command );
+      $prompt     = $mailbox . ': ' . $outputOfDu . ' bytes';
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
     }
       // DRS
@@ -433,11 +438,6 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     
     return $success;
 
-    foreach( $mailboxData as $data )
-    {
-    }
-    
-    
       // Get call method
     if( basename( PATH_thisScript ) == 'cli_dispatch.phpsh')
     {
