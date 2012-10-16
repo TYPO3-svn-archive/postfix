@@ -551,6 +551,15 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     list( $bytes, $path ) = explode( ' ', $duLine );
     $bytes  = trim( $bytes );
     $path   = trim( $path );
+    if( $this->drsModeError )
+    {
+      $prompt     = 'duLine: ' . $duLine;
+      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+      $prompt     = 'bytes: ' . $bytes;
+      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+      $prompt     = 'path: ' . $path;
+      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+    }
       // Get bytes and path
     
       // RETURN : size of mailbox is 0 byte
