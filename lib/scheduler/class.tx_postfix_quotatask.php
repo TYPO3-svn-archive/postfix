@@ -549,7 +549,6 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       // Get bytes and path
     $duLine = $output[0];
     list( $bytes, $path ) = explode( chr( 9 ), $duLine );
-    PHP_
     $bytes  = trim( $bytes );
     $path   = trim( $path );
     if( $this->drsModeError )
