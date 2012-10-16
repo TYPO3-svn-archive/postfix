@@ -231,8 +231,8 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     $labelTest    = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode.test' );
     $selected               = array( );
     $selected['remove']     = null;
-    $selected['warn']       = null;
     $selected['test']       = null;
+    $selected['warn']       = null;
     $selected[$fieldValue]  = ' selected="selected"';
     
     $fieldCode    = '
@@ -366,12 +366,12 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
         $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.quotaMode.remove' );;
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::WARNING );
         break;
-      case( 'warn' ):
-        $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.quotaMode.warn' );;
-        $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
-        break;
       case( 'test' ):
         $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.quotaMode.test' );;
+        $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
+        break;
+      case( 'warn' ):
+        $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.quotaMode.warn' );;
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
         break;
       default:

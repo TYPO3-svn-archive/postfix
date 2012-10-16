@@ -81,6 +81,22 @@
           You are using TYPO3 and TYPO3 Postfix without any warranty!
         </p>
       ]]></label>
+      <label index="msg.quotaMode.test"><![CDATA[
+        <h1 style="text-align: left;">
+          Postfix Quota sends a report only
+        </h1>
+        <p>
+          The Postfix administrator will get a report by e-mail about what will happen in
+        </p>
+        <ul>
+          <li style="margin:0;">
+            Postfix Quota mode "Warnings"
+          </li>
+          <li style="margin:0;">
+            Postfix Quota mode "Warnings and removing e-mails"
+          </li>
+        </ul>
+      ]]></label>
       <label index="msg.quotaMode.warn"><![CDATA[
         <h1 style="text-align: left;">
           Postfix Quota will warn mailbox owner
@@ -103,22 +119,6 @@
         <p>
           Nothing more won't happen.
         </p>
-      ]]></label>
-      <label index="msg.quotaMode.test"><![CDATA[
-        <h1 style="text-align: left;">
-          Postfix Quota sends a report only
-        </h1>
-        <p>
-          The Postfix administrator will get a report by e-mail about what will happen in
-        </p>
-        <ul>
-          <li style="margin:0;">
-            Postfix Quota mode "Warnings"
-          </li>
-          <li style="margin:0;">
-            Postfix Quota mode "Warnings and removing e-mails"
-          </li>
-        </ul>
       ]]></label>
       <label index="msg.quotaMode.udefined">postfix_quotaMode is undefined!</label>
     </languageKey>

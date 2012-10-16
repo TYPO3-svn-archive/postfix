@@ -339,12 +339,10 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
  *                    The calling method is a debug method - if it is called by another
  *                    method, please set the level in the calling method to 2.
  *
- * $param   integer   $level      : integer
- *
- * @param    [type]        $$level: ...
+ * @param    integer   $level      : integer
  * @return    array        $arr_return : with elements class, method, line and prompt
- * @version 3.9.9
- * @since   3.9.9
+ * @version 1.1.0
+ * @since   1.1.0
  */
   private function drs_debugTrail( $level = 1 )
   {
@@ -380,6 +378,94 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
 
 
 
+/**
+ * drs_mailToAdmin( ): Returns class, method and line of the call of this method.
+ *                    The calling method is a debug method - if it is called by another
+ *                    method, please set the level in the calling method to 2.
+ *
+ * @param    string        $subject     : ...
+ * @param    string        $body        : ...
+ * @return    array        $arr_return  : with elements class, method, line and prompt
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function drs_mailToAdmin( $subject, $body )
+  {
+      // Get call method
+    if( basename( PATH_thisScript ) == 'cli_dispatch.phpsh' )
+    {
+      $calledBy = 'CLI module dispatcher';
+      $site     = '-';
+    }
+    else
+    {
+      $calledBy = 'TYPO3 backend';
+      $site     = t3lib_div::getIndpEnv( 'TYPO3_SITE_URL' );
+    }
+      // Get call method
+
+      // Get execution information
+    $exec = $this->getExecution( );
+
+    $start    = $exec->getStart( );
+    $end      = $exec->getEnd( );
+    $interval = $exec->getInterval( );
+    $multiple = $exec->getMultiple( );
+    $cronCmd  = $exec->getCronCmd( );
+    $mailBody = $body . PHP_EOL. PHP_EOL .
+      'POSTFIX QUOTA' . PHP_EOL .
+      '- - - - - - - - - - - - - - - -' . PHP_EOL .
+      'UID: '       . $this->taskUid . PHP_EOL .
+      'Sitename: '  . $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] . PHP_EOL .
+      'Site: ' . $site . PHP_EOL .
+      'Called by: ' . $calledBy . PHP_EOL .
+      'tstamp: ' . date( 'Y-m-d H:i:s' ) . ' [' . time( ) . ']' . PHP_EOL .
+      'start: ' . date( 'Y-m-d H:i:s', $start ) . ' [' . $start . ']' . PHP_EOL .
+      'end: ' . ( ( empty( $end ) ) ? '-' : ( date( 'Y-m-d H:i:s', $end ) . ' [' . $end . ']') ) . PHP_EOL .
+      'interval: ' . $interval . PHP_EOL .
+      'multiple: ' . ( $multiple ? 'yes' : 'no' ) . PHP_EOL .
+      'cronCmd: ' . ( $cronCmd ? $cronCmd : 'not used' ) . PHP_EOL .
+      '';
+
+      // Prepare mailer and send the mail
+    try 
+    {
+      /** @var $mailer t3lib_mail_message */
+      $mailer = t3lib_div::makeInstance( 't3lib_mail_message' );
+      $mailer->setFrom( array( $this->postfix_postfixAdminEmail => 'POSTFIX QUOTA' ) );
+      $mailer->setReplyTo( array( $this->postfix_postfixAdminEmail => 'POSTFIX QUOTA' ) );
+      $mailer->setSubject( 'POSTFIX QUOTA: ' . $subject );
+      $mailer->setBody( $mailBody );
+      $mailer->setTo( $this->postfix_postfixAdminEmail );
+      
+      $mailsSend  = $mailer->send( );
+      $success    = ( $mailsSend > 0 );
+    } 
+    catch( Exception $e )
+    {
+      throw new t3lib_exception( $e->getMessage( ) );
+    }
+
+      // DRS
+    if( $this->drsModeQuotaTask || $this->drsModeQuotaError )
+    {
+      switch( $success )
+      {
+        case( false ):
+          $prompt = 'Undefined error. Test email couldn\'t sent to "' . $this->postfix_postfixAdminEmail . '"';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+          break;
+        case( true ):
+        default:
+          $prompt = 'Test email is sent to "' . $this->postfix_postfixAdminEmail . '"';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, -1 );
+          break;
+      }
+    }
+  }
+
+
+
   /***********************************************
    *
    * Mailboxes
@@ -404,6 +490,8 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
         // ...
         continue;
       }
+      $this->quotaWarning( );
+      $this->quotaRemove( );
     }
 
     return $success;
@@ -420,95 +508,13 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
   {
     $success = true;
     
-      // Get size of the current mailbox
-    $mailboxSizeInBytes = $this->mailboxSizeInBytes( );
-    
-      // RETURN : size is 0
-    if( empty( $mailboxSizeInBytes ) )
+      // RETURN : size of current mailbox is 0
+    if( ! $this->mailboxSizeInBytes( ) )
     {
       return false;
     }
-      // RETURN : size is 0
-
-    return $success;
-
-      // Get call method
-    if( basename( PATH_thisScript ) == 'cli_dispatch.phpsh')
-    {
-      $calledBy = 'CLI module dispatcher';
-      $site     = '-';
-    }
-    else
-    {
-      $calledBy = 'TYPO3 backend';
-      $site     = t3lib_div::getIndpEnv('TYPO3_SITE_URL');
-    }
-      // Get call method
-
-      // Get execution information
-    $exec = $this->getExecution();
-
-    $strMailboxData = var_export( $this->mailboxesData, true );
-
-    $start    = $exec->getStart();
-    $end      = $exec->getEnd();
-    $interval = $exec->getInterval();
-    $multiple = $exec->getMultiple();
-    $cronCmd  = $exec->getCronCmd();
-    $mailBody =
-      'POSTFIX QUOTA' . PHP_EOL .
-      '- - - - - - - - - - - - - - - -' . PHP_EOL .
-      'UID: '       . $this->taskUid . PHP_EOL .
-      'Sitename: '  . $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] . PHP_EOL .
-      'Site: ' . $site . PHP_EOL .
-      'Called by: ' . $calledBy . PHP_EOL .
-      'tstamp: ' . date('Y-m-d H:i:s') . ' [' . time() . ']' . PHP_EOL .
-      'start: ' . date('Y-m-d H:i:s', $start) . ' [' . $start . ']' . PHP_EOL .
-      'end: ' . ((empty($end)) ? '-' : (date('Y-m-d H:i:s', $end) . ' [' . $end . ']')) . PHP_EOL .
-      'interval: ' . $interval . PHP_EOL .
-      'multiple: ' . ($multiple ? 'yes' : 'no') . PHP_EOL .
-      'cronCmd: ' . ($cronCmd ? $cronCmd : 'not used') . PHP_EOL .
-      PHP_EOL .
-      $strMailboxData . PHP_EOL .
-      'XXX'
-      ;
-
-      // Prepare mailer and send the mail
-    try 
-    {
-      /** @var $mailer t3lib_mail_message */
-      $mailer = t3lib_div::makeInstance('t3lib_mail_message');
-      $mailer->setFrom(array($this->postfix_postfixAdminEmail => 'POSTFIX QUOTA'));
-      $mailer->setReplyTo(array($this->postfix_postfixAdminEmail => 'POSTFIX QUOTA'));
-      $mailer->setSubject('POSTFIX QUOTA');
-      $mailer->setBody($mailBody);
-      $mailer->setTo($this->postfix_postfixAdminEmail);
-      
-      $mailsSend  = $mailer->send( );
-      $success    = ( $mailsSend > 0 );
-    } 
-    catch( Exception $e )
-    {
-      throw new t3lib_exception( $e->getMessage( ) );
-    }
-
-      // DRS
-    if( $this->drsModeQuotaTask )
-    {
-      switch( $success )
-      {
-        case( false ):
-          $prompt = 'Undefined error. Test email couldn\'t sent to "' . $this->postfix_postfixAdminEmail . '"';
-          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
-          break;
-        case( true ):
-        default:
-          $prompt = 'Test email is sent to "' . $this->postfix_postfixAdminEmail . '"';
-          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, -1 );
-          break;
-      }
-    }
-
+      // RETURN : size of current mailbox is 0
+    
     return $success;
   }
 
@@ -537,11 +543,23 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       // RETURN : output isn't an array
     if( ! is_array( $output ) )
     {
+        // DRS
       if( $this->drsModeError )
       {
         $prompt     = 'ERROR: exec doesn\'t returned an array. Command: ' . $command;
         t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
       }
+        // DRS
+        // Mail to admin
+      $subject  = 'error in exec( )';
+      $body     = 'Sorry, but the command exec( ) doesn\'t return an array. ' . PHP_EOL .
+                  'Command: ' . $command . PHP_EOL .
+                  'Method: ' . __METHOD__ . PHP_EOL .
+                  'Line: ' . __LINE__ . PHP_EOL .
+                  PHP_EOL .
+                  '';
+      $this->drs_mailToAdmin( $subject, $body );
+        // Mail to admin
       return false;
     }
       // RETURN : output isn't an array
@@ -549,31 +567,43 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       // Get bytes and path
     $duLine = $output[0];
     list( $bytes, $path ) = explode( chr( 9 ), $duLine );
-    $bytes  = trim( $bytes );
+    $bytes  = ( int ) trim( $bytes );
     $path   = trim( $path );
-    if( $this->drsModeError )
-    {
-      $prompt     = 'duLine: ' . $duLine;
-      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
-      $prompt     = 'explode( " ", $duLine ): ' . var_export( explode( chr( 9 ), $duLine ), true );
-      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
-      $prompt     = 'bytes: ' . $bytes;
-      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
-      $prompt     = '( int ) bytes: ' . ( int ) $bytes;
-      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
-      $prompt     = 'path: ' . $path;
-      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
-    }
+//    if( $this->drsModeError )
+//    {
+//      $prompt     = 'duLine: ' . $duLine;
+//      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );;
+//      $prompt     = 'explode( " ", $duLine ): ' . var_export( explode( chr( 9 ), $duLine ), true );
+//      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );;
+//      $prompt     = 'bytes: ' . $bytes;
+//      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );;
+//      $prompt     = '( int ) bytes: ' . ( int ) $bytes;
+//      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );;
+//      $prompt     = 'path: ' . $path;
+//      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );;
+//    }
       // Get bytes and path
     
       // RETURN : size of mailbox is 0 byte
     if( ( ( int ) $bytes ) <= 1 )
     {
+        // DRS
       if( $this->drsModeError )
       {
         $prompt     = 'ERROR: size of current mailbox is 0 byte. Command: ' . $command;
         t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
       }
+        // DRS
+        // Mail to admin
+      $subject  = 'error with size of mailbox';
+      $body     = 'Sorry, but the size of the mailbox is null.' . PHP_EOL .
+                  'Command: ' . $command . PHP_EOL .
+                  'Method: ' . __METHOD__ . PHP_EOL .
+                  'Line: ' . __LINE__ . PHP_EOL .
+                  PHP_EOL .
+                  '';
+      $this->drs_mailToAdmin( $subject, $body );
+        // Mail to admin
       return false;
     }
       // RETURN : size of mailbox is 0 byte
@@ -581,11 +611,23 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       // RETURN : size of mailbox is 0 byte
     if( $path != $mailbox )
     {
+        // DRS
       if( $this->drsModeError )
       {
-        $prompt     = 'ERROR: ' . $path . ' isn\'t any part of the command: ' . $command;
+        $prompt     = 'ERROR: "' . $path . '" isn\'t any part of the command: ' . $command;
         t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
       }
+        // DRS
+        // Mail to admin
+      $subject  = 'error with exec( )';
+      $body     = 'Sorry, but the path "' . $path . '" isn\'t any part of the command below.' . PHP_EOL .
+                  'Command: ' . $command . PHP_EOL .
+                  'Method: ' . __METHOD__ . PHP_EOL .
+                  'Line: ' . __LINE__ . PHP_EOL .
+                  PHP_EOL .
+                  '';
+      $this->drs_mailToAdmin( $subject, $body );
+        // Mail to admin
       return false;
     }
       // RETURN : size of mailbox is 0 byte
@@ -598,7 +640,110 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     }
       // DRS
 
+    $this->mailboxSizeInBytes = $bytes;
     return $bytes;
+  }
+
+
+
+  /***********************************************
+   *
+   * Quota
+   *
+   **********************************************/
+
+  /**
+    * quotaWarning( )  : 
+    *
+    * @return void
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function quotaWarning( )
+  {
+    static $bool_drsFirstLoop = true; 
+    
+    switch( $this->postfix_quotaMode )
+    {
+      case( 'remove' ):
+          // Follow the workflow
+        break;
+      case( 'test' ):
+          // DRS
+        if( $bool_drsFirstLoop && $this->drsModeError )
+        {
+          $prompt = 'Quota warning won\'t be processed in test mode.';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
+          $bool_drsFirstLoop = false;
+        }
+          // DRS
+        return;
+        break;
+      case( 'warn' ):
+          // Follow the workflow
+        break;
+      default:
+          // DRS
+        if( $this->drsModeError )
+        {
+          $prompt = 'Quota mode is undefined: "' .  $this->postfix_quotaMode . '"';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+        }
+          // DRS
+        return;
+        break;
+    }
+  }
+
+  /**
+    * quotaRemove( )  : 
+    *
+    * @return void
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function quotaRemove( )
+  {
+    static $bool_drsFirstLoop = true; 
+    
+    switch( $this->postfix_quotaMode )
+    {
+      case( 'remove' ):
+          // Follow the workflow
+        break;
+      case( 'test' ):
+          // DRS
+        if( $bool_drsFirstLoop && $this->drsModeError )
+        {
+          $prompt = 'Quota remove won\'t be processed in test mode.';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
+          $bool_drsFirstLoop = false;
+        }
+          // DRS
+        return;
+        break;
+      case( 'warn' ):
+          // DRS
+        if( $bool_drsFirstLoop && $this->drsModeError )
+        {
+          $prompt = 'Quota remove won\'t be processed in warning mode.';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
+          $bool_drsFirstLoop = false;
+        }
+          // DRS
+        return;
+        break;
+      default:
+          // DRS
+        if( $this->drsModeError )
+        {
+          $prompt = 'Quota mode is undefined: "' .  $this->postfix_quotaMode . '"';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+        }
+          // DRS
+        return;
+        break;
+    }
   }
 
 
