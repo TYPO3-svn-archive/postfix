@@ -555,7 +555,11 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     {
       $prompt     = 'duLine: ' . $duLine;
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+      $prompt     = 'explode( " ", $duLine ): ' . var_export( explode( ' ', $duLine ), true );
+      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
       $prompt     = 'bytes: ' . $bytes;
+      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+      $prompt     = '( int ) bytes: ' . ( int ) $bytes;
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
       $prompt     = 'path: ' . $path;
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
@@ -567,7 +571,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     {
       if( $this->drsModeError )
       {
-        $prompt     = 'ERROR: size of current mailbox is = byte. Command: ' . $command;
+        $prompt     = 'ERROR: size of current mailbox is 0 byte. Command: ' . $command;
         t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
       }
       return false;
