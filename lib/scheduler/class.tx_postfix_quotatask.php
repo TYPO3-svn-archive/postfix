@@ -528,6 +528,12 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     exec( $command, $output );
       // get size of the current mailbox in bytes
     
+    if( $this->drsModeQuotaTask )
+    {
+      $prompt = var_export( $output, true );
+      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
+    }
+    
       // RETURN : output isn't an array
     if( ! is_array( $output ) )
     {
@@ -548,7 +554,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       // Get bytes and path
     
       // RETURN : size of mailbox is 0 byte
-    if( ( int ) $bytes <= 1 )
+    if( ( ( int ) $bytes ) <= 1 )
     {
       if( $this->drsModeError )
       {
@@ -571,11 +577,13 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     }
       // RETURN : size of mailbox is 0 byte
     
+      // DRS
     if( $this->drsModeQuotaTask )
     {
       $prompt = $mailbox . ': ' . $bytes . ' bytes';
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
     }
+      // DRS
 
     return $bytes;
   }
