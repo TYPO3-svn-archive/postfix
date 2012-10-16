@@ -145,7 +145,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     $this->mailboxesData = $this->initMailboxesData( );
     
       // Loop all mailboxes;
-    if( ! $this->quotaLoopMailboxes( ) )
+    if( ! $this->mailboxes( ) )
     {
       $success = false;
     }
@@ -382,63 +382,54 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
 
   /***********************************************
    *
-   * Quota
+   * Mailboxes
    *
    **********************************************/
 
   /**
-    * quotaLoopMailboxes( )  : 
+    * mailboxes( )  : 
     *
     * @return boolean
     * @version       1.1.0
     * @since         1.1.0
     */
-  private function quotaLoopMailboxes( )
+  private function mailboxes( )
   {
     $success = true;
     
     foreach( $this->mailboxesData as $this->mailboxData )
     {
-      $this->quotaLoopMailbox( );
+      if( ! $this->mailbox( ) )
+      {
+        // ...
+        continue;
+      }
     }
 
     return $success;
   }
 
   /**
-    * quotaLoopMailbox( )  : 
+    * mailbox( )  : 
     *
     * @return boolean
     * @version       1.1.0
     * @since         1.1.0
     */
-  private function quotaLoopMailbox( )
+  private function mailbox( )
   {
-    $success = false;
+    $success = true;
     
-      // DRS
-    if( $this->drsModeQuotaTask )
+      // Get size of the current mailbox
+    $mailboxSizeInBytes = $this->mailboxSizeInBytes( );
+    
+      // RETURN : size is 0
+    if( empty( $mailboxSizeInBytes ) )
     {
-      $mailbox    = $this->mailboxData['pathToMailbox'];
-      $command    = 'du --max-depth=0 ' . $mailbox;
-      //$command    = 'ls -l ' . $mailbox;
-      //$outputOfDu = shell_exec( $command );
-      exec( $command, $outputOfDu );
-      $outputOfDu = var_export( $outputOfDu, true );
-      $prompt     = $command . ': ' . $outputOfDu . ' bytes';
-      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
+      return false;
     }
-      // DRS
-    
-//      // RETURN : Path to Mailbox isn't proper
-//    if( ! $this->quotaMailboxPathIsProper( ) )
-//    {
-//      return;
-//    }
-//      // RETURN : Path to Mailbox isn't proper
-//
-//    $mailboxSizeMByte = $this->quotaMailboxSizeMByte( );
-    
+      // RETURN : size is 0
+
     return $success;
 
       // Get call method
@@ -519,6 +510,74 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     }
 
     return $success;
+  }
+
+  /**
+    * mailboxSizeInBytes( )  : 
+    *
+    * @return boolean
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function mailboxSizeInBytes( )
+  {
+      // get size of the current mailbox in bytes
+    $output   = null;
+    $mailbox  = $this->mailboxData['pathToMailbox'];
+    $command  = 'du --max-depth=0 ' . $mailbox;
+    exec( $command, $output );
+      // get size of the current mailbox in bytes
+    
+      // RETURN : output isn't an array
+    if( ! is_array( $output ) )
+    {
+      if( $this->drsModeError )
+      {
+        $prompt     = 'ERROR: exec doesn\'t returned an array. Command: ' . $command;
+        t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+      }
+      return false;
+    }
+      // RETURN : output isn't an array
+    
+      // Get bytes and path
+    $duLine = $output[0];
+    list( $bytes, $path ) = explode( ' ', $duLine );
+    $bytes  = trim( $bytes );
+    $path   = trim( $path );
+      // Get bytes and path
+    
+      // RETURN : size of mailbox is 0 byte
+    if( ( int ) $bytes <= 1 )
+    {
+      if( $this->drsModeError )
+      {
+        $prompt     = 'ERROR: size of current mailbox is = byte. Command: ' . $command;
+        t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+      }
+      return false;
+    }
+      // RETURN : size of mailbox is 0 byte
+    
+      // RETURN : size of mailbox is 0 byte
+    if( $path != $mailbox )
+    {
+      if( $this->drsModeError )
+      {
+        $prompt     = 'ERROR: ' . $path . ' isn\'t any part of the command: ' . $command;
+        t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+      }
+      return false;
+    }
+      // RETURN : size of mailbox is 0 byte
+    
+    if( $this->drsModeQuotaTask )
+    {
+      $prompt = $mailbox . ': ' . $bytes . ' bytes';
+      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
+    }
+
+    return $bytes;
   }
 
 
