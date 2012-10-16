@@ -421,8 +421,9 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     {
       $mailbox    = $this->mailboxData['pathToMailbox'];
       $command    = 'du --max-depth=0 ' . $mailbox;
-      $command    = 'ls -l ' . $mailbox;
-      $outputOfDu = shell_exec( $command );
+      //$command    = 'ls -l ' . $mailbox;
+      //$outputOfDu = shell_exec( $command );
+      exec( $command, $outputOfDu );
       $prompt     = $command . ': ' . $outputOfDu . ' bytes';
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
     }
