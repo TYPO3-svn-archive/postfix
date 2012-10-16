@@ -548,14 +548,15 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     
       // Get bytes and path
     $duLine = $output[0];
-    list( $bytes, $path ) = explode( ' ', $duLine );
+    list( $bytes, $path ) = explode( chr( 9 ), $duLine );
+    PHP_
     $bytes  = trim( $bytes );
     $path   = trim( $path );
     if( $this->drsModeError )
     {
       $prompt     = 'duLine: ' . $duLine;
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
-      $prompt     = 'explode( " ", $duLine ): ' . var_export( explode( ' ', $duLine ), true );
+      $prompt     = 'explode( " ", $duLine ): ' . var_export( explode( chr( 9 ), $duLine ), true );
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
       $prompt     = 'bytes: ' . $bytes;
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
