@@ -420,7 +420,8 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     if( $this->drsModeQuotaTask )
     {
       $mailbox    = $this->mailboxData['pathToMailbox'];
-      $command    = 'du -h --max-depth=0 ' . $mailbox;
+      $command    = 'du --max-depth=0 ' . $mailbox;
+      $command    = 'ls -l ' . $mailbox;
       $outputOfDu = shell_exec( $command );
       $prompt     = $command . ': ' . $outputOfDu . ' bytes';
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
