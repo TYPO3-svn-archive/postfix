@@ -165,12 +165,12 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     */
   private function feusersName( )
   {
-    $username   = $this->mailboxesData['username'];
-    $first_name = $this->mailboxesData['first_name'];
-    $last_name  = $this->mailboxesData['last_name'];
+    $username   = $this->mailboxData['username'];
+    $first_name = $this->mailboxData['first_name'];
+    $last_name  = $this->mailboxData['last_name'];
     
-$prompt = var_export( $this->mailboxesData, true );
-t3lib_div::devlog( '[tx_postfix_QuotaTask] ' . $prompt, $this->extKey, 0 );
+//$prompt = var_export( $this->mailboxData, true );
+//t3lib_div::devlog( '[tx_postfix_QuotaTask] ' . $prompt, $this->extKey, 0 );
 
     switch( true )
     {
