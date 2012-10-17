@@ -156,6 +156,33 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     return $success;
   }
 
+  /**
+    * feusersName( )  : Returns true, if limit is overrun, false if not.
+    *
+    * @return boolean
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function feusersName( )
+  {
+    $username   = $this->mailboxesData['username'];
+    $first_name = $this->mailboxesData['first_name'];
+    $last_name  = $this->mailboxesData['last_name'];
+    
+    switch( true )
+    {
+      case( $first_name ):
+      case( $last_name ):
+        $name = $first_name . ' ' . $last_name;
+        break;
+      default:
+        $name = $username;
+        break;
+    }
+    
+    return $name;
+  }
+
   
   
   /***********************************************
