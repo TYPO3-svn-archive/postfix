@@ -760,7 +760,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
         $bool_isValidatingSuccessful = false;
         break;
       case( $submittedData['postfix_quotaReduceMailbox'] >= $submittedData['postfix_quotaLimitRemove'] ):
-        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterQuotaReduceMailboxMustBeBigger' );
+        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterQuotaReduceMailboxMustBeSmaller' );
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
         $bool_isValidatingSuccessful = false;
         break;
