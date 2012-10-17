@@ -870,7 +870,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     
     $mailboxSizeInMegabytes     = ( int ) ( $this->mailboxSizeInBytes / 1024 / 1024 );
     
-    $quotaLimitInMegabytes      = ( int ) $this->quotaLimitInBytes * 1024 * 1024;
+    $quotaLimitInMegabytes      = ( int ) $this->quotaLimitInBytes / 1024 / 1024;
     
     $mailboxSizeInPercent       = ( int ) ( $this->mailboxSizeInBytes / $this->quotaLimitInBytes );
     
@@ -938,7 +938,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     
     $mailboxSizeInMegabytes     = ( int ) ( $this->mailboxSizeInBytes / 1024 / 1024 );
     
-    $quotaLimitInMegabytes      = ( int ) $this->quotaLimitInBytes * 1024 * 1024;
+    $quotaLimitInMegabytes      = ( int ) $this->quotaLimitInBytes / 1024 / 1024;
     
     $mailboxSizeInPercent       = ( int ) ( $this->mailboxSizeInBytes / $this->quotaLimitInBytes );
     
