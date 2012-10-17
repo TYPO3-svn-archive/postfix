@@ -854,7 +854,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     */
   public function getAdditionalInformation( )
   {    
-    $postfixAdminEmail  = $this->postfix_postfixAdminEmail;
+    $postfixAdminEmail  = 'Admin: ' . $this->postfix_postfixAdminEmail;
 // Kein Effekt
 //    $quotaMode          = htmlspecialchars_decode( $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode' ) ) .
 //                          ': ' . 
@@ -865,8 +865,17 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
 //                          html_entity_decode( $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode.' . $this->postfix_quotaMode ) );
     $quotaMode          = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode' ) .
                           ': ' . 
-                          $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode.' . $this->postfix_quotaMode );
-    return $quotaMode . ' (admin e-mail: ' . $postfixAdminEmail . ')'; //x
+                          $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode.' . $this->postfix_quotaMode ) .
+                          '. ';
+    $quotaLimitRemove   = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaLimitRemove' ) .
+                          ': ' . 
+                          $this->postfix_quotaLimitRemove .
+                          '. ';
+    $quotaLimitWarn     = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaLimitWarn' ) .
+                          ': ' . 
+                          $this->postfix_quotaLimitWarn .
+                          '. ';
+    return $quotaMode . $postfixAdminEmail. $quotaLimitRemove . $quotaLimitWarn;
   }
 }
 
