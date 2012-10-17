@@ -783,7 +783,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     if( $this->drsModeQuotaTask )
     {
       $prompt = 'Mailbox size is ' . $this->mailboxSizeInBytes . ' bytes. ' .
-                'Warning limit is ' . ( $this->mailboxSizeInBytes / 100 * $this->postfix_quotaLimitWarn ) . '.' .
+                'Warning limit is ' . ( $this->defaultQuotaInBytes / 100 * $this->postfix_quotaLimitWarn ) . '.' .
                 '';
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 1 );
     }
@@ -796,7 +796,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       {
         $prompt = $this->mailboxData['pathToMailbox'] . '  overrruns the warning limit. ' .
                   'Mailbox size is ' . $this->mailboxSizeInBytes . ' bytes. ' .
-                  'Warning limit is ' . ( $this->mailboxSizeInBytes / 100 * $this->postfix_quotaLimitWarn ) . '.' .
+                  'Warning limit is ' . ( $this->defaultQuotaInBytes / 100 * $this->postfix_quotaLimitWarn ) . '.' .
                   '';
         t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
       }
