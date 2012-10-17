@@ -534,12 +534,6 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     exec( $command, $output );
       // get size of the current mailbox in bytes
     
-    if( $this->drsModeQuotaTask )
-    {
-      $prompt = var_export( $output, true );
-      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
-    }
-    
       // RETURN : output isn't an array
     if( ! is_array( $output ) )
     {
@@ -569,19 +563,6 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     list( $bytes, $path ) = explode( chr( 9 ), $duLine );
     $bytes  = ( int ) trim( $bytes );
     $path   = trim( $path );
-//    if( $this->drsModeError )
-//    {
-//      $prompt     = 'duLine: ' . $duLine;
-//      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );;
-//      $prompt     = 'explode( " ", $duLine ): ' . var_export( explode( chr( 9 ), $duLine ), true );
-//      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );;
-//      $prompt     = 'bytes: ' . $bytes;
-//      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );;
-//      $prompt     = '( int ) bytes: ' . ( int ) $bytes;
-//      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );;
-//      $prompt     = 'path: ' . $path;
-//      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );;
-//    }
       // Get bytes and path
     
       // RETURN : size of mailbox is 0 byte
@@ -651,6 +632,56 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
    * Quota
    *
    **********************************************/
+  /**
+    * quotaRemove( )  : 
+    *
+    * @return void
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function quotaRemove( )
+  {
+    static $bool_drsFirstLoop = true; 
+    
+    switch( $this->postfix_quotaMode )
+    {
+      case( 'remove' ):
+          // Follow the workflow
+        break;
+      case( 'test' ):
+          // DRS
+        if( $bool_drsFirstLoop && $this->drsModeError )
+        {
+          $prompt = 'Quota remove won\'t be processed in test mode.';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 2 );
+          $bool_drsFirstLoop = false;
+        }
+          // DRS
+        return;
+        break;
+      case( 'warn' ):
+          // DRS
+        if( $bool_drsFirstLoop && $this->drsModeError )
+        {
+          $prompt = 'Quota remove won\'t be processed in warning mode.';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 2 );
+          $bool_drsFirstLoop = false;
+        }
+          // DRS
+        return;
+        break;
+      default:
+          // DRS
+        if( $this->drsModeError )
+        {
+          $prompt = 'Quota mode is undefined: "' .  $this->postfix_quotaMode . '"';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+        }
+          // DRS
+        return;
+        break;
+    }
+  }
 
   /**
     * quotaWarning( )  : 
@@ -673,7 +704,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
         if( $bool_drsFirstLoop && $this->drsModeError )
         {
           $prompt = 'Quota warning won\'t be processed in test mode.';
-          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 2 );
           $bool_drsFirstLoop = false;
         }
           // DRS
@@ -695,56 +726,6 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     }
   }
 
-  /**
-    * quotaRemove( )  : 
-    *
-    * @return void
-    * @version       1.1.0
-    * @since         1.1.0
-    */
-  private function quotaRemove( )
-  {
-    static $bool_drsFirstLoop = true; 
-    
-    switch( $this->postfix_quotaMode )
-    {
-      case( 'remove' ):
-          // Follow the workflow
-        break;
-      case( 'test' ):
-          // DRS
-        if( $bool_drsFirstLoop && $this->drsModeError )
-        {
-          $prompt = 'Quota remove won\'t be processed in test mode.';
-          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
-          $bool_drsFirstLoop = false;
-        }
-          // DRS
-        return;
-        break;
-      case( 'warn' ):
-          // DRS
-        if( $bool_drsFirstLoop && $this->drsModeError )
-        {
-          $prompt = 'Quota remove won\'t be processed in warning mode.';
-          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
-          $bool_drsFirstLoop = false;
-        }
-          // DRS
-        return;
-        break;
-      default:
-          // DRS
-        if( $this->drsModeError )
-        {
-          $prompt = 'Quota mode is undefined: "' .  $this->postfix_quotaMode . '"';
-          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
-        }
-          // DRS
-        return;
-        break;
-    }
-  }
 
 
 

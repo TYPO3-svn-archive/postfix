@@ -24,6 +24,9 @@
       <label index="label.testTask.description">Postfix tests the sending of an e-mail to the postfix admin. It is a service for development only.</label>
       <label index="msg.enterEmail">Please enter an e-mail adress.</label>
       <label index="msg.enterPathToFolderWiDrafts">Please enter the path to the folder with the e-mail drafts (with an ending slash). Default: typo3conf/ext/postfix/lib/scheduler/maildrafts/</label>
+      <label index="msg.enterQuotaLimitRemove">The Quota limit has to be between 100 per cent and 150 per cent.</label>
+      <label index="msg.enterQuotaLimitRemoveMustBeBigger">The Quota limit has to be bigger than the warning limit.</label>
+      <label index="msg.enterQuotaLimitWarn">The Quota warning limit has to be between 50 per cent and 120 per cent.</label>
       <label index="msg.osIsNotSupported"><![CDATA[
         Sorry, but the operating system "###PHP_OS###" isn't supported by TYPO3 Postfix.<br />
         If you need support, please contact <a href="http://wildt.at.die-netzmacher.de/" target="_blank">http://wildt.at.die-netzmacher.de/</a>
@@ -124,6 +127,8 @@
     </languageKey>
     <languageKey index="de" type="array">
       <label index="label.postfixAdminEmail">E-Mail des Postfix-Administrators</label>
+      <label index="label.quotaLimitRemove">Quota Limit in percent</label>
+      <label index="label.quotaLimitWarn">Warning Limit in percent</label>
       <label index="label.quotaMode">Quota Modus</label>
       <label index="label.quotaMode.remove">Warnungen und L<![CDATA[&ouml;]]>schen von Mails</label>
       <label index="label.quotaMode.warn">Warnungen</label>
