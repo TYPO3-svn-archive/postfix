@@ -225,7 +225,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
       // Write the code for the field
     $fieldID    = 'postfix_quotaLimitDefault';
     $fieldValue = htmlspecialchars( $taskInfo['postfix_quotaLimitDefault'] );
-    $fieldCode  = '<input type="text" name="tx_scheduler[postfix_quotaLimitDefault]" id="' . $fieldID . '" value="' . $fieldValue . '" size="50" />';
+    $fieldCode  = '<input type="text" name="tx_scheduler[postfix_quotaLimitDefault]" id="' . $fieldID . '" value="' . $fieldValue . '" size="5" />';
     $additionalFields = array( );
     $additionalFields[$fieldID] = array
     (
@@ -282,7 +282,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
       // Write the code for the field
     $fieldID    = 'postfix_quotaLimitRemove';
     $fieldValue = htmlspecialchars( $taskInfo['postfix_quotaLimitRemove'] );
-    $fieldCode  = '<input type="text" name="tx_scheduler[postfix_quotaLimitRemove]" id="' . $fieldID . '" value="' . $fieldValue . '" size="50" />';
+    $fieldCode  = '<input type="text" name="tx_scheduler[postfix_quotaLimitRemove]" id="' . $fieldID . '" value="' . $fieldValue . '" size="3" />';
     $additionalFields = array( );
     $additionalFields[$fieldID] = array
     (
@@ -339,7 +339,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
       // Write the code for the field
     $fieldID    = 'postfix_quotaLimitWarn';
     $fieldValue = htmlspecialchars( $taskInfo['postfix_quotaLimitWarn'] );
-    $fieldCode  = '<input type="text" name="tx_scheduler[postfix_quotaLimitWarn]" id="' . $fieldID . '" value="' . $fieldValue . '" size="50" />';
+    $fieldCode  = '<input type="text" name="tx_scheduler[postfix_quotaLimitWarn]" id="' . $fieldID . '" value="' . $fieldValue . '" size="3" />';
     $additionalFields = array( );
     $additionalFields[$fieldID] = array
     (
