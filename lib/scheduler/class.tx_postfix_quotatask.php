@@ -901,7 +901,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
                     PHP_EOL .
                     $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.to' ) .
                     ': ' .
-                    $marker['###NAME###'] . '(' . $this->mailboxData['email'] . ')' . PHP_EOL .
+                    $marker['###NAME###'] . ' (' . $this->mailboxData['email'] . ')' . PHP_EOL .
                     $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.copy' ) .
                     ': ' .
                     $this->postfix_postfixAdminName . PHP_EOL .
@@ -1052,7 +1052,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
                     PHP_EOL .
                     $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.to' ) .
                     ': ' .
-                    $marker['###NAME###'] . '(' . $this->mailboxData['email'] . ')' . PHP_EOL .
+                    $marker['###NAME###'] . ' (' . $this->mailboxData['email'] . ')' . PHP_EOL .
                     $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.copy' ) .
                     ': ' .
                     $this->postfix_postfixAdminName . PHP_EOL .
