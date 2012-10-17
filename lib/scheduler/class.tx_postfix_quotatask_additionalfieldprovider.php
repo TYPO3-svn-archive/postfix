@@ -624,7 +624,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     $this->saveFieldPostfixAdminEmail( $submittedData, $task );
     $this->saveFieldQuotaMode( $submittedData, $task );
     $this->saveFieldQuotaLimitRemove( $submittedData, $task );
-    $this->saveFieldQuotaLimitWarns( $submittedData, $task );
+    $this->saveFieldQuotaLimitWarn( $submittedData, $task );
   }
 
   /**
