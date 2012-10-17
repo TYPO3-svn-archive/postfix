@@ -6,12 +6,12 @@
   </meta>
   <data type="array">
     <languageKey index="default" type="array">
-      <label index="email.warn.overrunWarningLimit.subject">Your mailbox chocks!</label>
+      <label index="email.warn.overrunWarningLimit.subject">Only ###LEFTPLACEINPERCENT### per cent are left: Your mailbox chocks!</label>
       <label index="email.warn.overrunWarningLimit.body"><![CDATA[
 Dear ###NAME###,
 
 Your mailbox has a size of ###MAILBOXSIZEINMEGABYTES### megabytes.
-Your mailbox lefts ###LEFTPLACEINPERCENT### per cent place only.
+Your mailbox is left ###LEFTPLACEINPERCENT### per cent place only.
 
 Please remove e-mails, which aren't needed. If you don't remove mails, you will get 
 this reminder next day again.
@@ -31,7 +31,7 @@ phone ###POSTFIXADMINPHONE###
 P.S. This is an automatical e-mail
 
       ]]></label>
-      <label index="email.warn.overrunQuotaLimit.subject">Your mailbox is overrun!</label>
+      <label index="email.warn.overrunQuotaLimit.subject">###MAILBOXSIZEINMEGABYTES### megabytes: Your mailbox is overrun!</label>
       <label index="email.warn.overrunQuotaLimit.body"><![CDATA[
 Dear ###NAME###,
 
@@ -184,7 +184,7 @@ P.S. This is an automatical e-mail
       <label index="msg.quotaMode.udefined">postfix_quotaMode is undefined!</label>
     </languageKey>
     <languageKey index="de" type="array">
-      <label index="email.warn.overrunWarningLimit.subject">Ihre Mailbox l<![CDATA[ä]]>uft <![CDATA[ü]]>ber!</label>
+      <label index="email.warn.overrunWarningLimit.subject">Nur noch ###LEFTPLACEINPERCENT### Prozent Platz: Ihre Mailbox l<![CDATA[ä]]>uft <![CDATA[ü]]>ber!</label>
       <label index="email.warn.overrunWarningLimit.body"><![CDATA[
 Hallo ###NAME###,
 
@@ -208,7 +208,7 @@ Tel: ###POSTFIXADMINPHONE###
 
 P.S. Dies ist eine automatisch generierte Mail
       ]]></label>
-      <label index="email.warn.overrunQuotaLimit.subject">Ihre Mailbox ist <![CDATA[ü]]>bergelaufen!</label>
+      <label index="email.warn.overrunQuotaLimit.subject">###MAILBOXSIZEINMEGABYTES### Megabyte: Ihre Mailbox ist <![CDATA[ü]]>bergelaufen!</label>
       <label index="email.warn.overrunQuotaLimit.body"><![CDATA[
 Hallo ###NAME###,
 
