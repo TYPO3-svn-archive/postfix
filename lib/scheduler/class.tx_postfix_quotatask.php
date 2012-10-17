@@ -870,6 +870,10 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
                           ': ' . 
                           $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode.' . $this->postfix_quotaMode ) .
                           '. ';
+    $quotaLimitDefault   = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaLimitDefault' ) .
+                          ': ' . 
+                          $this->postfix_quotaLimitDefault . 
+                          '. ';
     $quotaLimitRemove   = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaLimitRemove' ) .
                           ': ' . 
                           $this->postfix_quotaLimitRemove .
@@ -878,7 +882,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
                           ': ' . 
                           $this->postfix_quotaLimitWarn .
                           '. ';
-    return $quotaMode . $postfixAdminEmail. $quotaLimitRemove . $quotaLimitWarn;
+    return $quotaMode . $postfixAdminEmail. $quotaLimitDefault . $quotaLimitRemove . $quotaLimitWarn;
   }
 }
 
