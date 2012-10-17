@@ -531,7 +531,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       // get size of the current mailbox in bytes
     $output   = null;
     $mailbox  = $this->mailboxData['pathToMailbox'];
-    $command  = 'du --max-depth=0 ' . $mailbox;
+    $command  = 'du -b --max-depth=0 ' . $mailbox;
     exec( $command, $output );
       // get size of the current mailbox in bytes
     
