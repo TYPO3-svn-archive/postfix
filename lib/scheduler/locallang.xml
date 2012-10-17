@@ -50,7 +50,6 @@ Kind regards
 ###POSTFIXADMINNAME###
 ###POSTFIXADMINPHONE###
       ]]></label>
-      <label index="label.pathToFolderWiDrafts">Path to the folder with the e-mail drafts</label>
       <label index="label.postfixAdminCompany">Company of the postfix admin</label>
       <label index="label.postfixAdminEmail">E-mail of the postfix admin</label>
       <label index="label.postfixAdminName">Name of the postfix admin</label>
@@ -70,8 +69,10 @@ Kind regards
       <label index="label.testMode.enabled">Enabled (postfix admin will get the report "Which will happen")</label>
       <label index="label.testTask.name">Postfix Test</label>
       <label index="label.testTask.description">Postfix tests the sending of an e-mail to the postfix admin. It is a service for development only.</label>
-      <label index="msg.enterEmail">Please enter an e-mail adress.</label>
-      <label index="msg.enterPathToFolderWiDrafts">Please enter the path to the folder with the e-mail drafts (with an ending slash). Default: typo3conf/ext/postfix/lib/scheduler/maildrafts/</label>
+      <label index="msg.enterPostfixAdminCompany">Please enter the company name of the postfix admin.</label>
+      <label index="msg.enterPostfixAdminEmail">Please enter the e-mail adress of the postfix admin.</label>
+      <label index="msg.enterPostfixAdminName">Please enter the name of the postfix admin.</label>
+      <label index="msg.enterPostfixAdminPhone">Please enter the phone number of the postfix admin. The phone number can't be 000 00000000.</label>
       <label index="msg.enterQuotaLimitDefault">The default Quota limit has to be 50 megabyte at least.</label>
       <label index="msg.enterQuotaLimitRemove">The Quota limit has to be between 100 per cent and 150 per cent.</label>
       <label index="msg.enterQuotaLimitRemoveMustBeBigger">The Quota limit has to be bigger than the warning limit.</label>
@@ -186,7 +187,7 @@ Kind regards
       <label index="label.quotaTask.description">Postfix Quota <![CDATA[&uuml;]]>berwacht Postfix-Mail-Ordner. <![CDATA[&Uuml;]]>berschreitet die Gr<![CDATA[&ouml;]]><![CDATA[&szlig;]]>e des jeweiligen Ordners die Warn-Grenze, wird eine Warnung an den Konto-Inhaber versendet. Wird das Quota-Limit <![CDATA[&uuml;]]>berschritten, wird ein Teil der Mails gel<![CDATA[&ouml;]]>scht. Der Konto-Inhaber wird per Mail <![CDATA[&uuml;]]>ber das L<![CDATA[&ouml;]]>schen informiert.</label>
       <label index="label.testTask.name">Postfix Test</label>
       <label index="label.testTask.description">Postfix testet den Mail-Versand an den Postfix Administrator. Der Test dient allein der Entwicklung von TYPO3-Postfix.</label>
-      <label index="msg.enterEmail">Bitte gebe eine Mail-Adresse an.</label>
+      <label index="msg.enterPostfixAdminEmail">Bitte gebe eine Mail-Adresse an.</label>
     </languageKey>
   </data>
 </T3locallang>
