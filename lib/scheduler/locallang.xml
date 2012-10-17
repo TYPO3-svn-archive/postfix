@@ -56,7 +56,7 @@ Kind regards
       <label index="label.postfixAdminName">Name of the postfix admin</label>
       <label index="label.postfixAdminPhone">Phone of the postfix admin</label>
       <label index="label.quotaLimitDefault">Default Quota Limit (in megabyte)</label>
-      <label index="label.quotaLimitRemove">Quota Limit (in percent)</label>
+      <label index="label.quotaLimitRemove">Remove mails from limit (in percent)</label>
       <label index="label.quotaLimitWarn">Warning Limit (in percent)</label>
       <label index="label.quotaMode">Quota mode</label>
       <label index="label.quotaMode.remove">Warnings and removing e-mails</label>
