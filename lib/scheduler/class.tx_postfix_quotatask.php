@@ -169,6 +169,9 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     $first_name = $this->mailboxesData['first_name'];
     $last_name  = $this->mailboxesData['last_name'];
     
+$prompt = var_export( $this->mailboxesData, true );
+t3lib_div::devlog( '[tx_postfix_QuotaTask] ' . $prompt, $this->extKey, 0 );
+
     switch( true )
     {
       case( $first_name ):

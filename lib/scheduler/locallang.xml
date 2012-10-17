@@ -25,7 +25,7 @@ because overrun mailboxes provoke high costs of server performance.
 Kind regards
 ###POSTFIXADMINCOMPANY###
 ###POSTFIXADMINNAME###
-###POSTFIXADMINPHONE###
+phone ###POSTFIXADMINPHONE###
       ]]></label>
       <label index="email.warn.overrunQuotaLimit"><![CDATA[
 Dear ###NAME###,
@@ -48,7 +48,7 @@ because overrun mailboxes provoke high costs of server performance.
 Kind regards
 ###POSTFIXADMINCOMPANY###
 ###POSTFIXADMINNAME###
-###POSTFIXADMINPHONE###
+phone ###POSTFIXADMINPHONE###
       ]]></label>
       <label index="label.postfixAdminCompany">Company of the postfix admin</label>
       <label index="label.postfixAdminEmail">E-mail of the postfix admin</label>
