@@ -899,12 +899,16 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
         $subject  = '[TEST] ' . $subject;
         $body     = '[TEST] ' . PHP_EOL . 
                     PHP_EOL .
+                    $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.to' ) .
+                    ': ' .
+                    $marker['###NAME###'] . '(' . $this->mailboxData['email'] . ')' . PHP_EOL .
                     $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.copy' ) .
                     ': ' .
                     $this->postfix_postfixAdminName . PHP_EOL .
                     PHP_EOL .
                     $body;
         $to       = $this->postfix_postfixAdminEmail;
+        $cc       = null;
         break;
       case( 'remove' ):
           // DRS
@@ -1046,12 +1050,16 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
         $subject  = '[TEST] ' . $subject;
         $body     = '[TEST] ' . PHP_EOL . 
                     PHP_EOL .
+                    $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.to' ) .
+                    ': ' .
+                    $marker['###NAME###'] . '(' . $this->mailboxData['email'] . ')' . PHP_EOL .
                     $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.copy' ) .
                     ': ' .
                     $this->postfix_postfixAdminName . PHP_EOL .
                     PHP_EOL .
                     $body;
         $to       = $this->postfix_postfixAdminEmail;
+        $cc       = null;
         break;
       case( 'remove' ):
           // DRS
