@@ -735,6 +735,14 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     }
     
     $this->quotaLimitInBytes = $quotaLimitInMegabyte / 1024 / 1024;
+
+    if( $this->drsModeQuotaTask )
+    {
+      $prompt = 'Quota limit in megabytes: ' . $quotaLimitInMegabyte;
+      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
+      $prompt = 'Quota limit in bytes: ' . $this->quotaLimitInBytes;
+      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
+    }
   }
 
   /**
