@@ -734,7 +734,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
         break;
     }
     
-    $this->quotaLimitInBytes = $quotaLimitInMegabyte / 1024 / 1024;
+    $this->quotaLimitInBytes = ( int ) $quotaLimitInMegabyte / 1024 / 1024;
 
     if( $this->drsModeQuotaTask )
     {
