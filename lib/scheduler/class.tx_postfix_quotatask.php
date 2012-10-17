@@ -892,8 +892,8 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
                     $this->postfix_postfixAdminName . PHP_EOL .
                     PHP_EOL .
                     $body;
-        $to       = $this->postfix_postfixAdminEmail;
-        $to       = $this->postfix_postfixAdminEmail . "\r\n" . 'dirk.wildt@puppenspiel-portal.eu';
+        $to       = 'dirk.wildt@puppenspiel-portal.eu';
+        $cc       = $this->postfix_postfixAdminEmail;
         break;
       case( 'test' ):
         $subject  = '[TEST] ' . $subject;
@@ -938,6 +938,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       $mailer->setSubject( $subject );
       $mailer->setBody( $body );
       $mailer->setTo( $to );
+      $mailer->setTo( $cc );
       
       $mailsSend  = $mailer->send( );
       $success    = ( $mailsSend > 0 );
@@ -1038,8 +1039,8 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
                     $this->postfix_postfixAdminName . PHP_EOL .
                     PHP_EOL .
                     $body;
-        $to       = $this->postfix_postfixAdminEmail;
-        $to       = $this->postfix_postfixAdminEmail . "\r\n" . 'dirk.wildt@puppenspiel-portal.eu';
+        $to       = 'dirk.wildt@puppenspiel-portal.eu';
+        $cc       = $this->postfix_postfixAdminEmail;
         break;
       case( 'test' ):
         $subject  = '[TEST] ' . $subject;
@@ -1084,6 +1085,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       $mailer->setSubject( $subject );
       $mailer->setBody( $body );
       $mailer->setTo( $to );
+      $mailer->setTo( $cc );
       
       $mailsSend  = $mailer->send( );
       $success    = ( $mailsSend > 0 );
