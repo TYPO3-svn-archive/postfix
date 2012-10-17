@@ -854,7 +854,10 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     */
   public function getAdditionalInformation( )
   {    
-    $postfixAdminEmail  = 'Admin: ' . $this->postfix_postfixAdminEmail;
+    $postfixAdminEmail  = 'Admin' . 
+                          ': ' .
+                          $this->postfix_postfixAdminEmail . 
+                          '. ';
 // Kein Effekt
 //    $quotaMode          = htmlspecialchars_decode( $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaMode' ) ) .
 //                          ': ' . 
