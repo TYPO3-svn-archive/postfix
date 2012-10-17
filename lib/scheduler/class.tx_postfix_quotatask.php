@@ -784,61 +784,6 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     */
   private function quotaWarning( )
   {
-    static $bool_drsFirstLoop = true; 
-    
-//    switch( $this->postfix_quotaMode )
-//    {
-//      case( 'remove' ):
-//          // Follow the workflow
-//        break;
-//      case( 'test' ):
-//          // DRS
-//        if( $bool_drsFirstLoop && $this->drsModeError )
-//        {
-//          $prompt = 'Quota warning won\'t be processed in test mode.';
-//          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 2 );
-//          $bool_drsFirstLoop = false;
-//        }
-//          // DRS
-//        return;
-//        break;
-//      case( 'warn' ):
-//          // Follow the workflow
-//        break;
-//      default:
-//          // DRS
-//        if( $this->drsModeError )
-//        {
-//          $prompt = 'Quota mode is undefined: "' .  $this->postfix_quotaMode . '"';
-//          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
-//        }
-//          // DRS
-//        return;
-//        break;
-//    }
-//    
-//      // DRS
-//    if( $this->drsModeQuotaTask )
-//    {
-//      $prompt = 'Mailbox size is ' . $this->mailboxSizeInBytes . ' bytes. ' .
-//                'Warning limit is ' . ( $this->quotaLimitInBytes / 100 * $this->postfix_quotaLimitWarn ) . '.' .
-//                '';
-//      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 1 );
-//    }
-//      // DRS
-
-    $this->quotaWarningLimitWarn( );
-  }
-
-  /**
-    * quotaWarningLimitWarn( )  : Returns true, if limit is overrun, false if not.
-    *
-    * @return boolean
-    * @version       1.1.0
-    * @since         1.1.0
-    */
-  private function quotaWarningLimitWarn( )
-  {
       // Get the limit for warnings in bytes
     $quotaLimitWarnInBytes = $this->quotaLimitInBytes / 100 * $this->postfix_quotaLimitWarn;
     
@@ -895,9 +840,6 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       // RETURN : mailbox is bigger than the quota limit
       
       // Get the limit for warnings in bytes
-    $quotaLimitWarnInBytes      = $this->quotaLimitInBytes / 100 * $this->postfix_quotaLimitWarn;
-    $quotaLimitWarnInMegabytes  = ( int ) ( $quotaLimitWarnInBytes / 1024 / 1024 );
-    
     $quotaLimitInMegabytes      = ( int ) $this->quotaLimitInBytes / 1024 / 1024;
     
       // Size of the current mailbox in megabytes
@@ -940,7 +882,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     }
       // DRS
      
-      // action depending on quota mode
+      // SWITCH : quota mode
     switch( $this->postfix_quotaMode )
     {
       case( 'warn' ):
@@ -984,6 +926,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
         return false;
         break;
     }
+      // SWITCH : quota mode
     
     try 
     {
@@ -1084,15 +1027,38 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     }
       // DRS
     
-    // action depending on quota mode
+      // SWITCH : quota mode
     switch( $this->postfix_quotaMode )
     {
-      case( 'remove' ):
       case( 'warn' ):
-          // Send a warning mail
+        $body     = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.copy' ) .
+                    ': ' .
+                    $this->postfix_postfixAdminName . PHP_EOL .
+                    PHP_EOL .
+                    $body;
+        $to       = $this->postfix_postfixAdminEmail;
+        $to       = $this->postfix_postfixAdminEmail . ', dirk.wildt@puppenspiel-portal.eu';
         break;
       case( 'test' ):
-          // Send a warning mail to admin only
+        $subject  = '[TEST] ' . $subject;
+        $body     = '[TEST] ' . PHP_EOL . 
+                    PHP_EOL .
+                    $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.copy' ) .
+                    ': ' .
+                    $this->postfix_postfixAdminName . PHP_EOL .
+                    PHP_EOL .
+                    $body;
+        $to       = $this->postfix_postfixAdminEmail;
+        break;
+      case( 'remove' ):
+          // DRS
+        if( $this->drsModeError )
+        {
+          $prompt = 'Quota mode is not allowed: "' .  $this->postfix_quotaMode . '"';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+        }
+          // DRS
+        return false;
         break;
       default:
           // DRS
@@ -1102,9 +1068,47 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
           t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
         }
           // DRS
+        return false;
         break;
     }
+      // SWITCH : quota mode
     
+    try 
+    {
+      /** @var $mailer t3lib_mail_message */
+      $mailer = t3lib_div::makeInstance( 't3lib_mail_message' );
+      $mailer->setFrom( array( $this->postfix_postfixAdminEmail => $this->postfix_postfixAdminName ) );
+      $mailer->setReplyTo( array( $this->postfix_postfixAdminEmail => $this->postfix_postfixAdminName ) );
+      $mailer->setSubject( $subject );
+      $mailer->setBody( $body );
+      $mailer->setTo( $to );
+      
+      $mailsSend  = $mailer->send( );
+      $success    = ( $mailsSend > 0 );
+    } 
+    catch( Exception $e )
+    {
+      throw new t3lib_exception( $e->getMessage( ) );
+    }
+
+      // DRS
+    if( $this->drsModeQuotaTask || $this->drsModeQuotaError )
+    {
+      switch( $success )
+      {
+        case( false ):
+          $prompt = 'Undefined error. Test email couldn\'t sent to "' . $this->postfix_postfixAdminEmail . '"';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+          break;
+        case( true ):
+        default:
+          $prompt = 'Test email is sent to "' . $this->postfix_postfixAdminEmail . '"';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, -1 );
+          break;
+      }
+    }
+     // DRS
+ 
   }
 
 

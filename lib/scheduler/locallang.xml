@@ -17,16 +17,19 @@ Please remove e-mails, which aren't needed. If you don't remove mails, you will 
 this reminder next day again.
 
 CAUTION: If your mailbox will overrun the size of 100 per cent (###QUOTALIMITINMEGABYTES### megabytes), 
-the system will cut down your mailbox to ###REDUCEDMAILBOXINPERCENT### per cent
-(###REDUCEDMAILBOXINMEGABYTES### megabytes) of the contracted limit by removing e-mails automatically!
+the system will cut down your mailbox to ###REDUCEDMAILBOXINPERCENT### per cent (###REDUCEDMAILBOXINMEGABYTES### megabytes) 
+of the contracted limit by removing e-mails automatically!
 
 Please be appreciative of this reminder and of removing e-mails in case of a overrun,
-because overrun mailboxes provoke high costs of server performance.
+because overrun mailboxes provoke high costs of server performance unfortunately.
 
 Kind regards
 ###POSTFIXADMINCOMPANY###
 ###POSTFIXADMINNAME###
 phone ###POSTFIXADMINPHONE###
+
+P.S. This is an automatical e-mail
+
       ]]></label>
       <label index="email.warn.overrunQuotaLimit.subject">Your mailbox is overrun!</label>
       <label index="email.warn.overrunQuotaLimit.body"><![CDATA[
@@ -39,16 +42,18 @@ with ###OVERRUNINMEGABYTES### megabytes (###OVERRUNINPERCENT### per cent).
 Please remove emails, which aren't needed. Please avoid extra costs for overrun the contracted size.
 
 CAUTION: If you don't remove emails by your own, the system will cut down your mailbox 
-to ###REDUCEDMAILBOXINPERCENT### per cent (###REDUCEDMAILBOXINMEGABYTES### megabytes) 
-of the contracted limit by removing e-mails automatically!
+to ###REDUCEDMAILBOXINPERCENT### per cent (###REDUCEDMAILBOXINMEGABYTES### megabytes) of the contracted limit 
+by removing e-mails automatically!
 
 Please be appreciative of this reminder and of removing emails in case of a overrun,
-because overrun mailboxes provoke high costs of server performance.
+because overrun mailboxes provoke high costs of server performance unfortunately.
 
 Kind regards
 ###POSTFIXADMINCOMPANY###
 ###POSTFIXADMINNAME###
 phone ###POSTFIXADMINPHONE###
+
+P.S. This is an automatical e-mail
       ]]></label>
       <label index="label.copy">Copy</label>
       <label index="label.postfixAdminCompany">Company of the postfix admin</label>
@@ -190,8 +195,8 @@ Bitte löschen Sie Mails, die Sie nicht mehr brauchen. Wenn Sie keine Mails lös
 erhalten Sie diese Benachrichtigung auch am kommenden Tag.
 
 ACHTUNG: Wenn Ihre Mailbox die Größe von 100 Prozent (###QUOTALIMITINMEGABYTES### Megabytes) überschreitet, 
-wird das System Ihre Mailbox auf ###REDUCEDMAILBOXINPERCENT### Prozent (###REDUCEDMAILBOXINMEGABYTES### Megabytes)
-der vertraglich vereinbarten Größe reduzieren - durch das automatische Löschen von Mails!
+wird das System Ihre Mailbox auf ###REDUCEDMAILBOXINPERCENT### Prozent (###REDUCEDMAILBOXINMEGABYTES### Megabytes) der vertraglich
+vereinbarten Größe reduzieren - durch das automatische Löschen von Mails!
 
 Haben Sie bitte Verständnis für die Benachrichtigung und das automatische Löschen von Mails.
 Übergelaufene Mailboxen verursachen leider eine hohe Belastung des Servers.
@@ -200,6 +205,8 @@ Viele Grüße
 ###POSTFIXADMINCOMPANY###
 ###POSTFIXADMINNAME###
 phone ###POSTFIXADMINPHONE###
+
+P.S. Dies ist eine automatisch generierte Mail
       ]]></label>
       <label index="email.warn.overrunQuotaLimit.subject">Your mailbox is overrun!</label>
       <label index="email.warn.overrunQuotaLimit.body"><![CDATA[
@@ -212,9 +219,8 @@ mit ###OVERRUNINMEGABYTES### Megabytes (###OVERRUNINPERCENT### Prozent).
 Bitte löschen Sie Mails, die Sie nicht mehr brauchen. Vermeiden Sie zusätzliche Kosten durch
 das Überschreiten vereinbarter Grenzen.
 
-ACHTUNG: Wenn Sie Mails nicht selbst löschen, wird das System Ihre Mailbox auf ###REDUCEDMAILBOXINPERCENT### Prozent
-(###REDUCEDMAILBOXINMEGABYTES### Megabytes) der vereinbarten Größe reduzieren - durch das automatische
-Löschen von Mails!
+ACHTUNG: Wenn Sie Mails nicht selbst löschen, wird das System Ihre Mailbox auf ###REDUCEDMAILBOXINPERCENT### Prozent (###REDUCEDMAILBOXINMEGABYTES### Megabytes) 
+der vereinbarten Größe reduzieren - durch das automatische Löschen von Mails!
 
 Haben Sie bitte Verständnis für die Benachrichtigung und das automatische Löschen von Mails.
 Übergelaufene Mailboxen verursachen leider eine hohe Belastung des Servers.
@@ -223,8 +229,10 @@ Viele Grüße
 ###POSTFIXADMINCOMPANY###
 ###POSTFIXADMINNAME###
 phone ###POSTFIXADMINPHONE###
+
+P.S. Dies ist eine automatisch generierte Mail
       ]]></label>
-      <label index="label.copy">Copy</label>
+      <label index="label.copy">Kopie</label>
       <label index="label.postfixAdminEmail">E-Mail des Postfix-Administrators</label>
       <label index="label.quotaMode">Quota Modus</label>
       <label index="label.quotaMode.remove">Warnungen und L<![CDATA[&ouml;]]>schen von Mails</label>
