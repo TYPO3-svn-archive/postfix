@@ -886,7 +886,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
                 'Please remove emails, which aren\'t needed. Sorry, but elsewise you will get this reminder every day. ' .
                 'And if your mailbox will overrun the size of 100 per cent (' . $quotaLimitInMegabytes . ' megabytes), ' . 
                 'the system will cut down your mailbox to ' . $this->postfix_quotaReduceMailbox . ' per cent ' .
-                '(' . $reducedMailboxInMegabytes . ' megabytes) by removing e-mails! ' .
+                '(' . $reducedMailboxInMegabytes . ' megabytes) of the contracted limit by removing e-mails automatically! ' .
                 'Please be appreciative of this reminder and of removing emails in case of a overrun, ' .
                 'because overrun mailboxes provoke high costs of server performance. ';
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
@@ -951,11 +951,13 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     if( $this->drsModeQuotaTask )
     {
       $prompt = 'Your mailbox has a size of ' . $mailboxSizeInMegabytes . ' megabytes. ' .
-                'Your mailbox overrun the contracted size of ' . $quotaLimitInMegabytes . ' megabytes. ' . 
+                'Your mailbox overrun the contracted size of ' . $quotaLimitInMegabytes . ' megabytes ' . 
                 'with ' . $overrunInMegabytes . ' megabytes (' . $overrunInPercent . ' per cent). ' .
-                'Please remove emails, which aren\'t needed. Please avoid extra costs. ' . 
-                'If you don\'t remove emails by your own, the system will cut down your mailbox to ' . $this->postfix_quotaReduceMailbox . ' per cent ' .
-                '(' . $reducedMailboxInMegabytes . ' megabytes) by removing e-mails from 1st of December automatically! ' .
+                'Please remove emails, which aren\'t needed. Please avoid extra costs for overrun the contracted size. ' . 
+                'If you don\'t remove emails by your own, the system will cut down your mailbox to ' .
+                $this->postfix_quotaReduceMailbox . ' per cent ' .
+                '(' . $reducedMailboxInMegabytes . ' megabytes) of the contracted limit ' . 
+                'by removing e-mails from 1st of December automatically! ' .
                 'Please be appreciative of this reminder and of removing emails in case of a overrun, ' .
                 'because overrun mailboxes provoke high costs of server performance. ';
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
