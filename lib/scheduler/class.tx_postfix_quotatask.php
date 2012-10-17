@@ -946,7 +946,9 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       case( 'warn' ):
         $body     = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.copy' ) .
                     ': ' .
-                    $this->postfix_postfixAdminName;
+                    $this->postfix_postfixAdminName . PHP_EOL .
+                    PHP_EOL .
+                    $body;
         $to       = $this->postfix_postfixAdminEmail;
         $to       = $this->postfix_postfixAdminEmail . ', dirk.wildt@puppenspiel-portal.eu';
         break;
@@ -956,7 +958,9 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
                     PHP_EOL .
                     $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.copy' ) .
                     ': ' .
-                    $this->postfix_postfixAdminName;
+                    $this->postfix_postfixAdminName . PHP_EOL .
+                    PHP_EOL .
+                    $body;
         $to       = $this->postfix_postfixAdminEmail;
         break;
       case( 'remove' ):
