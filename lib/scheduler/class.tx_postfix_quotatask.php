@@ -893,7 +893,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
                     PHP_EOL .
                     $body;
         $to       = $this->postfix_postfixAdminEmail;
-        $to       = $this->postfix_postfixAdminEmail . ', dirk.wildt@puppenspiel-portal.eu';
+        $to       = $this->postfix_postfixAdminEmail . ',dirk.wildt@puppenspiel-portal.eu';
         break;
       case( 'test' ):
         $subject  = '[TEST] ' . $subject;
@@ -1039,7 +1039,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
                     PHP_EOL .
                     $body;
         $to       = $this->postfix_postfixAdminEmail;
-        $to       = $this->postfix_postfixAdminEmail . ', dirk.wildt@puppenspiel-portal.eu';
+        $to       = $this->postfix_postfixAdminEmail . ',dirk.wildt@puppenspiel-portal.eu';
         break;
       case( 'test' ):
         $subject  = '[TEST] ' . $subject;
