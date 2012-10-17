@@ -96,7 +96,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
       if( $parentObject->CMD == 'add' ) 
       {
           // In case of new task and if field is empty, set default email address
-        $taskInfo['postfix_quotaReduceMailbox'] = '75';
+        $taskInfo['postfix_quotaReduceMailbox'] = '90';
       } 
       elseif( $parentObject->CMD == 'edit' ) 
       {
@@ -556,7 +556,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
       if( $parentObject->CMD == 'add' ) 
       {
           // In case of new task and if field is empty, set default email address
-        $taskInfo['postfix_quotaLimitWarn'] = '80';
+        $taskInfo['postfix_quotaLimitWarn'] = '95';
       } 
       elseif( $parentObject->CMD == 'edit' ) 
       {
