@@ -188,14 +188,14 @@ P.S. This is an automatical e-mail
       <label index="email.warn.overrunWarningLimit.body"><![CDATA[
 Hallo ###NAME###,
 
-Ihre Mailbox hat eine Größe von ###MAILBOXSIZEINMEGABYTES### Megabytes erreicht.
+Ihre Mailbox hat eine Größe von ###MAILBOXSIZEINMEGABYTES### Megabyte erreicht.
 Ihre Mailbox hat nur noch ###LEFTPLACEINPERCENT### Prozent Platz.
 
 Bitte löschen Sie Mails, die Sie nicht mehr brauchen. Wenn Sie keine Mails löschen, 
 erhalten Sie diese Benachrichtigung auch am kommenden Tag.
 
-ACHTUNG: Wenn Ihre Mailbox die Größe von 100 Prozent (###QUOTALIMITINMEGABYTES### Megabytes) überschreitet, 
-wird das System Ihre Mailbox auf ###REDUCEDMAILBOXINPERCENT### Prozent (###REDUCEDMAILBOXINMEGABYTES### Megabytes) der vertraglich
+ACHTUNG: Wenn Ihre Mailbox die Größe von 100 Prozent (###QUOTALIMITINMEGABYTES### Megabyte) überschreitet, 
+wird das System Ihre Mailbox auf ###REDUCEDMAILBOXINPERCENT### Prozent (###REDUCEDMAILBOXINMEGABYTES### Megabyte) der vertraglich
 vereinbarten Größe reduzieren - durch das automatische Löschen von Mails!
 
 Haben Sie bitte Verständnis für die Benachrichtigung und das automatische Löschen von Mails.
@@ -204,22 +204,23 @@ Haben Sie bitte Verständnis für die Benachrichtigung und das automatische Lös
 Viele Grüße
 ###POSTFIXADMINCOMPANY###
 ###POSTFIXADMINNAME###
-phone ###POSTFIXADMINPHONE###
+Tel: ###POSTFIXADMINPHONE###
 
 P.S. Dies ist eine automatisch generierte Mail
       ]]></label>
-      <label index="email.warn.overrunQuotaLimit.subject">Your mailbox is overrun!</label>
+      <label index="email.warn.overrunQuotaLimit.subject">Ihre Mailbox ist <![CDATA[ü]]>bergelaufen!</label>
       <label index="email.warn.overrunQuotaLimit.body"><![CDATA[
 Hallo ###NAME###,
 
-Ihre Mailbox hat eine Größe von ###MAILBOXSIZEINMEGABYTES### Megabytes erreicht.
-Damit überschreitet Ihre Mailbox die vertraglich vereinbarte Größe von ###QUOTALIMITINMEGABYTES### Megabytes
-mit ###OVERRUNINMEGABYTES### Megabytes (###OVERRUNINPERCENT### Prozent).
+Ihre Mailbox hat eine Größe von ###MAILBOXSIZEINMEGABYTES### Megabyte erreicht.
+Damit überschreitet Ihre Mailbox die vertraglich vereinbarte Größe von ###QUOTALIMITINMEGABYTES### Megabyte
+um ###OVERRUNINMEGABYTES### Megabyte und um ###OVERRUNINPERCENT### Prozent.
 
 Bitte löschen Sie Mails, die Sie nicht mehr brauchen. Vermeiden Sie zusätzliche Kosten durch
-das Überschreiten vereinbarter Grenzen.
+das Überschreiten vereinbarter Grenzen. Wenn Sie keine Mails löschen, erhalten Sie diese Benachrichtigung 
+auch am kommenden Tag.
 
-ACHTUNG: Wenn Sie Mails nicht selbst löschen, wird das System Ihre Mailbox auf ###REDUCEDMAILBOXINPERCENT### Prozent (###REDUCEDMAILBOXINMEGABYTES### Megabytes) 
+ACHTUNG: Wenn Sie Mails nicht selbst löschen, wird das System Ihre Mailbox auf ###REDUCEDMAILBOXINPERCENT### Prozent (###REDUCEDMAILBOXINMEGABYTES### Megabyte) 
 der vereinbarten Größe reduzieren - durch das automatische Löschen von Mails!
 
 Haben Sie bitte Verständnis für die Benachrichtigung und das automatische Löschen von Mails.
@@ -228,7 +229,7 @@ Haben Sie bitte Verständnis für die Benachrichtigung und das automatische Lös
 Viele Grüße
 ###POSTFIXADMINCOMPANY###
 ###POSTFIXADMINNAME###
-phone ###POSTFIXADMINPHONE###
+Tel: ###POSTFIXADMINPHONE###
 
 P.S. Dies ist eine automatisch generierte Mail
       ]]></label>

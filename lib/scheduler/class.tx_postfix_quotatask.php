@@ -957,7 +957,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
           break;
         case( true ):
         default:
-          $prompt = 'Test email is sent to "' . $this->postfix_postfixAdminEmail . '"';
+          $prompt = 'E-mail is sent to "' . $to . '"';
           t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, -1 );
           break;
       }
@@ -1102,7 +1102,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
           break;
         case( true ):
         default:
-          $prompt = 'Test email is sent to "' . $this->postfix_postfixAdminEmail . '"';
+          $prompt = 'E-mail is sent to "' . $to . '"';
           t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, -1 );
           break;
       }
