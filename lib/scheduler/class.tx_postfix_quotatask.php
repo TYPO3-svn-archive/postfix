@@ -991,10 +991,17 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     $marker['###POSTFIXADMINNAME###']           = $this->postfix_postfixAdminName;
     $marker['###POSTFIXADMINPHONE###']          = $this->postfix_postfixAdminPhone;
       
+    $body = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:email.warn.overrunQuotaLimit' );
+    
+    foreach( $marker as $key => $value )
+    {
+      $body = str_replace($key, $value, $body );
+    }
+
       // DRS
     if( $this->drsModeQuotaTask )
     {
-      $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:email.warn.overrunQuotaLimit' );
+      $prompt = $body;
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
     }
       // DRS
