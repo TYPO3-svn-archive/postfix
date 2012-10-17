@@ -59,6 +59,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     $additionalFields = $additionalFields + $this->getFieldPostfixAdminEmail( $taskInfo, $task, $parentObject );
     $additionalFields = $additionalFields + $this->getFieldPathToFolderWiDrafts( $taskInfo, $task, $parentObject );
     $additionalFields = $additionalFields + $this->getFieldQuotaMode( $taskInfo, $task, $parentObject );
+    $additionalFields = $additionalFields + $this->getFieldQuotaLimitDefault( $taskInfo, $task, $parentObject );
     $additionalFields = $additionalFields + $this->getFieldQuotaLimitRemove( $taskInfo, $task, $parentObject );
     $additionalFields = $additionalFields + $this->getFieldQuotaLimitWarn( $taskInfo, $task, $parentObject );
 //    quotaDefaultLimit
@@ -173,6 +174,63 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     (
       'code'     => $fieldCode,
       'label'    => 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.postfixAdminEmail',
+      'cshKey'   => '_MOD_tools_txschedulerM1',
+      'cshLabel' => $fieldID
+    );
+      // Write the code for the field
+
+    return $additionalFields;
+  }
+
+  /**
+    * getFieldQuotaLimitDefault( )  : This method is used to define new fields for adding or editing a task
+    *                                           In this case, it adds an email field
+    *
+    * @param array $taskInfo Reference to the array containing the info used in the add/edit form
+    * @param object $task When editing, reference to the current task object. Null when adding.
+    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
+    * @return array    Array containing all the information pertaining to the additional fields
+    *                    The array is multidimensional, keyed to the task class name and each field's id
+    *                    For each field it provides an associative sub-array with the following:
+    *                        ['code']        => The HTML code for the field
+    *                        ['label']        => The label of the field (possibly localized)
+    *                        ['cshKey']        => The CSH key for the field
+    *                        ['cshLabel']    => The code of the CSH label
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function getFieldQuotaLimitDefault( array &$taskInfo, $task, $parentObject ) 
+  {
+      // IF : field is empty, initialize extra field value
+    if( empty( $taskInfo['postfix_quotaLimitDefault'] ) ) 
+    {
+      if( $parentObject->CMD == 'add' ) 
+      {
+          // In case of new task and if field is empty, set default email address
+        $taskInfo['postfix_quotaLimitDefault'] = '105';
+      } 
+      elseif( $parentObject->CMD == 'edit' ) 
+      {
+          // In case of edit, and editing a test task, set to internal value if not data was submitted already
+        $taskInfo['postfix_quotaLimitDefault'] = $task->postfix_quotaLimitDefault;
+      }
+      else
+      {
+          // Otherwise set an empty value, as it will not be used anyway
+        $taskInfo['postfix_quotaLimitDefault'] = '';
+      }
+    }
+      // IF : field is empty, initialize extra field value
+
+      // Write the code for the field
+    $fieldID    = 'postfix_quotaLimitDefault';
+    $fieldValue = htmlspecialchars( $taskInfo['postfix_quotaLimitDefault'] );
+    $fieldCode  = '<input type="text" name="tx_scheduler[postfix_quotaLimitDefault]" id="' . $fieldID . '" value="' . $fieldValue . '" size="50" />';
+    $additionalFields = array( );
+    $additionalFields[$fieldID] = array
+    (
+      'code'     => $fieldCode,
+      'label'    => 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaLimitDefault',
       'cshKey'   => '_MOD_tools_txschedulerM1',
       'cshLabel' => $fieldID
     );
@@ -403,6 +461,11 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
       $bool_isValidatingSuccessful = false;
     } 
 
+    if( ! $this->validateFieldQuotaLimitDefault( $submittedData, $parentObject ) ) 
+    {
+      $bool_isValidatingSuccessful = false;
+    } 
+
     if( ! $this->validateFieldQuotaLimitRemove( $submittedData, $parentObject ) ) 
     {
       $bool_isValidatingSuccessful = false;
@@ -464,6 +527,37 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
       $bool_isValidatingSuccessful = false;
     } 
+
+    return $bool_isValidatingSuccessful;
+  }
+
+  /**
+    * validateFieldQuotaLimitDefault( )  : This method checks any additional data that is relevant to the specific task
+    *                                     If the task class is not relevant, the method is expected to return TRUE
+    *
+    * @param array     $submittedData Reference to the array containing the data submitted by the user
+    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
+    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function validateFieldQuotaLimitDefault( array &$submittedData, tx_scheduler_Module $parentObject ) 
+  {
+    $bool_isValidatingSuccessful = true;
+
+    $submittedData['postfix_quotaLimitDefault'] = ( int ) $submittedData['postfix_quotaLimitDefault'];
+
+    switch( true )
+    {
+      case( $submittedData['postfix_quotaLimitDefault'] < 50 ):
+        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterQuotaLimitDefault' );
+        $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
+        $bool_isValidatingSuccessful = false;
+        break;
+      default:
+        $bool_isValidatingSuccessful = true;
+        break;
+    }
 
     return $bool_isValidatingSuccessful;
   }
@@ -623,6 +717,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     $this->saveFieldPathToFolderWiDrafts( $submittedData, $task );
     $this->saveFieldPostfixAdminEmail( $submittedData, $task );
     $this->saveFieldQuotaMode( $submittedData, $task );
+    $this->saveFieldQuotaLimitDefault( $submittedData, $task );
     $this->saveFieldQuotaLimitRemove( $submittedData, $task );
     $this->saveFieldQuotaLimitWarn( $submittedData, $task );
   }
@@ -671,6 +766,22 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   private function saveFieldQuotaMode( array $submittedData, tx_scheduler_Task $task )
   {
     $task->postfix_quotaMode = $submittedData['postfix_quotaMode'];
+  }
+
+  /**
+    * saveFieldQuotaLimitDefault( ) : This method is used to save any additional input into the current task object
+    *                           if the task class matches
+    *
+    * @param array $submittedData Array containing the data submitted by the user
+    * @param tx_scheduler_Task $task Reference to the current task object
+    * @return void
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function saveFieldQuotaLimitDefault( array $submittedData, tx_scheduler_Task $task )
+  {
+    $postfix_quotaLimitDefault       = ( int ) $submittedData['postfix_quotaLimitDefault'];
+    $task->postfix_quotaLimitDefault = $postfix_quotaLimitDefault;
   }
 
   /**

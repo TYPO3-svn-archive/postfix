@@ -8,13 +8,13 @@
     <languageKey index="default" type="array">
       <label index="label.pathToFolderWiDrafts">Path to the folder with the e-mail drafts</label>
       <label index="label.postfixAdminEmail">E-mail of the postfix admin</label>
+      <label index="label.quotaLimitDefault">Default Quota Limit in megabyte</label>
+      <label index="label.quotaLimitRemove">Quota Limit in percent</label>
+      <label index="label.quotaLimitWarn">Warning Limit in percent</label>
       <label index="label.quotaMode">Quota mode</label>
       <label index="label.quotaMode.remove">Warnings and removing e-mails</label>
       <label index="label.quotaMode.warn">Warnings</label>
       <label index="label.quotaMode.test">Report (test mode)</label>
-      <label index="label.quotaDefaultLimit">Default quota limit (in megabyte)</label>
-      <label index="label.quotaWarnIfLimitOver">Send the warning message, if quota is over</label>
-      <label index="label.quotaDeleteIfLimitOver">Delete mails and send a message, if quota is over</label>
       <label index="label.quotaTask.name">Postfix Quota</label>
       <label index="label.quotaTask.description">Postfix Quota checks postfix maildirs. It will send warning e-mails to the owner of the current account, if the size of the account is over the warning limit. It will delete some mails, if the size of the folder is over the quota limit. The owner of the current account will informed by e-mail.</label>
       <label index="label.testMode">Test mode</label>
@@ -24,6 +24,7 @@
       <label index="label.testTask.description">Postfix tests the sending of an e-mail to the postfix admin. It is a service for development only.</label>
       <label index="msg.enterEmail">Please enter an e-mail adress.</label>
       <label index="msg.enterPathToFolderWiDrafts">Please enter the path to the folder with the e-mail drafts (with an ending slash). Default: typo3conf/ext/postfix/lib/scheduler/maildrafts/</label>
+      <label index="msg.enterQuotaLimitDefault">The default Quota limit has to be 50 megabyte at least.</label>
       <label index="msg.enterQuotaLimitRemove">The Quota limit has to be between 100 per cent and 150 per cent.</label>
       <label index="msg.enterQuotaLimitRemoveMustBeBigger">The Quota limit has to be bigger than the warning limit.</label>
       <label index="msg.enterQuotaLimitWarn">The Quota warning limit has to be between 50 per cent and 120 per cent.</label>
@@ -127,8 +128,6 @@
     </languageKey>
     <languageKey index="de" type="array">
       <label index="label.postfixAdminEmail">E-Mail des Postfix-Administrators</label>
-      <label index="label.quotaLimitRemove">Quota Limit in percent</label>
-      <label index="label.quotaLimitWarn">Warning Limit in percent</label>
       <label index="label.quotaMode">Quota Modus</label>
       <label index="label.quotaMode.remove">Warnungen und L<![CDATA[&ouml;]]>schen von Mails</label>
       <label index="label.quotaMode.warn">Warnungen</label>
