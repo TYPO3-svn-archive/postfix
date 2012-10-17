@@ -17,6 +17,7 @@
       <label index="label.quotaMode.test">Report (test mode)</label>
       <label index="label.quotaTask.name">Postfix Quota</label>
       <label index="label.quotaTask.description">Postfix Quota checks postfix maildirs. It will send warning e-mails to the owner of the current account, if the size of the account is over the warning limit. It will delete some mails, if the size of the folder is over the quota limit. The owner of the current account will informed by e-mail.</label>
+      <label index="label.quotaReduceMailbox">Reduce mailbox to size (in percent)</label>
       <label index="label.testMode">Test mode</label>
       <label index="label.testMode.disabled">Disabled (Warning message will sent, e-mails over quota will deleted)</label>
       <label index="label.testMode.enabled">Enabled (postfix admin will get the report "Which will happen")</label>
@@ -28,6 +29,8 @@
       <label index="msg.enterQuotaLimitRemove">The Quota limit has to be between 100 per cent and 150 per cent.</label>
       <label index="msg.enterQuotaLimitRemoveMustBeBigger">The Quota limit has to be bigger than the warning limit.</label>
       <label index="msg.enterQuotaLimitWarn">The Quota warning limit has to be between 50 per cent and 120 per cent.</label>
+      <label index="msg.enterQuotaReduceMailbox">If a mailbox is over the quota limit, it should reduced to a value between 50 and 100 per cent.</label>
+      <label index="msg.enterQuotaReduceMailboxMustBeSmaller">The value for a reduced mailbox has to be smaller than the Quota limit for removing e-mails.</label>
       <label index="msg.osIsNotSupported"><![CDATA[
         Sorry, but the operating system "###PHP_OS###" isn't supported by TYPO3 Postfix.<br />
         If you need support, please contact <a href="http://wildt.at.die-netzmacher.de/" target="_blank">http://wildt.at.die-netzmacher.de/</a>
