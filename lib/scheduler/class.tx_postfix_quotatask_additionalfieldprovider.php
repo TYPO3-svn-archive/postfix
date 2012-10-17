@@ -211,7 +211,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
       if( $parentObject->CMD == 'add' ) 
       {
           // In case of new task and if field is empty, set default email address
-        $taskInfo['postfix_postfixAdminCompany'] = $GLOBALS['BE_USER']->user['email'];
+        $taskInfo['postfix_postfixAdminCompany'] = $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'];
       } 
       elseif( $parentObject->CMD == 'edit' ) 
       {
@@ -327,7 +327,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
       if( $parentObject->CMD == 'add' ) 
       {
           // In case of new task and if field is empty, set default email address
-        $taskInfo['postfix_postfixAdminName'] = $GLOBALS['BE_USER']->user['email'];
+        $taskInfo['postfix_postfixAdminName'] = $GLOBALS['BE_USER']->user['realName'];
       } 
       elseif( $parentObject->CMD == 'edit' ) 
       {
@@ -385,7 +385,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
       if( $parentObject->CMD == 'add' ) 
       {
           // In case of new task and if field is empty, set default email address
-        $taskInfo['postfix_postfixAdminPhone'] = $GLOBALS['BE_USER']->user['email'];
+        $taskInfo['postfix_postfixAdminPhone'] = '000 00000000';
       } 
       elseif( $parentObject->CMD == 'edit' ) 
       {
