@@ -490,6 +490,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
         // ...
         continue;
       }
+      $this->quotaSet( );
       $this->quotaWarning( );
       $this->quotaRemove( );
     }
@@ -632,6 +633,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
    * Quota
    *
    **********************************************/
+
   /**
     * quotaRemove( )  : 
     *
@@ -684,6 +686,58 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
   }
 
   /**
+    * quotaSet( )  : 
+    *
+    * @return void
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function quotaSet( )
+  {
+    $defaultQuotaInMegabyte = ( int ) $this->mailboxData['tx_postfix_quota'];
+    if( empty ( $defaultQuotaInMegabyte ) )
+    {
+      $defaultQuotaInMegabyte = ( int ) $this->postfix_quotaLimitDefault;
+    }
+    
+    switch( true )
+    {
+      case( $defaultQuotaInMegabyte <= 1 ):
+          // DRS
+        $prompt_01 = 'FATAL ERROR: current Quota limit is "' .  $defaultQuotaInMegabyte . '" ';
+        $prompt_02 = 'mailbox: "' .  $this->mailboxData['pathToMailbox'] . '" ';
+        $prompt_03 = 'Postfix Quota will die!';
+        if( $this->drsModeError )
+        {
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt_01, $this->extKey, 3 );
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt_02, $this->extKey, 2 );
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt_03, $this->extKey, 3 );
+        }
+          // DRS
+        $prompt = $prompt_01 . $prompt_02 . __METHOD__ . ' at line ' . __LINE__ . '.';
+        die( $prompt );
+        break;
+      case( $defaultQuotaInMegabyte < 50 ):
+          // DRS
+        if( $this->drsModeWarn )
+        {
+          $prompt = 'Current Quota limit is less than 50 megabyte: ' .  
+                    $defaultQuotaInMegabyte . ' megabyte. ' . 
+                    'mailbox: ' . $this->mailboxData['pathToMailbox'] . '.';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 2 );
+          $prompt = 'Please check, if this value is proper!';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 2 );
+        }
+        break;
+      default:
+          // Follow the workflow
+        break;
+    }
+    
+    $this->defaultQuotaInBytes = $defaultQuotaInMegabyte * 1024;
+  }
+
+  /**
     * quotaWarning( )  : 
     *
     * @return void
@@ -723,6 +777,20 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
           // DRS
         return;
         break;
+    }
+    
+    if( $this->mailboxSizeInBytes > ( $this->defaultQuotaInBytes / 100 * $this->postfix_quotaLimitWarn ) )
+    {
+        // DRS
+      if( $this->drsModeError )
+      {
+        $prompt = $this->mailboxData['pathToMailbox'] . '  overrruns the warning limit. ' .
+                  'Mailbox size is ' . $this->mailboxSizeInBytes . ' bytes. ' .
+                  'Warning limit is ' . ( $this->mailboxSizeInBytes / 100 * $this->postfix_quotaLimitWarn ) . '.' .
+                  '';
+        t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+      }
+        // DRS
     }
   }
 
