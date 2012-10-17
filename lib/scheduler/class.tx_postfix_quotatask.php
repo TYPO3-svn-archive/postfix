@@ -960,9 +960,9 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     $marker['###OVERRUNINPERCENT###']           = $overrunInPercent;
     $marker['###REDUCEDMAILBOXINPERCENT###']    = $this->postfix_quotaReduceMailbox;
     $marker['###REDUCEDMAILBOXINMEGABYTES###']  = $reducedMailboxInMegabytes;
-    $marker['###POSTFIXADMINCOMPANY###']        = '';
-    $marker['###POSTFIXADMINNAME###']           = '';
-    $marker['###POSTFIXADMINPHONE###']          = '';
+    $marker['###POSTFIXADMINCOMPANY###']        = $this->postfix_postfixAdminCompany;
+    $marker['###POSTFIXADMINNAME###']           = $this->postfix_postfixAdminName;
+    $marker['###POSTFIXADMINPHONE###']          = $this->postfix_postfixAdminPhone;
       
       // DRS
     if( $this->drsModeQuotaTask )
