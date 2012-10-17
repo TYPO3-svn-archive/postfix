@@ -6,7 +6,8 @@
   </meta>
   <data type="array">
     <languageKey index="default" type="array">
-      <label index="email.warn.overrunWarningLimit"><![CDATA[
+      <label index="email.warn.overrunWarningLimit.subject">Your mailbox chocks!</label>
+      <label index="email.warn.overrunWarningLimit.body"><![CDATA[
 Dear ###NAME###,
 
 Your mailbox has a size of ###MAILBOXSIZEINMEGABYTES### megabytes.
@@ -27,7 +28,8 @@ Kind regards
 ###POSTFIXADMINNAME###
 phone ###POSTFIXADMINPHONE###
       ]]></label>
-      <label index="email.warn.overrunQuotaLimit"><![CDATA[
+      <label index="email.warn.overrunQuotaLimit.subject">Your mailbox is overrun!</label>
+      <label index="email.warn.overrunQuotaLimit.body"><![CDATA[
 Dear ###NAME###,
 
 Your mailbox has a size of ###MAILBOXSIZEINMEGABYTES### megabytes.
@@ -50,6 +52,7 @@ Kind regards
 ###POSTFIXADMINNAME###
 phone ###POSTFIXADMINPHONE###
       ]]></label>
+      <label index="label.copy">Copy</label>
       <label index="label.postfixAdminCompany">Company of the postfix admin</label>
       <label index="label.postfixAdminEmail">E-mail of the postfix admin</label>
       <label index="label.postfixAdminName">Name of the postfix admin</label>

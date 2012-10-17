@@ -924,8 +924,9 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     $marker['###REDUCEDMAILBOXINPERCENT###']    = $this->postfix_quotaReduceMailbox;
     $marker['###REDUCEDMAILBOXINMEGABYTES###']  = $reducedMailboxInMegabytes;
     
-    $body = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:email.warn.overrunWarningLimit' );
-    
+    $subject  = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:email.warn.overrunWarningLimit.subject' );
+
+    $body     = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:email.warn.overrunWarningLimit.body' );
     foreach( $marker as $key => $value )
     {
       $body = str_replace($key, $value, $body );
@@ -942,12 +943,31 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       // action depending on quota mode
     switch( $this->postfix_quotaMode )
     {
-      case( 'remove' ):
       case( 'warn' ):
-          // Send a warning mail
+        $body     = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.copy' ) .
+                    ': ' .
+                    $this->postfix_postfixAdminName;
+        $to       = $this->postfix_postfixAdminEmail;
+        $to       = $this->postfix_postfixAdminEmail . ', dirk.wildt@puppenspiel-portal.eu';
         break;
       case( 'test' ):
-          // Send a warning mail to admin only
+        $subject  = '[TEST] ' . $subject;
+        $body     = '[TEST] ' . PHP_EOL . 
+                    PHP_EOL .
+                    $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.copy' ) .
+                    ': ' .
+                    $this->postfix_postfixAdminName;
+        $to       = $this->postfix_postfixAdminEmail;
+        break;
+      case( 'remove' ):
+          // DRS
+        if( $this->drsModeError )
+        {
+          $prompt = 'Quota mode is not allowed: "' .  $this->postfix_quotaMode . '"';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+        }
+          // DRS
+        return false;
         break;
       default:
           // DRS
@@ -957,9 +977,46 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
           t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
         }
           // DRS
+        return false;
         break;
     }
     
+    try 
+    {
+      /** @var $mailer t3lib_mail_message */
+      $mailer = t3lib_div::makeInstance( 't3lib_mail_message' );
+      $mailer->setFrom( array( $this->postfix_postfixAdminEmail => $this->postfix_postfixAdminName ) );
+      $mailer->setReplyTo( array( $this->postfix_postfixAdminEmail => $this->postfix_postfixAdminName ) );
+      $mailer->setSubject( $subject );
+      $mailer->setBody( $body );
+      $mailer->setTo( $to );
+      
+      $mailsSend  = $mailer->send( );
+      $success    = ( $mailsSend > 0 );
+    } 
+    catch( Exception $e )
+    {
+      throw new t3lib_exception( $e->getMessage( ) );
+    }
+
+      // DRS
+    if( $this->drsModeQuotaTask || $this->drsModeQuotaError )
+    {
+      switch( $success )
+      {
+        case( false ):
+          $prompt = 'Undefined error. Test email couldn\'t sent to "' . $this->postfix_postfixAdminEmail . '"';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+          break;
+        case( true ):
+        default:
+          $prompt = 'Test email is sent to "' . $this->postfix_postfixAdminEmail . '"';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, -1 );
+          break;
+      }
+    }
+     // DRS
+ 
   }
 
   /**
@@ -1007,8 +1064,9 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     $marker['###REDUCEDMAILBOXINPERCENT###']    = $this->postfix_quotaReduceMailbox;
     $marker['###REDUCEDMAILBOXINMEGABYTES###']  = $reducedMailboxInMegabytes;
       
-    $body = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:email.warn.overrunQuotaLimit' );
-    
+    $subject  = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:email.warn.overrunQuotaLimit.subject' );
+
+    $body     = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:email.warn.overrunQuotaLimit.body' );
     foreach( $marker as $key => $value )
     {
       $body = str_replace($key, $value, $body );
