@@ -734,7 +734,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
         break;
     }
     
-    $this->defaultQuotaInBytes = $defaultQuotaInMegabyte * 1024;
+    $this->defaultQuotaInBytes = $defaultQuotaInMegabyte * 1024 * 1024;
   }
 
   /**
@@ -782,7 +782,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     if( $this->mailboxSizeInBytes > ( $this->defaultQuotaInBytes / 100 * $this->postfix_quotaLimitWarn ) )
     {
         // DRS
-      if( $this->drsModeError )
+      if( $this->drsModeQuotaTask )
       {
         $prompt = $this->mailboxData['pathToMailbox'] . '  overrruns the warning limit. ' .
                   'Mailbox size is ' . $this->mailboxSizeInBytes . ' bytes. ' .
