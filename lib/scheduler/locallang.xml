@@ -6,11 +6,11 @@
   </meta>
   <data type="array">
     <languageKey index="default" type="array">
-      <label index="email.warn.overrunWarningLimit.subject">Only ###LEFTPLACEINPERCENT### per cent are left: Your mailbox chocks!</label>
+      <label index="email.warn.overrunWarningLimit.subject">Only ###LEFTPLACEINPERCENT### per cent: Your mailbox chocks!</label>
       <label index="email.warn.overrunWarningLimit.body"><![CDATA[
 Dear ###NAME###,
 
-Your mailbox has a size of ###MAILBOXSIZEINMEGABYTES### megabytes.
+Your mailbox ###FEUSERSEMAIL### has a size of ###MAILBOXSIZEINMEGABYTES### megabytes.
 Your mailbox is left ###LEFTPLACEINPERCENT### per cent place only.
 
 Please remove e-mails, which aren't needed. If you don't remove mails, you will get 
@@ -35,7 +35,7 @@ P.S. This is an automatical e-mail
       <label index="email.warn.overrunQuotaLimit.body"><![CDATA[
 Dear ###NAME###,
 
-Your mailbox has a size of ###MAILBOXSIZEINMEGABYTES### megabytes.
+Your mailbox ###FEUSERSEMAIL### has a size of ###MAILBOXSIZEINMEGABYTES### megabytes.
 Your mailbox overrun the contracted size of ###QUOTALIMITINMEGABYTES### megabytes
 with ###OVERRUNINMEGABYTES### megabytes (###OVERRUNINPERCENT### per cent).
 
@@ -184,11 +184,11 @@ P.S. This is an automatical e-mail
       <label index="msg.quotaMode.udefined">postfix_quotaMode is undefined!</label>
     </languageKey>
     <languageKey index="de" type="array">
-      <label index="email.warn.overrunWarningLimit.subject">Nur noch ###LEFTPLACEINPERCENT### Prozent Platz: Ihre Mailbox l<![CDATA[ä]]>uft <![CDATA[ü]]>ber!</label>
+      <label index="email.warn.overrunWarningLimit.subject">Noch ###LEFTPLACEINPERCENT### Prozent: Ihre Mailbox l<![CDATA[ä]]>uft <![CDATA[ü]]>ber!</label>
       <label index="email.warn.overrunWarningLimit.body"><![CDATA[
 Hallo ###NAME###,
 
-Ihre Mailbox hat eine Größe von ###MAILBOXSIZEINMEGABYTES### Megabyte erreicht.
+Ihre Mailbox ###FEUSERSEMAIL### hat eine Größe von ###MAILBOXSIZEINMEGABYTES### Megabyte erreicht.
 Ihre Mailbox hat nur noch ###LEFTPLACEINPERCENT### Prozent Platz.
 
 Bitte löschen Sie Mails, die Sie nicht mehr brauchen. Wenn Sie keine Mails löschen, 
@@ -212,7 +212,7 @@ P.S. Dies ist eine automatisch generierte Mail
       <label index="email.warn.overrunQuotaLimit.body"><![CDATA[
 Hallo ###NAME###,
 
-Ihre Mailbox hat eine Größe von ###MAILBOXSIZEINMEGABYTES### Megabyte erreicht.
+Ihre Mailbox ###FEUSERSEMAIL### hat eine Größe von ###MAILBOXSIZEINMEGABYTES### Megabyte erreicht.
 Damit überschreitet Ihre Mailbox die vertraglich vereinbarte Größe von ###QUOTALIMITINMEGABYTES### Megabyte
 um ###OVERRUNINMEGABYTES### Megabyte und um ###OVERRUNINPERCENT### Prozent.
 

@@ -854,6 +854,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     $reducedMailboxInMegabytes  = ( int ) ( $quotaLimitInMegabytes / 100 * $this->postfix_quotaReduceMailbox );
     
     $marker = array( );
+    $marker['###FEUSERSEMAIL###']               = $this->mailboxData['email'];
     $marker['###LEFTPLACEINPERCENT###']         = $leftPlaceInPercent;
     $marker['###MAILBOXSIZEINMEGABYTES###']     = $mailboxSizeInMegabytes;
     $marker['###NAME###']                       = $this->feusersName( );
@@ -999,6 +1000,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     $reducedMailboxInMegabytes  = ( int ) ( $quotaLimitInMegabytes / 100 * $this->postfix_quotaReduceMailbox );
     
     $marker = array( );
+    $marker['###FEUSERSEMAIL###']               = $this->mailboxData['email'];
     $marker['###LEFTPLACEINPERCENT###']         = null;
     $marker['###MAILBOXSIZEINMEGABYTES###']     = $mailboxSizeInMegabytes;
     $marker['###NAME###']                       = $this->feusersName( );
