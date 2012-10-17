@@ -8,9 +8,9 @@
     <languageKey index="default" type="array">
       <label index="label.pathToFolderWiDrafts">Path to the folder with the e-mail drafts</label>
       <label index="label.postfixAdminEmail">E-mail of the postfix admin</label>
-      <label index="label.quotaLimitDefault">Default Quota Limit in megabyte</label>
-      <label index="label.quotaLimitRemove">Quota Limit in percent</label>
-      <label index="label.quotaLimitWarn">Warning Limit in percent</label>
+      <label index="label.quotaLimitDefault">Default Quota Limit (in megabyte)</label>
+      <label index="label.quotaLimitRemove">Quota Limit (in percent)</label>
+      <label index="label.quotaLimitWarn">Warning Limit (in percent)</label>
       <label index="label.quotaMode">Quota mode</label>
       <label index="label.quotaMode.remove">Warnings and removing e-mails</label>
       <label index="label.quotaMode.warn">Warnings</label>
