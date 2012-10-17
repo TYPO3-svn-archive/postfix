@@ -882,7 +882,11 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
                           ': ' . 
                           $this->postfix_quotaLimitWarn .
                           '. ';
-    return $quotaMode . $postfixAdminEmail. $quotaLimitDefault . $quotaLimitRemove . $quotaLimitWarn;
+    $quotaReduceMailbox   = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.quotaReduceMailbox' ) .
+                          ': ' . 
+                          $this->postfix_quotaReduceMailbox .
+                          '. ';
+    return $quotaMode . $postfixAdminEmail. $quotaLimitDefault . $quotaLimitRemove . $quotaLimitWarn . $quotaReduceMailbox;
   }
 }
 
