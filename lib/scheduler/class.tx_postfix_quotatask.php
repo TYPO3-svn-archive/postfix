@@ -844,6 +844,26 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     */
   private function sendMailWarning( )
   {
+    $this->sendMailWarningQuotaIsOverrun( );
+    $this->sendMailWarningQuotaIsNotOverrun( );
+  }
+
+  /**
+    * sendMailWarningQuotaIsNotOverrun( )  : Returns true, if limit is overrun, false if not.
+    *
+    * @return boolean
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function sendMailWarningQuotaIsNotOverrun( )
+  {
+      // RETURN : mailbox is bigger than the quota limit
+    if( $this->mailboxSizeInBytes >= $this->quotaLimitInBytes )
+    {
+      return;
+    }
+      // RETURN : mailbox is bigger than the quota limit
+      
       // Get the limit for warnings in bytes
     $quotaLimitWarnInBytes      = $this->quotaLimitInBytes / 100 * $this->postfix_quotaLimitWarn;
     $quotaLimitWarnInMegabytes  = ( int ) ( $quotaLimitWarnInBytes / 1024 / 1024 );
@@ -867,6 +887,75 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
                 'And if your mailbox will overrun the size of 100 per cent (' . $quotaLimitInMegabytes . ' megabytes), ' . 
                 'the system will cut down your mailbox to ' . $this->postfix_quotaReduceMailbox . ' per cent ' .
                 '(' . $reducedMailboxInMegabytes . ' megabytes) by removing e-mails! ' .
+                'Please be appreciative of this reminder and of removing emails in case of a overrun, ' .
+                'because overrun mailboxes provoke high costs of server performance. ';
+      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
+    }
+      // DRS
+    
+    // action depending on quota mode
+    switch( $this->postfix_quotaMode )
+    {
+      case( 'remove' ):
+      case( 'warn' ):
+          // Send a warning mail
+        break;
+      case( 'test' ):
+          // Send a warning mail to admin only
+        break;
+      default:
+          // DRS
+        if( $this->drsModeError )
+        {
+          $prompt = 'Quota mode is undefined: "' .  $this->postfix_quotaMode . '"';
+          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
+        }
+          // DRS
+        break;
+    }
+    
+  }
+
+  /**
+    * sendMailWarningQuotaIsOverrun( )  : Returns true, if limit is overrun, false if not.
+    *
+    * @return boolean
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function sendMailWarningQuotaIsOverrun( )
+  {
+      // RETURN : mailbox is smaller than the quota limit
+    if( $this->mailboxSizeInBytes <  $this->quotaLimitInBytes )
+    {
+      return;
+    }
+      // RETURN : mailbox is smaller than the quota limit
+      
+      // Get the limit for warnings in bytes
+    $quotaLimitWarnInBytes      = $this->quotaLimitInBytes / 100 * $this->postfix_quotaLimitWarn;
+    $quotaLimitWarnInMegabytes  = ( int ) ( $quotaLimitWarnInBytes / 1024 / 1024 );
+    
+    $mailboxSizeInMegabytes     = ( int ) ( $this->mailboxSizeInBytes / 1024 / 1024 );
+    
+    $quotaLimitInMegabytes      = ( int ) $this->quotaLimitInBytes * 1024 * 1024;
+    
+    $mailboxSizeInPercent       = ( int ) ( $this->mailboxSizeInBytes / $this->quotaLimitInBytes );
+    
+    $overrunInPercent           = $mailboxSizeInPercent - 100;
+    $overrunInMegabytes         = $mailboxSizeInMegabytes - $quotaLimitInMegabytes;
+    
+    $reducedMailboxInMegabytes  = ( int ) ( $quotaLimitWarnInMegabytes * $this->postfix_quotaReduceMailbox );
+    
+      // DRS
+    if( $this->drsModeQuotaTask )
+    {
+      $prompt = 'Your mailbox has a size of ' . $mailboxSizeInMegabytes . ' megabytes. ' .
+                'Your mailbox overrun the contracted size of ' . $quotaLimitInMegabytes . ' megabytes. ' . 
+                'with ' . $overrunInMegabytes . ' megabytes (' . $overrunInPercent . ' per cent). ' .
+                'Please remove emails, which aren\'t needed. Please avoid extra costs. ' . 
+                'If you don\'t remove emails by your own, the system will cut down your mailbox to ' . $this->postfix_quotaReduceMailbox . ' per cent ' .
+                '(' . $reducedMailboxInMegabytes . ' megabytes) by removing e-mails from 1st of December automatically.! ' .
                 'Please be appreciative of this reminder and of removing emails in case of a overrun, ' .
                 'because overrun mailboxes provoke high costs of server performance. ';
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
