@@ -867,11 +867,11 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     $marker['###REDUCEDMAILBOXINMEGABYTES###']  = $reducedMailboxInMegabytes;
     
     $subject  = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:email.warn.overrunWarningLimit.subject' );
-
     $body     = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:email.warn.overrunWarningLimit.body' );
     foreach( $marker as $key => $value )
     {
-      $body = str_replace($key, $value, $body );
+      $subject  = str_replace($key, $value, $subject );
+      $body     = str_replace($key, $value, $body );
     }
 
       // DRS
@@ -1012,11 +1012,11 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     $marker['###REDUCEDMAILBOXINMEGABYTES###']  = $reducedMailboxInMegabytes;
       
     $subject  = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:email.warn.overrunQuotaLimit.subject' );
-
     $body     = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:email.warn.overrunQuotaLimit.body' );
     foreach( $marker as $key => $value )
     {
-      $body = str_replace($key, $value, $body );
+      $subject  = str_replace($key, $value, $subject );
+      $body     = str_replace($key, $value, $body );
     }
 
       // DRS
