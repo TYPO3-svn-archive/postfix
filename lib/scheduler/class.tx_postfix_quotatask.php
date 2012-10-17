@@ -938,7 +938,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       $mailer->setSubject( $subject );
       $mailer->setBody( $body );
       $mailer->setTo( $to );
-      $mailer->setTo( $cc );
+      $mailer->setCc( $cc );
       
       $mailsSend  = $mailer->send( );
       $success    = ( $mailsSend > 0 );
@@ -1085,7 +1085,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       $mailer->setSubject( $subject );
       $mailer->setBody( $body );
       $mailer->setTo( $to );
-      $mailer->setTo( $cc );
+      $mailer->setCc( $cc );
       
       $mailsSend  = $mailer->send( );
       $success    = ( $mailsSend > 0 );
