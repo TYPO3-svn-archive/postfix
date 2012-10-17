@@ -6,8 +6,55 @@
   </meta>
   <data type="array">
     <languageKey index="default" type="array">
+      <label index="email.warn.overrunWarningLimit"><![CDATA[
+Dear ###NAME###,
+
+Your mailbox has a size of ###MAILBOXSIZEINMEGABYTES### megabytes.
+Your mailbox lefts ###LEFTPLACEINPERCENT### per cent place only.
+
+*Please remove emails, which aren't needed.*
+Sorry, but elsewise you will get this reminder every day.
+
+BE AWARE: If your mailbox will overrun the size of 100 per cent (###QUOTALIMITINMEGABYTES### megabytes), 
+*the system will cut down your mailbox* to ###REDUCEDMAILBOXINPERCENT### per cent
+(###REDUCEDMAILBOXINMEGABYTES### megabytes) of the contracted limit *by removing e-mails automatically*!
+
+Please be appreciative of this reminder and of removing e-mails in case of a overrun,
+because overrun mailboxes provoke high costs of server performance.
+
+Kind regards
+###POSTFIXADMINCOMPANY###
+###POSTFIXADMINNAME###
+###POSTFIXADMINPHONE###
+      ]]></label>
+      <label index="email.warn.overrunQuotaLimit"><![CDATA[
+Dear ###NAME###,
+
+Your mailbox has a size of ###MAILBOXSIZEINMEGABYTES### megabytes.
+Your mailbox *overrun the contracted size* of ###QUOTALIMITINMEGABYTES### megabytes
+with ###OVERRUNINMEGABYTES### megabytes (###OVERRUNINPERCENT### per cent).
+
+Please remove emails, which aren't needed.
+
+Please avoid extra costs for overrun the contracted size.
+
+If you don't remove emails by your own, *the system will cut down your mailbox* 
+to ###REDUCEDMAILBOXINPERCENT### per cent (###REDUCEDMAILBOXINMEGABYTES### megabytes) 
+of the contracted limit *by removing e-mails automatically*!
+
+Please be appreciative of this reminder and of removing emails in case of a overrun,
+because overrun mailboxes provoke high costs of server performance.
+
+Kind regards
+###POSTFIXADMINCOMPANY###
+###POSTFIXADMINNAME###
+###POSTFIXADMINPHONE###
+      ]]></label>
       <label index="label.pathToFolderWiDrafts">Path to the folder with the e-mail drafts</label>
+      <label index="label.postfixAdminCompany">Company of the postfix admin</label>
       <label index="label.postfixAdminEmail">E-mail of the postfix admin</label>
+      <label index="label.postfixAdminName">Name of the postfix admin</label>
+      <label index="label.postfixAdminPhone">Phone of the postfix admin</label>
       <label index="label.quotaLimitDefault">Default Quota Limit (in megabyte)</label>
       <label index="label.quotaLimitRemove">Quota Limit (in percent)</label>
       <label index="label.quotaLimitWarn">Warning Limit (in percent)</label>

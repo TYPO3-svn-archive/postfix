@@ -56,7 +56,10 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   public function getAdditionalFields( array &$taskInfo, $task, tx_scheduler_Module $parentObject ) 
   {
     $additionalFields = array( );
+    $additionalFields = $additionalFields + $this->getFieldPostfixAdminCompany( $taskInfo, $task, $parentObject );
     $additionalFields = $additionalFields + $this->getFieldPostfixAdminEmail( $taskInfo, $task, $parentObject );
+    $additionalFields = $additionalFields + $this->getFieldPostfixAdminName( $taskInfo, $task, $parentObject );
+    $additionalFields = $additionalFields + $this->getFieldPostfixAdminPhone( $taskInfo, $task, $parentObject );
     $additionalFields = $additionalFields + $this->getFieldPathToFolderWiDrafts( $taskInfo, $task, $parentObject );
     $additionalFields = $additionalFields + $this->getFieldQuotaMode( $taskInfo, $task, $parentObject );
     $additionalFields = $additionalFields + $this->getFieldQuotaLimitDefault( $taskInfo, $task, $parentObject );
@@ -184,6 +187,64 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
 
 
   /**
+    * getFieldPostfixAdminCompany( )  : This method is used to define new fields for adding or editing a task
+    *                                           In this case, it adds an email field
+    *
+    * @param array $taskInfo Reference to the array containing the info used in the add/edit form
+    * @param object $task When editing, reference to the current task object. Null when adding.
+    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
+    * @return array    Array containing all the information pertaining to the additional fields
+    *                    The array is multidimensional, keyed to the task class name and each field's id
+    *                    For each field it provides an associative sub-array with the following:
+    *                        ['code']        => The HTML code for the field
+    *                        ['label']        => The label of the field (possibly localized)
+    *                        ['cshKey']        => The CSH key for the field
+    *                        ['cshLabel']    => The code of the CSH label
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function getFieldPostfixAdminCompany( array &$taskInfo, $task, $parentObject ) 
+  {
+      // IF : field is empty, initialize extra field value
+    if( empty( $taskInfo['postfix_postfixAdminCompany'] ) ) 
+    {
+      if( $parentObject->CMD == 'add' ) 
+      {
+          // In case of new task and if field is empty, set default email address
+        $taskInfo['postfix_postfixAdminCompany'] = $GLOBALS['BE_USER']->user['email'];
+      } 
+      elseif( $parentObject->CMD == 'edit' ) 
+      {
+          // In case of edit, and editing a test task, set to internal value if not data was submitted already
+        $taskInfo['postfix_postfixAdminCompany'] = $task->postfix_postfixAdminCompany;
+      }
+      else
+      {
+          // Otherwise set an empty value, as it will not be used anyway
+        $taskInfo['postfix_postfixAdminCompany'] = '';
+      }
+    }
+      // IF : field is empty, initialize extra field value
+
+      // Write the code for the field
+    $fieldID    = 'postfix_postfixAdminCompany';
+    $fieldValue = htmlspecialchars( $taskInfo['postfix_postfixAdminCompany'] );
+    $fieldCode  = '<input type="text" name="tx_scheduler[postfix_postfixAdminCompany]" id="' . $fieldID . '" value="' . $fieldValue . '" size="50" />';
+    $additionalFields = array( );
+    $additionalFields[$fieldID] = array
+    (
+      'code'     => $fieldCode,
+      'label'    => 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.postfixAdminCompany',
+      'cshKey'   => '_MOD_tools_txschedulerM1',
+      'cshLabel' => $fieldID
+    );
+      // Write the code for the field
+
+    return $additionalFields;
+  }
+
+
+  /**
     * getFieldPostfixAdminEmail( )  : This method is used to define new fields for adding or editing a task
     *                                           In this case, it adds an email field
     *
@@ -232,6 +293,122 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     (
       'code'     => $fieldCode,
       'label'    => 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.postfixAdminEmail',
+      'cshKey'   => '_MOD_tools_txschedulerM1',
+      'cshLabel' => $fieldID
+    );
+      // Write the code for the field
+
+    return $additionalFields;
+  }
+
+
+  /**
+    * getFieldPostfixAdminName( )  : This method is used to define new fields for adding or editing a task
+    *                                           In this case, it adds an email field
+    *
+    * @param array $taskInfo Reference to the array containing the info used in the add/edit form
+    * @param object $task When editing, reference to the current task object. Null when adding.
+    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
+    * @return array    Array containing all the information pertaining to the additional fields
+    *                    The array is multidimensional, keyed to the task class name and each field's id
+    *                    For each field it provides an associative sub-array with the following:
+    *                        ['code']        => The HTML code for the field
+    *                        ['label']        => The label of the field (possibly localized)
+    *                        ['cshKey']        => The CSH key for the field
+    *                        ['cshLabel']    => The code of the CSH label
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function getFieldPostfixAdminName( array &$taskInfo, $task, $parentObject ) 
+  {
+      // IF : field is empty, initialize extra field value
+    if( empty( $taskInfo['postfix_postfixAdminName'] ) ) 
+    {
+      if( $parentObject->CMD == 'add' ) 
+      {
+          // In case of new task and if field is empty, set default email address
+        $taskInfo['postfix_postfixAdminName'] = $GLOBALS['BE_USER']->user['email'];
+      } 
+      elseif( $parentObject->CMD == 'edit' ) 
+      {
+          // In case of edit, and editing a test task, set to internal value if not data was submitted already
+        $taskInfo['postfix_postfixAdminName'] = $task->postfix_postfixAdminName;
+      }
+      else
+      {
+          // Otherwise set an empty value, as it will not be used anyway
+        $taskInfo['postfix_postfixAdminName'] = '';
+      }
+    }
+      // IF : field is empty, initialize extra field value
+
+      // Write the code for the field
+    $fieldID    = 'postfix_postfixAdminName';
+    $fieldValue = htmlspecialchars( $taskInfo['postfix_postfixAdminName'] );
+    $fieldCode  = '<input type="text" name="tx_scheduler[postfix_postfixAdminName]" id="' . $fieldID . '" value="' . $fieldValue . '" size="50" />';
+    $additionalFields = array( );
+    $additionalFields[$fieldID] = array
+    (
+      'code'     => $fieldCode,
+      'label'    => 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.postfixAdminName',
+      'cshKey'   => '_MOD_tools_txschedulerM1',
+      'cshLabel' => $fieldID
+    );
+      // Write the code for the field
+
+    return $additionalFields;
+  }
+
+
+  /**
+    * getFieldPostfixAdminPhone( )  : This method is used to define new fields for adding or editing a task
+    *                                           In this case, it adds an email field
+    *
+    * @param array $taskInfo Reference to the array containing the info used in the add/edit form
+    * @param object $task When editing, reference to the current task object. Null when adding.
+    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
+    * @return array    Array containing all the information pertaining to the additional fields
+    *                    The array is multidimensional, keyed to the task class name and each field's id
+    *                    For each field it provides an associative sub-array with the following:
+    *                        ['code']        => The HTML code for the field
+    *                        ['label']        => The label of the field (possibly localized)
+    *                        ['cshKey']        => The CSH key for the field
+    *                        ['cshLabel']    => The code of the CSH label
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function getFieldPostfixAdminPhone( array &$taskInfo, $task, $parentObject ) 
+  {
+      // IF : field is empty, initialize extra field value
+    if( empty( $taskInfo['postfix_postfixAdminPhone'] ) ) 
+    {
+      if( $parentObject->CMD == 'add' ) 
+      {
+          // In case of new task and if field is empty, set default email address
+        $taskInfo['postfix_postfixAdminPhone'] = $GLOBALS['BE_USER']->user['email'];
+      } 
+      elseif( $parentObject->CMD == 'edit' ) 
+      {
+          // In case of edit, and editing a test task, set to internal value if not data was submitted already
+        $taskInfo['postfix_postfixAdminPhone'] = $task->postfix_postfixAdminPhone;
+      }
+      else
+      {
+          // Otherwise set an empty value, as it will not be used anyway
+        $taskInfo['postfix_postfixAdminPhone'] = '';
+      }
+    }
+      // IF : field is empty, initialize extra field value
+
+      // Write the code for the field
+    $fieldID    = 'postfix_postfixAdminPhone';
+    $fieldValue = htmlspecialchars( $taskInfo['postfix_postfixAdminPhone'] );
+    $fieldCode  = '<input type="text" name="tx_scheduler[postfix_postfixAdminPhone]" id="' . $fieldID . '" value="' . $fieldValue . '" size="50" />';
+    $additionalFields = array( );
+    $additionalFields[$fieldID] = array
+    (
+      'code'     => $fieldCode,
+      'label'    => 'LLL:EXT:postfix/lib/scheduler/locallang.xml:label.postfixAdminPhone',
       'cshKey'   => '_MOD_tools_txschedulerM1',
       'cshLabel' => $fieldID
     );
@@ -509,7 +686,22 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
       $bool_isValidatingSuccessful = false;
     } 
 
+    if( ! $this->validateFieldPostfixAdminCompany( $submittedData, $parentObject ) ) 
+    {
+      $bool_isValidatingSuccessful = false;
+    } 
+
     if( ! $this->validateFieldPostfixAdminEmail( $submittedData, $parentObject ) ) 
+    {
+      $bool_isValidatingSuccessful = false;
+    } 
+
+    if( ! $this->validateFieldPostfixAdminName( $submittedData, $parentObject ) ) 
+    {
+      $bool_isValidatingSuccessful = false;
+    } 
+
+    if( ! $this->validateFieldPostfixAdminPhone( $submittedData, $parentObject ) ) 
     {
       $bool_isValidatingSuccessful = false;
     } 
@@ -570,6 +762,32 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   }
 
   /**
+    * validateFieldPostfixAdminCompany( )  : This method checks any additional data that is relevant to the specific task
+    *                                     If the task class is not relevant, the method is expected to return TRUE
+    *
+    * @param array     $submittedData Reference to the array containing the data submitted by the user
+    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
+    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function validateFieldPostfixAdminCompany( array &$submittedData, tx_scheduler_Module $parentObject ) 
+  {
+    $bool_isValidatingSuccessful = true;
+
+    $submittedData['postfix_postfixAdminCompany'] = trim( $submittedData['postfix_postfixAdminCompany'] );
+
+    if( empty( $submittedData['postfix_postfixAdminCompany'] ) ) 
+    {
+      $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterEmail' );
+      $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
+      $bool_isValidatingSuccessful = false;
+    } 
+
+    return $bool_isValidatingSuccessful;
+  }
+
+  /**
     * validateFieldPostfixAdminEmail( )  : This method checks any additional data that is relevant to the specific task
     *                                     If the task class is not relevant, the method is expected to return TRUE
     *
@@ -586,6 +804,58 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     $submittedData['postfix_postfixAdminEmail'] = trim( $submittedData['postfix_postfixAdminEmail'] );
 
     if( empty( $submittedData['postfix_postfixAdminEmail'] ) ) 
+    {
+      $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterEmail' );
+      $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
+      $bool_isValidatingSuccessful = false;
+    } 
+
+    return $bool_isValidatingSuccessful;
+  }
+
+  /**
+    * validateFieldPostfixAdminName( )  : This method checks any additional data that is relevant to the specific task
+    *                                     If the task class is not relevant, the method is expected to return TRUE
+    *
+    * @param array     $submittedData Reference to the array containing the data submitted by the user
+    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
+    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function validateFieldPostfixAdminName( array &$submittedData, tx_scheduler_Module $parentObject ) 
+  {
+    $bool_isValidatingSuccessful = true;
+
+    $submittedData['postfix_postfixAdminName'] = trim( $submittedData['postfix_postfixAdminName'] );
+
+    if( empty( $submittedData['postfix_postfixAdminName'] ) ) 
+    {
+      $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterEmail' );
+      $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
+      $bool_isValidatingSuccessful = false;
+    } 
+
+    return $bool_isValidatingSuccessful;
+  }
+
+  /**
+    * validateFieldPostfixAdminPhone( )  : This method checks any additional data that is relevant to the specific task
+    *                                     If the task class is not relevant, the method is expected to return TRUE
+    *
+    * @param array     $submittedData Reference to the array containing the data submitted by the user
+    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
+    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function validateFieldPostfixAdminPhone( array &$submittedData, tx_scheduler_Module $parentObject ) 
+  {
+    $bool_isValidatingSuccessful = true;
+
+    $submittedData['postfix_postfixAdminPhone'] = trim( $submittedData['postfix_postfixAdminPhone'] );
+
+    if( empty( $submittedData['postfix_postfixAdminPhone'] ) ) 
     {
       $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterEmail' );
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
@@ -816,7 +1086,10 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   public function saveAdditionalFields( array $submittedData, tx_scheduler_Task $task )
   {
     $this->saveFieldPathToFolderWiDrafts( $submittedData, $task );
+    $this->saveFieldPostfixAdminCompany( $submittedData, $task );
     $this->saveFieldPostfixAdminEmail( $submittedData, $task );
+    $this->saveFieldPostfixAdminName( $submittedData, $task );
+    $this->saveFieldPostfixAdminPhone( $submittedData, $task );
     $this->saveFieldQuotaMode( $submittedData, $task );
     $this->saveFieldQuotaLimitDefault( $submittedData, $task );
     $this->saveFieldQuotaLimitRemove( $submittedData, $task );
@@ -841,6 +1114,21 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   }
   
   /**
+    * saveFieldPostfixAdminCompany( ) : This method is used to save any additional input into the current task object
+    *                           if the task class matches
+    *
+    * @param array $submittedData Array containing the data submitted by the user
+    * @param tx_scheduler_Task $task Reference to the current task object
+    * @return void
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function saveFieldPostfixAdminCompany( array $submittedData, tx_scheduler_Task $task )
+  {
+    $task->postfix_postfixAdminCompany = $submittedData['postfix_postfixAdminCompany'];
+  }
+  
+  /**
     * saveFieldPostfixAdminEmail( ) : This method is used to save any additional input into the current task object
     *                           if the task class matches
     *
@@ -853,6 +1141,36 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   private function saveFieldPostfixAdminEmail( array $submittedData, tx_scheduler_Task $task )
   {
     $task->postfix_postfixAdminEmail = $submittedData['postfix_postfixAdminEmail'];
+  }
+  
+  /**
+    * saveFieldPostfixAdminName( ) : This method is used to save any additional input into the current task object
+    *                           if the task class matches
+    *
+    * @param array $submittedData Array containing the data submitted by the user
+    * @param tx_scheduler_Task $task Reference to the current task object
+    * @return void
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function saveFieldPostfixAdminName( array $submittedData, tx_scheduler_Task $task )
+  {
+    $task->postfix_postfixAdminName = $submittedData['postfix_postfixAdminName'];
+  }
+  
+  /**
+    * saveFieldPostfixAdminPhone( ) : This method is used to save any additional input into the current task object
+    *                           if the task class matches
+    *
+    * @param array $submittedData Array containing the data submitted by the user
+    * @param tx_scheduler_Task $task Reference to the current task object
+    * @return void
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function saveFieldPostfixAdminPhone( array $submittedData, tx_scheduler_Task $task )
+  {
+    $task->postfix_postfixAdminPhone = $submittedData['postfix_postfixAdminPhone'];
   }
 
   /**

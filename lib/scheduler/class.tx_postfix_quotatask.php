@@ -932,34 +932,42 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     }
       // RETURN : mailbox is smaller than the quota limit
       
-      // Get the limit for warnings in bytes
+      // Get the limit for warnings in bytes and megabytes
     $quotaLimitWarnInBytes      = $this->quotaLimitInBytes / 100 * $this->postfix_quotaLimitWarn;
     $quotaLimitWarnInMegabytes  = ( int ) ( $quotaLimitWarnInBytes / 1024 / 1024 );
     
-    $mailboxSizeInMegabytes     = ( int ) ( $this->mailboxSizeInBytes / 1024 / 1024 );
     
+      // Current quota limit in megabytes
     $quotaLimitInMegabytes      = ( int ) $this->quotaLimitInBytes / 1024 / 1024;
     
+      // Size of the current mailbox in megabytes
+    $mailboxSizeInMegabytes     = ( int ) ( $this->mailboxSizeInBytes / 1024 / 1024 );
+      // Size of the current mailbox in per cent in relation to the quota limit
     $mailboxSizeInPercent       = ( int ) ( $this->mailboxSizeInBytes / $this->quotaLimitInBytes * 100 );
     
+      // Size of the overun part of the current mailbox in per cent in relation to the current quota limit
     $overrunInPercent           = $mailboxSizeInPercent - 100;
+      // Size of the overun part of the current mailbox in megabytes in relation to the current quota limit
     $overrunInMegabytes         = $mailboxSizeInMegabytes - $quotaLimitInMegabytes;
     
+      // Size of a reduced mailbox in megabytes in relation to the current quota limit
     $reducedMailboxInMegabytes  = ( int ) ( $quotaLimitInMegabytes / 100 * $this->postfix_quotaReduceMailbox );
     
+    $marker['###NAME###']                       = $this->feusersName( );
+    $marker['###MAILBOXSIZEINMEGABYTES###']     = $mailboxSizeInMegabytes;
+    $marker['###QUOTALIMITINMEGABYTES###']      = $quotaLimitInMegabytes;
+    $marker['###OVERRUNINMEGABYTES###']         = $overrunInMegabytes;
+    $marker['###OVERRUNINPERCENT###']           = $overrunInPercent;
+    $marker['###REDUCEDMAILBOXINPERCENT###']    = $this->postfix_quotaReduceMailbox;
+    $marker['###REDUCEDMAILBOXINMEGABYTES###']  = $reducedMailboxInMegabytes;
+    $marker['###POSTFIXADMINCOMPANY###']        = '';
+    $marker['###POSTFIXADMINNAME###']           = '';
+    $marker['###POSTFIXADMINPHONE###']          = '';
+      
       // DRS
     if( $this->drsModeQuotaTask )
     {
-      $prompt = 'Your mailbox has a size of ' . $mailboxSizeInMegabytes . ' megabytes. ' .
-                'Your mailbox overrun the contracted size of ' . $quotaLimitInMegabytes . ' megabytes ' . 
-                'with ' . $overrunInMegabytes . ' megabytes (' . $overrunInPercent . ' per cent). ' .
-                'Please remove emails, which aren\'t needed. Please avoid extra costs for overrun the contracted size. ' . 
-                'If you don\'t remove emails by your own, the system will cut down your mailbox to ' .
-                $this->postfix_quotaReduceMailbox . ' per cent ' .
-                '(' . $reducedMailboxInMegabytes . ' megabytes) of the contracted limit ' . 
-                'by removing e-mails from 1st of December automatically! ' .
-                'Please be appreciative of this reminder and of removing emails in case of a overrun, ' .
-                'because overrun mailboxes provoke high costs of server performance. ';
+      $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:email.warn.overrunQuotaLimit' );
       t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
     }
       // DRS
