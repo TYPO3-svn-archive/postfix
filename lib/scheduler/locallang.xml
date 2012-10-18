@@ -87,7 +87,7 @@ P.S. This is an automatical e-mail
       <label index="msg.enterQuotaLimitWarn">The Quota warning limit has to be between 50 per cent and 120 per cent.</label>
       <label index="msg.enterQuotaReduceMailbox">If a mailbox is over the quota limit, it should reduced to a value between 50 and 100 per cent.</label>
       <label index="msg.enterQuotaReduceMailboxMustBeSmaller">The value for a reduced mailbox has to be smaller than the Quota limit for removing e-mails.</label>
-      <label index="msg.enterStart">Start must be 24 hours later than now. If you like to run PostFix Quota earlier, please run it manually.</label>
+      <label index="msg.enterStart">Start must be 24 hours later than now. This is a security requirement. If you like to run PostFix Quota earlier, please run it manually.</label>
       <label index="msg.osIsNotSupported"><![CDATA[
         Sorry, but the operating system "###PHP_OS###" isn't supported by TYPO3 Postfix.<br />
         If you need support, please contact <a href="http://wildt.at.die-netzmacher.de/" target="_blank">http://wildt.at.die-netzmacher.de/</a>

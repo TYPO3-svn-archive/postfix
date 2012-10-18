@@ -726,9 +726,9 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   {
     $bool_isValidatingSuccessful = true;
 
-    $submittedData['frequency'] = trim( $submittedData['frequency'] );
+    $submittedData['frequency'] = ( int ) $submittedData['frequency'];
 
-    if( ( int ) $submittedData['frequency'] < 86400 ) 
+    if( $submittedData['frequency'] < 86400 ) 
     {
       $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterFrequency' );
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::WARNING );
@@ -1046,12 +1046,13 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   {
     $bool_isValidatingSuccessful = true;
 
-    $submittedData['start'] = trim( $submittedData['start'] );
+    $submittedData['start'] = ( int ) $submittedData['start'];
 
-    if( ( int ) $submittedData['start'] > 0 ) 
+    $in24Hours = time( ) + ( 1 * 24 * 60 * 60 );
+
+    if( $submittedData['start'] < $in24Hours ) 
     {
       $prompt = $this->msgPrefix . ': ' . $submittedData['start'] . ' | ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterStart' );
-
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
       $bool_isValidatingSuccessful = false;
     } 
