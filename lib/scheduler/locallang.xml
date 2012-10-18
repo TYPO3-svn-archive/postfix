@@ -147,8 +147,11 @@ P.S. This is an automatical e-mail
       ]]></label>
       <label index="msg.quotaMode.test"><![CDATA[
         <h1 style="text-align: left;">
-          Postfix Quota sends a report only
+          Postfix Quota runs in test mode
         </h1>
+        <h2 style="text-align: left;">
+          Postfix Quota will send a report to the admin only
+        </h2>
         <p>
           The Postfix administrator will get a report by e-mail about what will happen in
         </p>
