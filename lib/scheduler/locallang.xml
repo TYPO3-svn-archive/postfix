@@ -149,7 +149,7 @@ P.S. This is an automatical e-mail
         <h1 style="text-align: left;">
           Postfix Quota runs in test mode
         </h1>
-        <h2 style="text-align: left;">
+        <h2 style="font-size:1.2em;">
           Postfix Quota will send a report to the admin only
         </h2>
         <p>
