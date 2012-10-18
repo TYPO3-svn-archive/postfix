@@ -1019,7 +1019,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
 
     $inAnHour = time( ) + ( 60 * 60 );
 
-    if( $submittedData['start'] < $inAnHours ) 
+    if( $submittedData['start'] < $inAnHour ) 
     {
       $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterStart' );
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
