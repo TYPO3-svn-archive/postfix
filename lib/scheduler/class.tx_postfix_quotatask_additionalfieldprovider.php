@@ -1000,6 +1000,35 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
 
     return $bool_isValidatingSuccessful;
   }
+
+  /**
+    * validateFieldStart( )  : This method checks any additional data that is relevant to the specific task
+    *                                     If the task class is not relevant, the method is expected to return TRUE
+    *
+    * @param array     $submittedData Reference to the array containing the data submitted by the user
+    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
+    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function validateFieldStart( array &$submittedData, tx_scheduler_Module $parentObject ) 
+  {
+    $bool_isValidatingSuccessful = true;
+
+    $submittedData['start'] = ( int ) $submittedData['start'];
+
+    $inAnHour = time( ) + ( 60 * 60 );
+
+    if( $submittedData['start'] < $inAnHours ) 
+    {
+      $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterStart' );
+      $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
+      $bool_isValidatingSuccessful = false;
+    } 
+
+    return $bool_isValidatingSuccessful;
+  }
+
   
   /**
     * validateOS( ) : This method checks any additional data that is relevant to the specific task
@@ -1029,34 +1058,6 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     }
       // SWITCH : OS of the server
       
-    return $bool_isValidatingSuccessful;
-  }
-
-  /**
-    * validateFieldStart( )  : This method checks any additional data that is relevant to the specific task
-    *                                     If the task class is not relevant, the method is expected to return TRUE
-    *
-    * @param array     $submittedData Reference to the array containing the data submitted by the user
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
-    * @version       1.1.0
-    * @since         1.1.0
-    */
-  private function validateFieldStart( array &$submittedData, tx_scheduler_Module $parentObject ) 
-  {
-    $bool_isValidatingSuccessful = true;
-
-    $submittedData['start'] = ( int ) $submittedData['start'];
-
-    $in24Hours = time( ) + ( 1 * 24 * 60 * 60 );
-
-    if( $submittedData['start'] < $in24Hours ) 
-    {
-      $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterStart' );
-      $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
-      $bool_isValidatingSuccessful = false;
-    } 
-
     return $bool_isValidatingSuccessful;
   }
 
