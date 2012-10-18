@@ -618,13 +618,18 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   {
     $bool_isValidatingSuccessful = true;
     
-    $prompt = var_export( $submittedData, true );
-    $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
+//    $prompt = var_export( $submittedData, true );
+//    $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
 
      
     if( ! $this->validateOS( $parentObject ) ) 
     {
       return false;
+    } 
+
+    if( ! $this->validateFieldFrequency( $submittedData, $parentObject ) ) 
+    {
+      $bool_isValidatingSuccessful = false;
     } 
 
     if( ! $this->validateFieldPostfixAdminCompany( $submittedData, $parentObject ) ) 
@@ -695,6 +700,32 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     if( empty( $submittedData['postfix_postfixAdminCompany'] ) ) 
     {
       $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterPostfixAdminCompany' );
+      $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
+      $bool_isValidatingSuccessful = false;
+    } 
+
+    return $bool_isValidatingSuccessful;
+  }
+
+  /**
+    * validateFieldFrequency( )  : This method checks any additional data that is relevant to the specific task
+    *                                     If the task class is not relevant, the method is expected to return TRUE
+    *
+    * @param array     $submittedData Reference to the array containing the data submitted by the user
+    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
+    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function validateFieldFrequency( array &$submittedData, tx_scheduler_Module $parentObject ) 
+  {
+    $bool_isValidatingSuccessful = true;
+
+    $submittedData['frequency'] = trim( $submittedData['frequency'] );
+
+    if( ( int ) $submittedData['frequency'] < 86400 ) 
+    {
+      $prompt = $this->msgPrefix . ': ' . 'frequency!';
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
       $bool_isValidatingSuccessful = false;
     } 
