@@ -521,8 +521,12 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
         continue;
       }
       $this->quotaSet( );
+      if( $this->quotaRemove( ) )
+      {
+          // Mailbox is handled by quotaRemove
+        continue;
+      }
       $this->quotaWarning( );
-      $this->quotaRemove( );
     }
 
     return $success;
@@ -673,34 +677,16 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     */
   private function quotaRemove( )
   {
-    static $bool_drsFirstLoop = true; 
-    
+      // SWITCH : quota mode
     switch( $this->postfix_quotaMode )
     {
       case( 'remove' ):
+      case( 'test' ):
           // Follow the workflow
         break;
-      case( 'test' ):
-          // DRS
-        if( $bool_drsFirstLoop && $this->drsModeError )
-        {
-          $prompt = 'Quota remove won\'t be processed in test mode.';
-          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 2 );
-          $bool_drsFirstLoop = false;
-        }
-          // DRS
-        return;
-        break;
       case( 'warn' ):
-          // DRS
-        if( $bool_drsFirstLoop && $this->drsModeError )
-        {
-          $prompt = 'Quota remove won\'t be processed in warning mode.';
-          t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 2 );
-          $bool_drsFirstLoop = false;
-        }
-          // DRS
-        return;
+          // RETURN : Don't follow the workflow in warning mode
+        return false;
         break;
       default:
           // DRS
@@ -710,9 +696,42 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
           t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 3 );
         }
           // DRS
-        return;
+          // RETURN : Don't follow the workflow in an undefined mode
+        return false;
         break;
     }
+      // SWITCH : quota mode
+
+      // RETURN : Mailbox doesn't overrun the limit for quota
+    if( $this->mailboxSizeInBytes <= $this->quotaLimitInBytes )
+    {
+      return false;
+    }
+      // RETURN : Mailbox doesn't overrun the limit for quota
+
+      // DRS
+    if( $this->drsModeQuotaTask )
+    {
+      $prompt = $this->mailboxData['pathToMailbox'] . '  overrruns the quota limit. ' .
+                'Mailbox size is ' . $this->mailboxSizeInBytes . ' bytes. ' .
+                'Quota limit is ' . $this->quotaLimitInBytes . ' bytes.' .
+                '';
+      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 2 );
+    }
+      // DRS
+    
+    $this->quotaRemoveMails( );
+  }
+
+  /**
+    * quotaRemoveMails( )  : 
+    *
+    * @return void
+    * @version       1.1.0
+    * @since         1.1.0
+    */
+  private function quotaRemoveMails( )
+  {
   }
 
   /**
@@ -766,13 +785,13 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
     
     $this->quotaLimitInBytes = ( int ) ( $quotaLimitInMegabyte * 1024 * 1024 );
 
-    if( $this->drsModeQuotaTask )
-    {
-      $prompt = 'Quota limit in megabytes: ' . $quotaLimitInMegabyte;
-      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
-      $prompt = 'Quota limit in bytes: ' . $this->quotaLimitInBytes;
-      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
-    }
+//    if( $this->drsModeQuotaTask )
+//    {
+//      $prompt = 'Quota limit in megabytes: ' . $quotaLimitInMegabyte;
+//      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
+//      $prompt = 'Quota limit in bytes: ' . $this->quotaLimitInBytes;
+//      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
+//    }
   }
 
   /**
@@ -787,18 +806,20 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
       // Get the limit for warnings in bytes
     $quotaLimitWarnInBytes = $this->quotaLimitInBytes / 100 * $this->postfix_quotaLimitWarn;
     
+      // RETURN : Mailbox doesn't reach the limit for warnings
     if( $this->mailboxSizeInBytes <= $quotaLimitWarnInBytes )
     {
       return false;
     }
+      // RETURN : Mailbox doesn't reach the limit for warnings
 
       // DRS
     if( $this->drsModeQuotaTask )
     {
-      $prompt = 'Quota limit in bytes: ' . $this->quotaLimitInBytes;
-      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
-      $prompt = 'Quota limit warn in per cent: ' . $this->postfix_quotaLimitWarn;
-      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
+//      $prompt = 'Quota limit in bytes: ' . $this->quotaLimitInBytes;
+//      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
+//      $prompt = 'Quota limit warn in per cent: ' . $this->postfix_quotaLimitWarn;
+//      t3lib_div::devLog( '[tx_postfix_QuotaTask]: ' . $prompt, $this->extKey, 0 );
       $prompt = $this->mailboxData['pathToMailbox'] . '  overrruns the warning limit. ' .
                 'Mailbox size is ' . $this->mailboxSizeInBytes . ' bytes. ' .
                 'Warning limit is ' . ( $this->quotaLimitInBytes / 100 * $this->postfix_quotaLimitWarn ) . '.' .

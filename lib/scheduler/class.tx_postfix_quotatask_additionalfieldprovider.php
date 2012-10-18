@@ -617,6 +617,10 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   public function validateAdditionalFields( array &$submittedData, tx_scheduler_Module $parentObject ) 
   {
     $bool_isValidatingSuccessful = true;
+    
+    $prompt = var_export( $submittedData, true );
+    $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
+
      
     if( ! $this->validateOS( $parentObject ) ) 
     {
