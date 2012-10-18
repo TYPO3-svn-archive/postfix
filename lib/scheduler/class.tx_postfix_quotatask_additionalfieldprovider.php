@@ -731,7 +731,7 @@ class tx_postfix_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     if( ( int ) $submittedData['frequency'] < 86400 ) 
     {
       $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:postfix/lib/scheduler/locallang.xml:msg.enterFrequency' );
-      $parentObject->addMessage( $prompt, t3lib_FlashMessage::WARN );
+      $parentObject->addMessage( $prompt, t3lib_FlashMessage::WARNING );
     } 
 
     return $bool_isValidatingSuccessful;
