@@ -76,6 +76,7 @@ P.S. This is an automatical e-mail
       <label index="label.testTask.name">Postfix Test</label>
       <label index="label.testTask.description">Postfix tests the sending of an e-mail to the postfix admin. It is a service for development only.</label>
       <label index="label.to">To</label>
+      <label index="msg.enterFrequency">Frequency is less than one day (24 hours = 86.400 seconds). Are your sure, that your frequency is proper?</label>
       <label index="msg.enterPostfixAdminCompany">Please enter the company name of the postfix admin.</label>
       <label index="msg.enterPostfixAdminEmail">Please enter the e-mail adress of the postfix admin.</label>
       <label index="msg.enterPostfixAdminName">Please enter the name of the postfix admin.</label>
@@ -86,6 +87,7 @@ P.S. This is an automatical e-mail
       <label index="msg.enterQuotaLimitWarn">The Quota warning limit has to be between 50 per cent and 120 per cent.</label>
       <label index="msg.enterQuotaReduceMailbox">If a mailbox is over the quota limit, it should reduced to a value between 50 and 100 per cent.</label>
       <label index="msg.enterQuotaReduceMailboxMustBeSmaller">The value for a reduced mailbox has to be smaller than the Quota limit for removing e-mails.</label>
+      <label index="msg.enterStart">Start must be 24 hours later than now. If you like to run PostFix Quota earlier, please run it manually.</label>
       <label index="msg.osIsNotSupported"><![CDATA[
         Sorry, but the operating system "###PHP_OS###" isn't supported by TYPO3 Postfix.<br />
         If you need support, please contact <a href="http://wildt.at.die-netzmacher.de/" target="_blank">http://wildt.at.die-netzmacher.de/</a>
