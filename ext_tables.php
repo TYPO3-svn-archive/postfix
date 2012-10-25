@@ -62,6 +62,15 @@ $tempColumns = array (
       'default' => 1,
     )
   ),
+  'tx_postfix_internal' => array (
+    'exclude' => 1,
+    'label' => 'LLL:EXT:postfix/locallang_db.xml:fe_users.tx_postfix_internal',
+    'config' => array (
+      'type' => 'text',
+      'cols' => '30', 
+      'rows' => '5',
+    )
+  ),
 );
 
 

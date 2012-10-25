@@ -1,3 +1,11 @@
+1.1.1
+  12-10-25
+  Improvement
+  * #00000: News field tx_postfix_internal
+            Effected files:
+            * ext_tables.php
+            * ext_tables.sql
+  
 1.1.0
   12-10-13
   New Feature

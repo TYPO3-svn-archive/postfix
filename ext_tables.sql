@@ -8,7 +8,8 @@ CREATE TABLE fe_users (
   tx_postfix_maildir tinytext NOT NULL,
   tx_postfix_homedir tinytext NOT NULL,
   tx_postfix_quota tinytext NOT NULL,
-  tx_postfix_webmail tinyint(3) DEFAULT '0' NOT NULL
+  tx_postfix_webmail tinyint(3) DEFAULT '0' NOT NULL,
+  tx_postfix_internal tinytext NOT NULL,
 );
 
 

@@ -13,6 +13,7 @@
       <label index="fe_users.tx_postfix_homedir">Mailsystem Homedir</label>
       <label index="fe_users.tx_postfix_quota">Quota</label>
       <label index="fe_users.tx_postfix_webmail">Allow Webmail</label>
+      <label index="fe_users.tx_postfix_internal">Internal</label>
       <label index="tx_postfix_forwards">Forwards</label>
       <label index="tx_postfix_forwards.forward_from">Forward from address</label>
       <label index="tx_postfix_forwards.forward_to">Forward to address</label>
@@ -46,6 +47,7 @@
       <label index="fe_users.tx_postfix_homedir">Mailsystem Homedir</label>
       <label index="fe_users.tx_postfix_quota">Quota</label>
       <label index="fe_users.tx_postfix_webmail">Erlaube Webmail</label>
+      <label index="fe_users.tx_postfix_internal">Interna</label>
       <label index="tx_postfix_forwards">Weiterleitungen</label>
       <label index="tx_postfix_forwards.forward_from">Weiterleitung von</label>
       <label index="tx_postfix_forwards.forward_to">Weiterleitung an</label>
