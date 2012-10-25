@@ -76,7 +76,7 @@ $tempColumns = array (
 
 t3lib_div::loadTCA('fe_users');
 t3lib_extMgm::addTCAcolumns('fe_users',$tempColumns,1);
-t3lib_extMgm::addToAllTCAtypes('fe_users','--div--;Postfix,tx_postfix_id;;;;1-1-1, tx_postfix_gid, tx_postfix_password, tx_postfix_maildir, tx_postfix_homedir, tx_postfix_quota, tx_postfix_webmail');
+t3lib_extMgm::addToAllTCAtypes('fe_users','--div--;Postfix,tx_postfix_id;;;;1-1-1, tx_postfix_gid, tx_postfix_password, tx_postfix_maildir, tx_postfix_homedir, tx_postfix_quota, tx_postfix_webmail, tx_postfix_internal');
 
 
 t3lib_extMgm::allowTableOnStandardPages('tx_postfix_forwards');
