@@ -1,3 +1,11 @@
+1.1.2
+  12-10-31
+  Improvement
+  * #00000: Don't process accounts, which are marked as deleted (AND deleted = 0)
+            Effected files:
+            * lib/scheduler
+              * class.tx_postfix_quota.php
+
 1.1.1
   12-10-25
   Improvement
