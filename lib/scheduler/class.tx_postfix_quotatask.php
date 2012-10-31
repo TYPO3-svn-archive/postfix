@@ -214,7 +214,7 @@ class tx_postfix_QuotaTask extends tx_scheduler_Task {
                         tx_postfix_quota
                       ";
     $from_table     = "fe_users";
-    $where_clause   = "(tx_postfix_homedir != '' OR tx_postfix_maildir != '') NAD deleted = 0";
+    $where_clause   = "(tx_postfix_homedir != '' OR tx_postfix_maildir != '') AND deleted = 0";
     $groupBy        = null;
     $orderBy        = "pathToMailbox";
     $limit          = null;
