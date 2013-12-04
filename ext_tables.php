@@ -95,6 +95,7 @@ $TCA['tx_postfix_forwards'] = array (
     ),
     'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
     'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'ext_icon.gif',
+    'searchFields'      =>  'forward_from,forward_to,'
   ),
   'feInterface' => array (
     'fe_admin_fieldList' => 'hidden, forward_from, forward_to, memo_txt',
@@ -118,6 +119,7 @@ $TCA['tx_postfix_domains'] = array (
     ),
     'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
     'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'ext_icon.gif',
+    'searchFields'      =>  'domain,'
   ),
   'feInterface' => array (
     'fe_admin_fieldList' => 'hidden, domain',
@@ -141,6 +143,7 @@ $TCA['tx_postfix_canonical'] = array (
     ),
     'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
     'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'ext_icon.gif',
+    'searchFields'      =>  'mail_dest,mail_srce,'
   ),
   'feInterface' => array (
     'fe_admin_fieldList' => 'hidden, mail_srce, mail_dest',
@@ -164,6 +167,7 @@ $TCA['tx_postfix_canonical_sender'] = array (
     ),
     'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
     'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'ext_icon.gif',
+    'searchFields'      =>  'mail_dest,mail_srce,'
   ),
   'feInterface' => array (
     'fe_admin_fieldList' => 'hidden, mail_srce, mail_dest',
@@ -187,6 +191,7 @@ $TCA['tx_postfix_canonical_recipient'] = array (
     ),
     'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
     'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'ext_icon.gif',
+    'searchFields'      =>  'mail_dest,mail_srce,'
   ),
   'feInterface' => array (
     'fe_admin_fieldList' => 'hidden, mail_srce, mail_dest',
@@ -210,6 +215,7 @@ $TCA['tx_postfix_autoresponder'] = array (
     ),
     'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
     'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'ext_icon.gif',
+    'searchFields'      =>  'descname,email,subject,message,'
   ),
   'feInterface' => array (
     'fe_admin_fieldList' => 'hidden, email, descname, from_date, to_date, message, enabled, force_enabled, subject',
